@@ -22,9 +22,12 @@
 		4C6253A1296E0EEF006AC733 /* JSONDecoderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253A0296E0EEF006AC733 /* JSONDecoderStub.swift */; };
 		4C6253A4296E174D006AC733 /* CachedImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253A3296E174D006AC733 /* CachedImageLoader.swift */; };
 		4C6253A6296E1A71006AC733 /* CachedImageLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253A5296E1A71006AC733 /* CachedImageLoaderTests.swift */; };
+		4C6253AC296E1E94006AC733 /* TVShowsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253AB296E1E94006AC733 /* TVShowsListView.swift */; };
+		4C6253B0296E2040006AC733 /* TVShowsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253AF296E2040006AC733 /* TVShowsListViewModel.swift */; };
+		4C6253B2296E265C006AC733 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253B1296E265C006AC733 /* UIView+.swift */; };
 		4CB6CFAB296D9EE900E2A229 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */; };
 		4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */; };
-		4CB6CFAF296D9EE900E2A229 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAE296D9EE900E2A229 /* ViewController.swift */; };
+		4CB6CFAF296D9EE900E2A229 /* TVShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAE296D9EE900E2A229 /* TVShowsViewController.swift */; };
 		4CB6CFB4296D9EEB00E2A229 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFB3296D9EEB00E2A229 /* Assets.xcassets */; };
 		4CB6CFB7296D9EEB00E2A229 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFB5296D9EEB00E2A229 /* LaunchScreen.storyboard */; };
 		4CB6CFDC296DA16B00E2A229 /* TVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFDB296DA16B00E2A229 /* TVShow.swift */; };
@@ -70,10 +73,13 @@
 		4C6253A0296E0EEF006AC733 /* JSONDecoderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoderStub.swift; sourceTree = "<group>"; };
 		4C6253A3296E174D006AC733 /* CachedImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImageLoader.swift; sourceTree = "<group>"; };
 		4C6253A5296E1A71006AC733 /* CachedImageLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImageLoaderTests.swift; sourceTree = "<group>"; };
+		4C6253AB296E1E94006AC733 /* TVShowsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsListView.swift; sourceTree = "<group>"; };
+		4C6253AF296E2040006AC733 /* TVShowsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsListViewModel.swift; sourceTree = "<group>"; };
+		4C6253B1296E265C006AC733 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		4CB6CFA7296D9EE900E2A229 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4CB6CFAE296D9EE900E2A229 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4CB6CFAE296D9EE900E2A229 /* TVShowsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsViewController.swift; sourceTree = "<group>"; };
 		4CB6CFB3296D9EEB00E2A229 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4CB6CFB6296D9EEB00E2A229 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4CB6CFB8296D9EEB00E2A229 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -155,6 +161,7 @@
 			children = (
 				4C625393296DF775006AC733 /* URLSession+.swift */,
 				4C62539E296E0E5F006AC733 /* JSONDecoder+.swift */,
+				4C6253B1296E265C006AC733 /* UIView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -174,6 +181,52 @@
 				4C62539C296E0DFC006AC733 /* JSONDecoding.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		4C6253A7296E1DBA006AC733 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				4C6253A8296E1DC1006AC733 /* Shows */,
+				4CB6CFAE296D9EE900E2A229 /* TVShowsViewController.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		4C6253A8296E1DC1006AC733 /* Shows */ = {
+			isa = PBXGroup;
+			children = (
+				4C6253AD296E2024006AC733 /* Views */,
+				4C6253AE296E2028006AC733 /* ViewModels */,
+			);
+			path = Shows;
+			sourceTree = "<group>";
+		};
+		4C6253A9296E1DD6006AC733 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */,
+				4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */,
+				4CB6CFB3296D9EEB00E2A229 /* Assets.xcassets */,
+				4CB6CFB8296D9EEB00E2A229 /* Info.plist */,
+				4CB6CFB5296D9EEB00E2A229 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4C6253AD296E2024006AC733 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4C6253AB296E1E94006AC733 /* TVShowsListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4C6253AE296E2028006AC733 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				4C6253AF296E2040006AC733 /* TVShowsListViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		4CB6CF9E296D9EE900E2A229 = {
@@ -197,17 +250,13 @@
 		4CB6CFA9296D9EE900E2A229 /* TVShows */ = {
 			isa = PBXGroup;
 			children = (
+				4CB6CFEB296DAC6300E2A229 /* APIClient */,
 				4C6253A2296E1715006AC733 /* Data */,
 				4C625392296DF76B006AC733 /* Extensions */,
-				4C625384296DEE74006AC733 /* Networking */,
-				4CB6CFEB296DAC6300E2A229 /* APIClient */,
 				4CB6CFDA296DA0E500E2A229 /* Models */,
-				4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */,
-				4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */,
-				4CB6CFAE296D9EE900E2A229 /* ViewController.swift */,
-				4CB6CFB3296D9EEB00E2A229 /* Assets.xcassets */,
-				4CB6CFB5296D9EEB00E2A229 /* LaunchScreen.storyboard */,
-				4CB6CFB8296D9EEB00E2A229 /* Info.plist */,
+				4C625384296DEE74006AC733 /* Networking */,
+				4C6253A9296E1DD6006AC733 /* Resources */,
+				4C6253A7296E1DBA006AC733 /* Scenes */,
 			);
 			path = TVShows;
 			sourceTree = "<group>";
@@ -381,10 +430,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CB6CFAF296D9EE900E2A229 /* ViewController.swift in Sources */,
+				4CB6CFAF296D9EE900E2A229 /* TVShowsViewController.swift in Sources */,
 				4CB6CFAB296D9EE900E2A229 /* AppDelegate.swift in Sources */,
 				4CB6CFE6296DAB4900E2A229 /* TVShowEpisode.swift in Sources */,
 				4CB6CFF1296DAE0200E2A229 /* TVMazeRequest.swift in Sources */,
+				4C6253B2296E265C006AC733 /* UIView+.swift in Sources */,
 				4CB6CFDE296DA64600E2A229 /* TVShowSchedule.swift in Sources */,
 				4C6253A4296E174D006AC733 /* CachedImageLoader.swift in Sources */,
 				4CB6CFEF296DAD5D00E2A229 /* TVMazeEndpoint.swift in Sources */,
@@ -393,7 +443,9 @@
 				4C625383296DBECB006AC733 /* TVMazeService.swift in Sources */,
 				4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */,
 				4C625394296DF775006AC733 /* URLSession+.swift in Sources */,
+				4C6253B0296E2040006AC733 /* TVShowsListViewModel.swift in Sources */,
 				4C625388296DEF39006AC733 /* NetworkSession.swift in Sources */,
+				4C6253AC296E1E94006AC733 /* TVShowsListView.swift in Sources */,
 				4C62539F296E0E5F006AC733 /* JSONDecoder+.swift in Sources */,
 				4C625391296DF719006AC733 /* NetworkSessionURLSession.swift in Sources */,
 				4C62539D296E0DFC006AC733 /* JSONDecoding.swift in Sources */,
@@ -569,7 +621,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TVShows/Info.plist;
+				INFOPLIST_FILE = TVShows/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -596,7 +648,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TVShows/Info.plist;
+				INFOPLIST_FILE = TVShows/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

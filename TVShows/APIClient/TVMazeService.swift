@@ -1,8 +1,7 @@
 import Foundation
 
 protocol TVMazeServiceProtocol: AnyObject {
-    var jsonDecoder: JSONDecoding { get }
-    var networkService: NetworkRequesting { get }
+    init(jsonDecoder: JSONDecoding, networkService: NetworkRequesting)
 
     func execute<T: Codable>(_ request: TVMazeRequest, expecting type: T.Type) async -> Result<T, Error>
 }
@@ -47,6 +46,6 @@ final class TVMazeService: TVMazeServiceProtocol {
         case exceededAPIRateLimit
     }
 
-    private(set) var networkService: NetworkRequesting
-    private(set) var jsonDecoder: JSONDecoding
+    private let networkService: NetworkRequesting
+    private let jsonDecoder: JSONDecoding
 }
