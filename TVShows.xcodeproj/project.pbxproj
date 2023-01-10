@@ -14,8 +14,6 @@
 		4CB6CFB4296D9EEB00E2A229 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFB3296D9EEB00E2A229 /* Assets.xcassets */; };
 		4CB6CFB7296D9EEB00E2A229 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFB5296D9EEB00E2A229 /* LaunchScreen.storyboard */; };
 		4CB6CFC2296D9EEB00E2A229 /* TVShowsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFC1296D9EEB00E2A229 /* TVShowsTests.swift */; };
-		4CB6CFCC296D9EEB00E2A229 /* TVShowsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFCB296D9EEB00E2A229 /* TVShowsUITests.swift */; };
-		4CB6CFCE296D9EEB00E2A229 /* TVShowsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFCD296D9EEB00E2A229 /* TVShowsUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,8 +45,6 @@
 		4CB6CFBD296D9EEB00E2A229 /* TVShowsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TVShowsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB6CFC1296D9EEB00E2A229 /* TVShowsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsTests.swift; sourceTree = "<group>"; };
 		4CB6CFC7296D9EEB00E2A229 /* TVShowsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TVShowsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CB6CFCB296D9EEB00E2A229 /* TVShowsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsUITests.swift; sourceTree = "<group>"; };
-		4CB6CFCD296D9EEB00E2A229 /* TVShowsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +77,6 @@
 			children = (
 				4CB6CFA9296D9EE900E2A229 /* TVShows */,
 				4CB6CFC0296D9EEB00E2A229 /* TVShowsTests */,
-				4CB6CFCA296D9EEB00E2A229 /* TVShowsUITests */,
 				4CB6CFA8296D9EE900E2A229 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -116,15 +111,6 @@
 				4CB6CFC1296D9EEB00E2A229 /* TVShowsTests.swift */,
 			);
 			path = TVShowsTests;
-			sourceTree = "<group>";
-		};
-		4CB6CFCA296D9EEB00E2A229 /* TVShowsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				4CB6CFCB296D9EEB00E2A229 /* TVShowsUITests.swift */,
-				4CB6CFCD296D9EEB00E2A229 /* TVShowsUITestsLaunchTests.swift */,
-			);
-			path = TVShowsUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,8 +262,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CB6CFCC296D9EEB00E2A229 /* TVShowsUITests.swift in Sources */,
-				4CB6CFCE296D9EEB00E2A229 /* TVShowsUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
