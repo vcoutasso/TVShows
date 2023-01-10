@@ -1,9 +1,17 @@
 import Foundation
 
-final class TVMazeService {
+protocol TVMazeServiceProtocol: AnyObject {
+    var apiRequestService: NetworkRequesting { get }
+
+    func execute<T: Codable>(_ request: TVMazeRequest, expecting type: T.Type) async -> Result<T, Error>
+}
+
+final class TVMazeService: TVMazeServiceProtocol {
     // MARK: Lifecycle
 
-    private init() {}
+    private init(apiRequestService: NetworkRequesting = NetworkSession.default) {
+        self.apiRequestService = apiRequestService
+    }
 
     // MARK: Internal
 
@@ -15,7 +23,7 @@ final class TVMazeService {
         }
 
         do {
-            let (data, response) = try await urlSession.data(for: urlRequest)
+            let (data, response) = try await apiRequestService.execute(for: urlRequest)
 
             if let httpResponse = response as? HTTPURLResponse,
                httpResponse.statusCode == 429 {
@@ -37,7 +45,5 @@ final class TVMazeService {
         case exceededAPIRateLimit
     }
 
-    // MARK: Private
-
-    private let urlSession = URLSession.shared
+    private(set) var apiRequestService: NetworkRequesting
 }
