@@ -23,6 +23,10 @@
 		4CB6CFEF296DAD5D00E2A229 /* TVMazeEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFEE296DAD5D00E2A229 /* TVMazeEndpoint.swift */; };
 		4CB6CFF1296DAE0200E2A229 /* TVMazeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFF0296DAE0200E2A229 /* TVMazeRequest.swift */; };
 		4CB6CFF4296DAFF900E2A229 /* TVMazeRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFF3296DAFF900E2A229 /* TVMazeRequestTests.swift */; };
+		4CB6CFF6296DB91100E2A229 /* TVShowScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFF5296DB91100E2A229 /* TVShowScheduleTests.swift */; };
+		4CB6CFF8296DB94000E2A229 /* UnderTheDomeSchedule.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFF7296DB94000E2A229 /* UnderTheDomeSchedule.json */; };
+		4CB6CFFA296DB9FC00E2A229 /* TVMazeImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFF9296DB9FC00E2A229 /* TVMazeImageTests.swift */; };
+		4CB6CFFC296DBA4E00E2A229 /* UnderTheDomeImage.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFFB296DBA4E00E2A229 /* UnderTheDomeImage.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +59,10 @@
 		4CB6CFEE296DAD5D00E2A229 /* TVMazeEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeEndpoint.swift; sourceTree = "<group>"; };
 		4CB6CFF0296DAE0200E2A229 /* TVMazeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeRequest.swift; sourceTree = "<group>"; };
 		4CB6CFF3296DAFF900E2A229 /* TVMazeRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeRequestTests.swift; sourceTree = "<group>"; };
+		4CB6CFF5296DB91100E2A229 /* TVShowScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowScheduleTests.swift; sourceTree = "<group>"; };
+		4CB6CFF7296DB94000E2A229 /* UnderTheDomeSchedule.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = UnderTheDomeSchedule.json; sourceTree = "<group>"; };
+		4CB6CFF9296DB9FC00E2A229 /* TVMazeImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeImageTests.swift; sourceTree = "<group>"; };
+		4CB6CFFB296DBA4E00E2A229 /* UnderTheDomeImage.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = UnderTheDomeImage.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +141,8 @@
 			children = (
 				4CB6CFE0296DA70C00E2A229 /* UnderTheDome.json */,
 				4CB6CFE9296DABC800E2A229 /* UnderTheDome-EP1.json */,
+				4CB6CFF7296DB94000E2A229 /* UnderTheDomeSchedule.json */,
+				4CB6CFFB296DBA4E00E2A229 /* UnderTheDomeImage.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -142,6 +152,7 @@
 			children = (
 				4CB6CFE3296DA79300E2A229 /* TVShowTests.swift */,
 				4CB6CFE7296DAB6500E2A229 /* TVShowEpisodeTests.swift */,
+				4CB6CFF5296DB91100E2A229 /* TVShowScheduleTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -160,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				4CB6CFF3296DAFF900E2A229 /* TVMazeRequestTests.swift */,
+				4CB6CFF9296DB9FC00E2A229 /* TVMazeImageTests.swift */,
 			);
 			path = APIClient;
 			sourceTree = "<group>";
@@ -255,7 +267,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CB6CFE1296DA70C00E2A229 /* UnderTheDome.json in Resources */,
+				4CB6CFFC296DBA4E00E2A229 /* UnderTheDomeImage.json in Resources */,
 				4CB6CFEA296DABC800E2A229 /* UnderTheDome-EP1.json in Resources */,
+				4CB6CFF8296DB94000E2A229 /* UnderTheDomeSchedule.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,8 +297,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CB6CFF4296DAFF900E2A229 /* TVMazeRequestTests.swift in Sources */,
+				4CB6CFFA296DB9FC00E2A229 /* TVMazeImageTests.swift in Sources */,
 				4CB6CFE8296DAB6500E2A229 /* TVShowEpisodeTests.swift in Sources */,
 				4CB6CFE4296DA79300E2A229 /* TVShowTests.swift in Sources */,
+				4CB6CFF6296DB91100E2A229 /* TVShowScheduleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
