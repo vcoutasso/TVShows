@@ -15,7 +15,13 @@ final class TVMazeService {
         }
 
         do {
-            let (data, _) = try await urlSession.data(for: urlRequest)
+            let (data, response) = try await urlSession.data(for: urlRequest)
+
+            if let httpResponse = response as? HTTPURLResponse,
+               httpResponse.statusCode == 429 {
+                return .failure(TVMazeServiceError.exceededAPIRateLimit)
+            }
+
             let decodedData = try JSONDecoder().decode(T.self, from: data)
 
             return .success(decodedData)
@@ -25,7 +31,10 @@ final class TVMazeService {
     }
 
     enum TVMazeServiceError: Error {
+        /// Failed to get `URLRequest` from `TVMazeRequest`
         case failedToGetURLRequest
+        /// Exceeded limit of API calls. This is not a permanent failure, retrying after a small pause is encouraged
+        case exceededAPIRateLimit
     }
 
     // MARK: Private
