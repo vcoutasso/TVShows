@@ -12,18 +12,14 @@
 		4CB6CFAF296D9EE900E2A229 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAE296D9EE900E2A229 /* ViewController.swift */; };
 		4CB6CFB4296D9EEB00E2A229 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFB3296D9EEB00E2A229 /* Assets.xcassets */; };
 		4CB6CFB7296D9EEB00E2A229 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFB5296D9EEB00E2A229 /* LaunchScreen.storyboard */; };
-		4CB6CFC2296D9EEB00E2A229 /* TVShowsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFC1296D9EEB00E2A229 /* TVShowsTests.swift */; };
+		4CB6CFDC296DA16B00E2A229 /* TVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFDB296DA16B00E2A229 /* TVShow.swift */; };
+		4CB6CFDE296DA64600E2A229 /* TVShowSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFDD296DA64600E2A229 /* TVShowSchedule.swift */; };
+		4CB6CFE1296DA70C00E2A229 /* UnderTheDome.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFE0296DA70C00E2A229 /* UnderTheDome.json */; };
+		4CB6CFE4296DA79300E2A229 /* TVShowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFE3296DA79300E2A229 /* TVShowTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		4CB6CFBE296D9EEB00E2A229 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4CB6CF9F296D9EE900E2A229 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4CB6CFA6296D9EE900E2A229;
-			remoteInfo = TVShows;
-		};
-		4CB6CFC8296D9EEB00E2A229 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4CB6CF9F296D9EE900E2A229 /* Project object */;
 			proxyType = 1;
@@ -41,8 +37,10 @@
 		4CB6CFB6296D9EEB00E2A229 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4CB6CFB8296D9EEB00E2A229 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CB6CFBD296D9EEB00E2A229 /* TVShowsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TVShowsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CB6CFC1296D9EEB00E2A229 /* TVShowsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsTests.swift; sourceTree = "<group>"; };
-		4CB6CFC7296D9EEB00E2A229 /* TVShowsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TVShowsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CB6CFDB296DA16B00E2A229 /* TVShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShow.swift; sourceTree = "<group>"; };
+		4CB6CFDD296DA64600E2A229 /* TVShowSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowSchedule.swift; sourceTree = "<group>"; };
+		4CB6CFE0296DA70C00E2A229 /* UnderTheDome.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = UnderTheDome.json; sourceTree = "<group>"; };
+		4CB6CFE3296DA79300E2A229 /* TVShowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,13 +52,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4CB6CFBA296D9EEB00E2A229 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CB6CFC4296D9EEB00E2A229 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -84,7 +75,6 @@
 			children = (
 				4CB6CFA7296D9EE900E2A229 /* TVShows.app */,
 				4CB6CFBD296D9EEB00E2A229 /* TVShowsTests.xctest */,
-				4CB6CFC7296D9EEB00E2A229 /* TVShowsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +82,7 @@
 		4CB6CFA9296D9EE900E2A229 /* TVShows */ = {
 			isa = PBXGroup;
 			children = (
+				4CB6CFDA296DA0E500E2A229 /* Models */,
 				4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */,
 				4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */,
 				4CB6CFAE296D9EE900E2A229 /* ViewController.swift */,
@@ -105,9 +96,35 @@
 		4CB6CFC0296D9EEB00E2A229 /* TVShowsTests */ = {
 			isa = PBXGroup;
 			children = (
-				4CB6CFC1296D9EEB00E2A229 /* TVShowsTests.swift */,
+				4CB6CFE2296DA77A00E2A229 /* Models */,
+				4CB6CFDF296DA6E400E2A229 /* Resources */,
 			);
 			path = TVShowsTests;
+			sourceTree = "<group>";
+		};
+		4CB6CFDA296DA0E500E2A229 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4CB6CFDB296DA16B00E2A229 /* TVShow.swift */,
+				4CB6CFDD296DA64600E2A229 /* TVShowSchedule.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4CB6CFDF296DA6E400E2A229 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4CB6CFE0296DA70C00E2A229 /* UnderTheDome.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4CB6CFE2296DA77A00E2A229 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4CB6CFE3296DA79300E2A229 /* TVShowTests.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,24 +165,6 @@
 			productReference = 4CB6CFBD296D9EEB00E2A229 /* TVShowsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		4CB6CFC6296D9EEB00E2A229 /* TVShowsUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4CB6CFD7296D9EEB00E2A229 /* Build configuration list for PBXNativeTarget "TVShowsUITests" */;
-			buildPhases = (
-				4CB6CFC3296D9EEB00E2A229 /* Sources */,
-				4CB6CFC4296D9EEB00E2A229 /* Frameworks */,
-				4CB6CFC5296D9EEB00E2A229 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4CB6CFC9296D9EEB00E2A229 /* PBXTargetDependency */,
-			);
-			name = TVShowsUITests;
-			productName = TVShowsUITests;
-			productReference = 4CB6CFC7296D9EEB00E2A229 /* TVShowsUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -180,10 +179,6 @@
 						CreatedOnToolsVersion = 14.2;
 					};
 					4CB6CFBC296D9EEB00E2A229 = {
-						CreatedOnToolsVersion = 14.2;
-						TestTargetID = 4CB6CFA6296D9EE900E2A229;
-					};
-					4CB6CFC6296D9EEB00E2A229 = {
 						CreatedOnToolsVersion = 14.2;
 						TestTargetID = 4CB6CFA6296D9EE900E2A229;
 					};
@@ -204,7 +199,6 @@
 			targets = (
 				4CB6CFA6296D9EE900E2A229 /* TVShows */,
 				4CB6CFBC296D9EEB00E2A229 /* TVShowsTests */,
-				4CB6CFC6296D9EEB00E2A229 /* TVShowsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -223,13 +217,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CB6CFC5296D9EEB00E2A229 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				4CB6CFE1296DA70C00E2A229 /* UnderTheDome.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +230,8 @@
 			files = (
 				4CB6CFAF296D9EE900E2A229 /* ViewController.swift in Sources */,
 				4CB6CFAB296D9EE900E2A229 /* AppDelegate.swift in Sources */,
+				4CB6CFDE296DA64600E2A229 /* TVShowSchedule.swift in Sources */,
+				4CB6CFDC296DA16B00E2A229 /* TVShow.swift in Sources */,
 				4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,14 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CB6CFC2296D9EEB00E2A229 /* TVShowsTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CB6CFC3296D9EEB00E2A229 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				4CB6CFE4296DA79300E2A229 /* TVShowTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,11 +251,6 @@
 			isa = PBXTargetDependency;
 			target = 4CB6CFA6296D9EE900E2A229 /* TVShows */;
 			targetProxy = 4CB6CFBE296D9EEB00E2A229 /* PBXContainerItemProxy */;
-		};
-		4CB6CFC9296D9EEB00E2A229 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4CB6CFA6296D9EE900E2A229 /* TVShows */;
-			targetProxy = 4CB6CFC8296D9EEB00E2A229 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -496,42 +474,6 @@
 			};
 			name = Release;
 		};
-		4CB6CFD8296D9EEB00E2A229 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H7BM7N56V5;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.TVShowsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TVShows;
-			};
-			name = Debug;
-		};
-		4CB6CFD9296D9EEB00E2A229 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H7BM7N56V5;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.TVShowsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TVShows;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -558,15 +500,6 @@
 			buildConfigurations = (
 				4CB6CFD5296D9EEB00E2A229 /* Debug */,
 				4CB6CFD6296D9EEB00E2A229 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4CB6CFD7296D9EEB00E2A229 /* Build configuration list for PBXNativeTarget "TVShowsUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4CB6CFD8296D9EEB00E2A229 /* Debug */,
-				4CB6CFD9296D9EEB00E2A229 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
