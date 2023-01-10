@@ -5,6 +5,18 @@ import XCTest
 final class TVMazeRequestTests: XCTestCase {
     private let testBundle = Bundle(for: TVMazeRequestTests.self)
 
+    func testTVMazeRequestYieldsValidURLRequest() {
+        // Given
+        let endpoint = TVMazeEndpoint.shows
+        let request = TVMazeRequest(endpoint: endpoint, pathComponents: nil, queryItems: nil)
+
+        // When
+        let urlRequest = request.urlRequest()
+
+        // Then
+        XCTAssertNotNil(urlRequest)
+    }
+
     func testTVMazeRequestShouldProduceValidShowsURL() {
         // Given
         let endpoint = TVMazeEndpoint.shows

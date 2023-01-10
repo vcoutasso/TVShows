@@ -5,6 +5,8 @@ protocol TVMazeRequestProtocol {
 
     var endpoint: TVMazeEndpoint { get }
     var url: URL? { get }
+
+    func urlRequest() -> URLRequest?
 }
 
 struct TVMazeRequest: TVMazeRequestProtocol {
@@ -32,9 +34,18 @@ struct TVMazeRequest: TVMazeRequestProtocol {
             }
     }
 
+    func urlRequest() -> URLRequest? {
+        guard let requestUrl = url else { return nil }
+        var request = URLRequest(url: requestUrl)
+        request.httpMethod = httpMethod
+
+        return request
+    }
+
     // MARK: Private
 
     private let baseURL: String = "https://api.tvmaze.com/"
+    private let httpMethod: String = "GET"
 
     private let pathComponents: [String]
     private let queryItems: [URLQueryItem]
