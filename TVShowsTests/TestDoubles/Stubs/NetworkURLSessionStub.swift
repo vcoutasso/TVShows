@@ -7,7 +7,7 @@ final class NetworkURLSessionStub: NetworkSessionURLSession {
 
     var resultData: Data?
     var resultResponse: URLResponse?
-    var resultError = Fixtures.mockNSError
+    var resultError: Error = Fixtures.mockNSError
 
     func data(for request: URLRequest) async throws -> (Data, URLResponse) {
         guard let resultData, let resultResponse else {

@@ -11,6 +11,9 @@ enum Fixtures {
 
     static func mockHTTPURLResponse(statusCode: Int = 200) -> HTTPURLResponse {
         HTTPURLResponse(url: mockURL, statusCode: statusCode, httpVersion: "HTTP/1.1", headerFields: nil)!
+    }
 
+    enum EquatableError: Equatable, Error {
+        case error
     }
 }

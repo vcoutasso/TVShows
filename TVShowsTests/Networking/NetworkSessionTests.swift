@@ -24,7 +24,7 @@ final class NetworkSessionTests: XCTestCase {
 
     func testNetworkSessionShouldThrowErrorsFromURLSession() async {
         // Given
-        let expectedError = urlSessionStub.resultError
+        let expectedError = urlSessionStub.resultError as NSError
 
         // When / Then
         do {

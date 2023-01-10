@@ -6,7 +6,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemPink
         Task {
-            let shows = await TVMazeService.shared.execute(.init(endpoint: .shows, pathComponents: nil, queryItems: nil), expecting: [TVShow].self)
+            let shows = await TVMazeService.default.execute(.init(endpoint: .shows, pathComponents: nil, queryItems: nil), expecting: [TVShow].self)
             print(shows)
         }
     }
