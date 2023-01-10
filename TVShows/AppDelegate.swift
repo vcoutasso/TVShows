@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  TVShows
-//
-//  Created by Vinícius Couto on 10/01/23.
-//
-
 import UIKit
 
 @main
