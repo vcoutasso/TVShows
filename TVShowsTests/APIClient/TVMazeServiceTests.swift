@@ -8,7 +8,7 @@ final class TVMazeServiceTests: XCTestCase {
     private let jsonDecoderStub = JSONDecoderStub<Int>()
     private let urlSessionStub = NetworkURLSessionStub()
     private lazy var networkSessionSpy = NetworkSessionSpy(urlSession: urlSessionStub)
-    private lazy var sut = TVMazeService(jsonDecoder: jsonDecoderStub, apiRequestService: networkSessionSpy)
+    private lazy var sut = TVMazeService(jsonDecoder: jsonDecoderStub, networkService: networkSessionSpy)
 
     func testTVMazeServiceShouldFailWithURLSessionError() async {
         // Given
@@ -62,6 +62,6 @@ final class TVMazeServiceTests: XCTestCase {
             return XCTFail("Expected failure but got success or unexpected error")
         }
 
-        XCTAssertEqual(actualError, .exceededAPIRateLimit)
+        XCTAssertEqual(actualError, expectedError)
     }
 }

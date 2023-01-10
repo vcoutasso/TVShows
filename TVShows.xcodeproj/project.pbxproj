@@ -20,6 +20,8 @@
 		4C62539D296E0DFC006AC733 /* JSONDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62539C296E0DFC006AC733 /* JSONDecoding.swift */; };
 		4C62539F296E0E5F006AC733 /* JSONDecoder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62539E296E0E5F006AC733 /* JSONDecoder+.swift */; };
 		4C6253A1296E0EEF006AC733 /* JSONDecoderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253A0296E0EEF006AC733 /* JSONDecoderStub.swift */; };
+		4C6253A4296E174D006AC733 /* CachedImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253A3296E174D006AC733 /* CachedImageLoader.swift */; };
+		4C6253A6296E1A71006AC733 /* CachedImageLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253A5296E1A71006AC733 /* CachedImageLoaderTests.swift */; };
 		4CB6CFAB296D9EE900E2A229 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */; };
 		4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */; };
 		4CB6CFAF296D9EE900E2A229 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAE296D9EE900E2A229 /* ViewController.swift */; };
@@ -66,6 +68,8 @@
 		4C62539C296E0DFC006AC733 /* JSONDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoding.swift; sourceTree = "<group>"; };
 		4C62539E296E0E5F006AC733 /* JSONDecoder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+.swift"; sourceTree = "<group>"; };
 		4C6253A0296E0EEF006AC733 /* JSONDecoderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoderStub.swift; sourceTree = "<group>"; };
+		4C6253A3296E174D006AC733 /* CachedImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImageLoader.swift; sourceTree = "<group>"; };
+		4C6253A5296E1A71006AC733 /* CachedImageLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImageLoaderTests.swift; sourceTree = "<group>"; };
 		4CB6CFA7296D9EE900E2A229 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,7 +119,7 @@
 				4C625385296DEEB7006AC733 /* NetworkRequesting.swift */,
 				4C625387296DEF39006AC733 /* NetworkSession.swift */,
 				4C625390296DF719006AC733 /* NetworkSessionURLSession.swift */,
-				4C62539C296E0DFC006AC733 /* JSONDecoding.swift */,
+				4C6253A3296E174D006AC733 /* CachedImageLoader.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -159,8 +163,17 @@
 			isa = PBXGroup;
 			children = (
 				4C625396296DFBD8006AC733 /* NetworkSessionTests.swift */,
+				4C6253A5296E1A71006AC733 /* CachedImageLoaderTests.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		4C6253A2296E1715006AC733 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				4C62539C296E0DFC006AC733 /* JSONDecoding.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		4CB6CF9E296D9EE900E2A229 = {
@@ -184,6 +197,7 @@
 		4CB6CFA9296D9EE900E2A229 /* TVShows */ = {
 			isa = PBXGroup;
 			children = (
+				4C6253A2296E1715006AC733 /* Data */,
 				4C625392296DF76B006AC733 /* Extensions */,
 				4C625384296DEE74006AC733 /* Networking */,
 				4CB6CFEB296DAC6300E2A229 /* APIClient */,
@@ -372,6 +386,7 @@
 				4CB6CFE6296DAB4900E2A229 /* TVShowEpisode.swift in Sources */,
 				4CB6CFF1296DAE0200E2A229 /* TVMazeRequest.swift in Sources */,
 				4CB6CFDE296DA64600E2A229 /* TVShowSchedule.swift in Sources */,
+				4C6253A4296E174D006AC733 /* CachedImageLoader.swift in Sources */,
 				4CB6CFEF296DAD5D00E2A229 /* TVMazeEndpoint.swift in Sources */,
 				4CB6CFED296DAC7100E2A229 /* TVMazeImage.swift in Sources */,
 				4CB6CFDC296DA16B00E2A229 /* TVShow.swift in Sources */,
@@ -398,6 +413,7 @@
 				4CB6CFE4296DA79300E2A229 /* TVShowTests.swift in Sources */,
 				4C6253A1296E0EEF006AC733 /* JSONDecoderStub.swift in Sources */,
 				4C625397296DFBD8006AC733 /* NetworkSessionTests.swift in Sources */,
+				4C6253A6296E1A71006AC733 /* CachedImageLoaderTests.swift in Sources */,
 				4C62538F296DF450006AC733 /* NetworkURLSessionStub.swift in Sources */,
 				4CB6CFF6296DB91100E2A229 /* TVShowScheduleTests.swift in Sources */,
 				4C625399296E0400006AC733 /* Fixtures.swift in Sources */,

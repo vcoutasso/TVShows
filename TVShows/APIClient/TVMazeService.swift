@@ -2,7 +2,7 @@ import Foundation
 
 protocol TVMazeServiceProtocol: AnyObject {
     var jsonDecoder: JSONDecoding { get }
-    var apiRequestService: NetworkRequesting { get }
+    var networkService: NetworkRequesting { get }
 
     func execute<T: Codable>(_ request: TVMazeRequest, expecting type: T.Type) async -> Result<T, Error>
 }
@@ -10,14 +10,14 @@ protocol TVMazeServiceProtocol: AnyObject {
 final class TVMazeService: TVMazeServiceProtocol {
     // MARK: Lifecycle
 
-    init(jsonDecoder: JSONDecoding, apiRequestService: NetworkRequesting) {
+    init(jsonDecoder: JSONDecoding, networkService: NetworkRequesting) {
         self.jsonDecoder = jsonDecoder
-        self.apiRequestService = apiRequestService
+        self.networkService = networkService
     }
 
-    // MARK: Internal
+    static let `default`: TVMazeService = .init(jsonDecoder: JSONDecoder(), networkService: NetworkSession.default)
 
-    static let `default`: TVMazeService = .init(jsonDecoder: JSONDecoder(), apiRequestService: NetworkSession.default)
+    // MARK: Internal
 
     func execute<T: Codable>(_ request: TVMazeRequest, expecting type: T.Type) async -> Result<T, Error> {
         guard let urlRequest = request.urlRequest() else {
@@ -25,7 +25,7 @@ final class TVMazeService: TVMazeServiceProtocol {
         }
 
         do {
-            let (data, response) = try await apiRequestService.execute(for: urlRequest)
+            let (data, response) = try await networkService.execute(for: urlRequest)
 
             if let httpResponse = response as? HTTPURLResponse,
                httpResponse.statusCode == 429 {
@@ -47,6 +47,6 @@ final class TVMazeService: TVMazeServiceProtocol {
         case exceededAPIRateLimit
     }
 
-    private(set) var apiRequestService: NetworkRequesting
+    private(set) var networkService: NetworkRequesting
     private(set) var jsonDecoder: JSONDecoding
 }
