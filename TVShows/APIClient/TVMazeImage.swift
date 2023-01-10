@@ -1,6 +1,6 @@
 import Foundation
 
-struct TVMImage: Codable {
+struct TVMazeImage: Codable {
     let medium: String
     let original: String
 }

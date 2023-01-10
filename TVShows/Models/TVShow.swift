@@ -19,7 +19,7 @@ struct TVShow: Codable {
         self.genres = try container.decode([String].self, forKey: .genres)
         self.schedule = try container.decode(TVShowSchedule.self, forKey: .schedule)
         self.summary = try container.decode(String.self, forKey: .summary)
-        let image = try container.decode(TVMImage.self, forKey: .image)
+        let image = try container.decode(TVMazeImage.self, forKey: .image)
         self.image = image.original
     }
 }
