@@ -7,6 +7,7 @@ final class LoadingCollectionViewFooter: UICollectionReusableView, ReusableView 
         super.init(frame: frame)
         addSubview(spinner)
         addConstraints()
+        startAnimating()
     }
 
     @available(*, unavailable)

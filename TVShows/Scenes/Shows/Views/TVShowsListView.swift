@@ -1,7 +1,11 @@
 import UIKit
 
+@MainActor
 protocol TVShowsListViewProtocol {
+    /// Filters show with the `query` parameter
     func searchShows(with query: String)
+    /// Clears previous queries and displays unfiltered cached data
+    func clearFilters()
 }
 
 /// Displays collection of shows
@@ -28,7 +32,14 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
     }
 
     func searchShows(with query: String) {
-        
+        Task {
+            await viewModel.searchShows(with: query)
+        }
+    }
+
+    func clearFilters() {
+        viewModel.cancelSearch()
+        collectionView.reloadData()
     }
 
     // MARK: Private
@@ -95,5 +106,9 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
 extension TVShowsListView: TVShowsListViewModelDelegate {
     func didFetchNextPage(with indexPathsToAdd: [IndexPath]) {
         collectionView.insertItems(at: indexPathsToAdd)
+    }
+
+    func didSearchShows() {
+        collectionView.reloadData()
     }
 }

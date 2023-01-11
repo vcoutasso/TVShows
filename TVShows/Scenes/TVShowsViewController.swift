@@ -59,6 +59,16 @@ final class TVShowsViewController: UIViewController {
 
 extension TVShowsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchBarSubject.send(searchText)
+        !searchText.isEmpty ? searchBarSubject.send(searchText) : cancelSearch()
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        cancelSearch()
+    }
+
+    private func cancelSearch() {
+        searchBarEventListener?.cancel()
+        showsListView.clearFilters()
+        attachSearchBarDebouncer()
     }
 }

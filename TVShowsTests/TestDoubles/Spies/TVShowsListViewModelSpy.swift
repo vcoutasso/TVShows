@@ -17,12 +17,22 @@ final class TVShowsListViewModelSpy: NSObject, TVShowsListViewModelProtocol {
 
     var expectation: XCTestExpectation?
 
-    private(set) var cellViewModels: NSMutableOrderedSet = .init()
+
+    private(set) var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] = []
+
 
     private(set) var didFetchInitialPage = false
     func fetchInitialPage() async {
         didFetchInitialPage = true
         expectation?.fulfill()
+    }
+
+    func searchShows(with query: String) async {
+
+    }
+
+    func cancelSearch() {
+        
     }
 
     private(set) var didFetchNextPageCount = 0

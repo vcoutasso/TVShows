@@ -21,14 +21,14 @@ final class TVShowsListViewModelTests: XCTestCase {
 
     func testFetchInitialPageShouldMapResultsToViewModels() async {
         // Given
-        XCTAssertTrue(sut.cellViewModels.count == 0)
+        XCTAssertTrue(sut.displayedCellViewModels.count == 0)
         serviceSpy.dataStub = [Fixtures.mockTVShow]
 
         // When
         await sut.fetchInitialPage()
 
         // Then
-        XCTAssertFalse(sut.cellViewModels.count == 0)
+        XCTAssertFalse(sut.displayedCellViewModels.count == 0)
     }
 
     func testFetchNextPageShouldNotExecuteServiceAfterReceivingCode404() async {

@@ -5,16 +5,19 @@ import UIKit
 protocol TVShowsListViewModelProtocol: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     init(mazeAPIService: TVMazeServiceProtocol)
 
-    var cellViewModels: NSMutableOrderedSet { get }
+    var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] { get }
     var delegate: TVShowsListViewModelDelegate? { get set }
 
     func fetchInitialPage() async
     func fetchNextPage() async
+    func searchShows(with query: String) async
+    func cancelSearch()
 }
 
 @MainActor
 protocol TVShowsListViewModelDelegate: AnyObject {
     func didFetchNextPage(with indexPathsToAdd: [IndexPath])
+    func didSearchShows()
 }
 
 final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
@@ -23,11 +26,17 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
     init(mazeAPIService: TVMazeServiceProtocol = TVMazeService(jsonDecoder: JSONDecoder(), networkService: NetworkSession.default)) {
         self.mazeAPIService = mazeAPIService
         self.cellViewModels = []
+        self.displayedCellViewModels = []
     }
 
     // MARK: Internal
 
-    private(set) var cellViewModels: NSMutableOrderedSet
+    // Collection with all cached cell view models
+    private var cellViewModels: NSMutableOrderedSet
+
+    // View models for cells that are in display
+    private(set) var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol]
+
 
     weak var delegate: TVShowsListViewModelDelegate?
 
@@ -35,18 +44,14 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
         let request = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: nil)
         switch await self.mazeAPIService.execute(request, expecting: [TVShow].self) {
             case .success(let shows):
-                shows
-                    .map { TVShowsListCollectionViewCellViewModel(show: $0) }
-                    .forEach {
-                        cellViewModels.add($0)
-                    }
+                updateList(with: shows)
             case .failure(let error):
                 print("Failed to fetch shows with error \(error)")
         }
     }
 
     func fetchNextPage() async {
-        guard canLoadMorePages, !isLoadingNextPage else { return }
+        guard canLoadMorePages, !isLoadingNextPage, !isSearching else { return }
 
         isLoadingNextPage = true
 
@@ -58,17 +63,13 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
                 let startingIndex = cellViewModels.count
                 let indexPathsToAdd = Array(startingIndex..<(startingIndex+shows.count)).map { IndexPath(row: $0, section: 0) }
 
-                shows
-                    .map { TVShowsListCollectionViewCellViewModel(show: $0) }
-                    .forEach {
-                        cellViewModels.add($0)
-                    }
+                updateList(with: shows)
 
                 self.delegate?.didFetchNextPage(with: indexPathsToAdd)
             case .failure(let error):
                 if let error = error as? TVMazeService.TVMazeServiceError {
                     if error == .exceededAPIRateLimit {
-                        // Try again after two seconds
+                        // Try again after some delay
                         Task {
                             try await Task.sleep(nanoseconds: Constants.delayBetweenRetries)
                             await fetchNextPage()
@@ -84,6 +85,19 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
         isLoadingNextPage = false
     }
 
+    func searchShows(with query: String) async {
+        guard !isLoadingNextPage else { return }
+
+        isSearching = true
+        displayedCellViewModels = cellViewModels.array.compactMap { $0 as? TVShowsListCollectionViewCellViewModelProtocol }.filter { $0.show.name.contains(query) }
+        delegate?.didSearchShows()
+    }
+
+    func cancelSearch() {
+        isSearching = false
+        resetDisplayedCells()
+    }
+
     enum Constants {
         static let delayBetweenRetries: UInt64 = 1_000_000_000
     }
@@ -94,23 +108,38 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
     private var isLoadingNextPage: Bool = false
     private var canLoadMorePages: Bool = true
+    private var isSearching: Bool = false
     private var nextPage: Int = 1
+
+    private func updateList(with shows: [TVShow]) {
+        shows
+            .map { TVShowsListCollectionViewCellViewModel(show: $0) }
+            .forEach {
+                cellViewModels.add($0)
+            }
+
+        if !isSearching { resetDisplayedCells() }
+    }
+
+    private func resetDisplayedCells() {
+        displayedCellViewModels = cellViewModels.array.compactMap { $0 as? TVShowsListCollectionViewCellViewModelProtocol }
+    }
 }
 
 // MARK: - UICollectionViewDelegate + UICollectionViewDataSource + UICollectionViewDelegateFlowLayout
 
 extension TVShowsListViewModel {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        cellViewModels.count
+        displayedCellViewModels.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(TVShowsListCollectionViewCell.self, for: indexPath),
-              let viewModel = cellViewModels[indexPath.row] as? TVShowsListCollectionViewCellViewModelProtocol
+        guard let cell = collectionView.dequeueReusableCell(TVShowsListCollectionViewCell.self, for: indexPath)
         else {
             preconditionFailure("Unsupported cell/viewModel")
         }
 
+        let viewModel = displayedCellViewModels[indexPath.row] as TVShowsListCollectionViewCellViewModelProtocol
         cell.configure(with: viewModel)
         return cell
     }
@@ -135,7 +164,7 @@ extension TVShowsListViewModel {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= (scrollView.contentSize.height - (scrollView.visibleSize.height * 1.15)) {
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - (scrollView.visibleSize.height * 1.1)) {
             Task {
                 await fetchNextPage()
             }
