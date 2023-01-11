@@ -26,9 +26,12 @@ final class TVMazeService: TVMazeServiceProtocol {
         do {
             let (data, response) = try await networkService.execute(for: urlRequest)
 
-            if let httpResponse = response as? HTTPURLResponse,
-               httpResponse.statusCode == 429 {
-                return .failure(TVMazeServiceError.exceededAPIRateLimit)
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 429 {
+                    return .failure(TVMazeServiceError.exceededAPIRateLimit)
+                } else if httpResponse.statusCode == 404 {
+                    return .failure(TVMazeServiceError.noMoreData)
+                }
             }
 
             let decodedData = try jsonDecoder.decode(T.self, from: data)
@@ -44,6 +47,8 @@ final class TVMazeService: TVMazeServiceProtocol {
         case failedToGetURLRequest
         /// Exceeded limit of API calls. This is not a permanent failure, retrying after a small pause is encouraged
         case exceededAPIRateLimit
+        /// Reached the end of the list
+        case noMoreData
     }
 
     private let networkService: NetworkRequesting

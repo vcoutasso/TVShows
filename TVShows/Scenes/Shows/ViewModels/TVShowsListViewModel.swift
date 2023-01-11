@@ -60,12 +60,15 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
                 self.delegate?.didFetchNextPage(with: indexPathsToAdd)
             case .failure(let error):
-                if let error = error as? TVMazeService.TVMazeServiceError,
-                   error == .exceededAPIRateLimit {
-                    // Try again after two seconds
-                    Task {
-                        try await Task.sleep(nanoseconds: 2_000_000_000)
-                        await fetchNextPage()
+                if let error = error as? TVMazeService.TVMazeServiceError {
+                    if error == .exceededAPIRateLimit {
+                        // Try again after two seconds
+                        Task {
+                            try await Task.sleep(nanoseconds: 2_000_000_000)
+                            await fetchNextPage()
+                        }
+                    } else if error == .noMoreData {
+                        canLoadMorePages = false
                     }
                 }
 
