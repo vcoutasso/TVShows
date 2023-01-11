@@ -6,7 +6,7 @@ import XCTest
 final class TVShowsListViewModelTests: XCTestCase {
 
     private let serviceSpy = TVMazeAPIServiceSpy<[TVShow]>()
-    private lazy var sut = TVShowsListViewModel(mazeAPIService: serviceSpy)
+    private lazy var sut = TVShowsListViewModel(apiService: serviceSpy)
 
     func testFetchInitialPageShouldExecuteTVMazeService() async {
         // Given
@@ -31,6 +31,35 @@ final class TVShowsListViewModelTests: XCTestCase {
         XCTAssertFalse(sut.displayedCellViewModels.count == 0)
     }
 
+    func testFetchNextPageShouldNotExecuteServiceBeforeFirstFetch() async {
+        // Given
+        let mirror = Mirror(reflecting: sut)
+        XCTAssertEqual(mirror.children.first(where: { $0.label == "didLoadFirstPage"})?.value as? Bool, false)
+
+        // When
+        await sut.fetchNextPage()
+
+        // Then
+        XCTAssertEqual(serviceSpy.executeCallCount, 0)
+    }
+
+    func testFetchNextPageShouldExecuteServiceAfterFirstFetch() async {
+        // Given
+        let mirror = Mirror(reflecting: sut)
+        XCTAssertEqual(mirror.children.first(where: { $0.label == "didLoadFirstPage"})?.value as? Bool, false)
+        serviceSpy.dataStub = []
+        await sut.fetchInitialPage()
+
+        // When
+        await sut.fetchNextPage()
+
+        // Then
+        XCTAssertEqual(serviceSpy.executeCallCount, 2)
+        XCTAssertEqual(mirror.children.first(where: { $0.label == "didLoadFirstPage"})?.value as? Bool, true)
+        XCTAssertEqual(mirror.children.first(where: { $0.label == "nextPage"})?.value as? Int, 2)
+    }
+
+
     func testFetchNextPageShouldNotExecuteServiceAfterReceivingCode404() async {
         // Given
         let mirror = Mirror(reflecting: sut)
@@ -40,7 +69,7 @@ final class TVShowsListViewModelTests: XCTestCase {
 
         // When
         // This call returns the expected error, which should prevent subsequent fetch tries
-        await sut.fetchNextPage()
+        await sut.fetchInitialPage()
         serviceSpy.dataStub = []
         await sut.fetchNextPage()
 
@@ -49,9 +78,25 @@ final class TVShowsListViewModelTests: XCTestCase {
         XCTAssertEqual(serviceSpy.executeCallCount, 1)
     }
 
+    func testFetchInitialPageShouldTryAgainAfterExceedingRateLimit() async throws {
+        // Given
+        XCTAssertEqual(serviceSpy.executeCallCount, 0)
+        serviceSpy.errorStub = TVMazeService.TVMazeServiceError.exceededAPIRateLimit
+
+        // When
+        await sut.fetchInitialPage()
+        try await Task.sleep(nanoseconds: 2 *  TVShowsListViewModel.Constants.delayBetweenRetries)
+
+        // Then
+        XCTAssertEqual(serviceSpy.executeCallCount, 2)
+    }
+
     func testFetchNextPageShouldTryAgainAfterExceedingRateLimit() async throws {
         // Given
         XCTAssertEqual(serviceSpy.executeCallCount, 0)
+        serviceSpy.dataStub = []
+        await sut.fetchInitialPage()
+        serviceSpy.dataStub = nil
         serviceSpy.errorStub = TVMazeService.TVMazeServiceError.exceededAPIRateLimit
 
         // When
@@ -59,7 +104,7 @@ final class TVShowsListViewModelTests: XCTestCase {
         try await Task.sleep(nanoseconds: 2 *  TVShowsListViewModel.Constants.delayBetweenRetries)
 
         // Then
-        XCTAssertEqual(serviceSpy.executeCallCount, 2)
+        XCTAssertEqual(serviceSpy.executeCallCount, 3)
     }
 
     func testFetchNextPageShouldIncrementPageCountOnSuccess() async {
@@ -67,6 +112,7 @@ final class TVShowsListViewModelTests: XCTestCase {
         let mirror = Mirror(reflecting: sut)
         XCTAssertEqual(mirror.children.first(where: { $0.label == "nextPage"})?.value as? Int, 1)
         serviceSpy.dataStub = []
+        await sut.fetchInitialPage()
 
         // When
         await sut.fetchNextPage()
@@ -79,6 +125,8 @@ final class TVShowsListViewModelTests: XCTestCase {
         // Given
         let delegateSpy = TVShowsListViewModelDelegateSpy()
         sut.delegate = delegateSpy
+        serviceSpy.dataStub = []
+        await sut.fetchInitialPage()
         serviceSpy.dataStub = [Fixtures.mockTVShow, Fixtures.mockTVShow]
         let expectedIndexPaths: [IndexPath] = [.init(row: 0, section: 0), .init(row: 1, section: 0)]
 

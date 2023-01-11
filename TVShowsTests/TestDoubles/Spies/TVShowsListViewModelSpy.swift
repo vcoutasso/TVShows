@@ -4,19 +4,17 @@ import UIKit
 
 @testable import TVShows
 
-final class TVShowsListViewModelSpy: NSObject, TVShowsListViewModelProtocol {
-
+final class TVShowsListViewModelSpy: NSObject, TVShowsListViewModelProtocol, TVShowListViewCollectionViewAdapterDelegate {
     // MARK: Lifecycle
 
     override init() {}
-    init(mazeAPIService: TVMazeServiceProtocol) {}
+    init(apiService: TVMazeServiceProtocol) {}
 
     // MARK: Internal
 
     weak var delegate: TVShowsListViewModelDelegate?
 
     var expectation: XCTestExpectation?
-
 
     private(set) var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] = []
 
@@ -40,11 +38,13 @@ final class TVShowsListViewModelSpy: NSObject, TVShowsListViewModelProtocol {
         didFetchNextPageCount += 1
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        0
+    var shouldDisplayLoadingFooter: Bool {
+        false
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        UICollectionViewCell()
+    func didSelectCell(at indexPath: IndexPath) {
+    }
+
+    func didScrollPastCurrentContent() {
     }
 }

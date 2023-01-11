@@ -52,11 +52,9 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
                 didLoadFirstPage = true
                 updateList(with: shows)
             case .failure(let error):
-                if case .exceededAPIRateLimit = error as? TVMazeService.TVMazeServiceError {
-                    // Try again after some delay
-                    Task {
-                        try await Task.sleep(nanoseconds: Constants.delayBetweenRetries)
-                        await fetchNextPage()
+                if let error = error as? TVMazeService.TVMazeServiceError {
+                    handleTVMazeError(error) {
+                        await self.fetchInitialPage()
                     }
                 }
 
@@ -70,7 +68,6 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
         isLoadingNextPage = true
 
         let request = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: [.page(nextPage)])
-
         switch await apiService.execute(request, expecting: [TVShow].self) {
             case .success(let shows):
                 nextPage += 1
@@ -82,14 +79,8 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
                 self.delegate?.didFetchNextPage(with: indexPathsToAdd)
             case .failure(let error):
                 if let error = error as? TVMazeService.TVMazeServiceError {
-                    if error == .exceededAPIRateLimit {
-                        // Try again after some delay
-                        Task {
-                            try await Task.sleep(nanoseconds: Constants.delayBetweenRetries)
-                            await fetchNextPage()
-                        }
-                    } else if error == .noMoreData {
-                        canLoadMorePages = false
+                    handleTVMazeError(error) {
+                        await self.fetchNextPage()
                     }
                 }
 
@@ -105,7 +96,6 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
         isSearching = true
 
         let request = TVMazeRequest(endpoint: .search, pathComponents: [.shows], queryItems: [.query(query)])
-
         switch await apiService.execute(request, expecting: [TVMazeFuzzySearchResults.Shows].self) {
             case .success(let results):
                 let shows = results.map { $0.show }
@@ -113,6 +103,10 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
                 displayedCellViewModels = shows.map { TVShowsListCollectionViewCellViewModel(show: $0) }
                 delegate?.didFetchFilteredShows()
             case .failure(let error):
+                if let error = error as? TVMazeService.TVMazeServiceError {
+                    handleTVMazeError(error)
+                }
+
                 print("Failed to search shows with error \(error)")
         }
     }
@@ -134,6 +128,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
     private var isLoadingNextPage: Bool = false
     private var canLoadMorePages: Bool = true
     private var isSearching: Bool = false
+    private var isRetrying: Bool = false
     private var nextPage: Int = 1
 
     private func updateList(with shows: [TVShow]) {
@@ -149,9 +144,27 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
     private func resetDisplayedCells() {
         displayedCellViewModels = cellViewModels.array.compactMap { $0 as? TVShowsListCollectionViewCellViewModelProtocol }
     }
+
+    private func handleTVMazeError(_ error: TVMazeService.TVMazeServiceError, retryBlock:  (() async -> Void)? = nil) {
+        switch error {
+            case .exceededAPIRateLimit:
+                Task {
+                    try? await Task.sleep(nanoseconds: Constants.delayBetweenRetries)
+                    if !isRetrying {
+                        isRetrying = true
+                        await retryBlock?()
+                        isRetrying = false
+                    }
+                }
+            case .noMoreData:
+                canLoadMorePages = false
+            default:
+                break
+        }
+    }
 }
 
-// MARK: -
+// MARK: - TVShowListViewCollectionViewAdapterDelegate
 
 extension TVShowsListViewModel: TVShowListViewCollectionViewAdapterDelegate {
     var shouldDisplayLoadingFooter: Bool {
