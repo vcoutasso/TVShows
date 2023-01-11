@@ -47,7 +47,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
         isLoadingNextPage = true
 
-        let request = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: [.init(name: "page", value: "\(nextPage)")])
+        let request = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: [.page(nextPage)])
 
         switch await self.mazeAPIService.execute(request, expecting: [TVShow].self) {
             case .success(let shows):

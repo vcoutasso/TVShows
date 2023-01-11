@@ -6,6 +6,7 @@ protocol TVMazeServiceProtocol: AnyObject {
     func execute<T: Codable>(_ request: TVMazeRequest, expecting type: T.Type) async -> Result<T, Error>
 }
 
+/// Service for fetching data from TV Maze API
 final class TVMazeService: TVMazeServiceProtocol {
     // MARK: Lifecycle
 

@@ -1,5 +1,6 @@
 import Foundation
 
+/// Supported TV Maze API endpoints
 enum TVMazeEndpoint: String {
     case shows
     case episodes

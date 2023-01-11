@@ -1,7 +1,7 @@
 import Foundation
 
 protocol TVMazeRequestProtocol {
-    init(endpoint: TVMazeEndpoint, pathComponents: [String]?, queryItems: [URLQueryItem]?)
+    init(endpoint: TVMazeEndpoint, pathComponents: [TVMazePathComponents]?, queryItems: [TVMazeQueryItems]?)
 
     var endpoint: TVMazeEndpoint { get }
     var url: URL? { get }
@@ -9,10 +9,11 @@ protocol TVMazeRequestProtocol {
     func urlRequest() -> URLRequest?
 }
 
+/// Represents a request to the TV Maze API
 struct TVMazeRequest: TVMazeRequestProtocol {
     // MARK: Lifecycle
 
-    init(endpoint: TVMazeEndpoint, pathComponents: [String]?, queryItems: [URLQueryItem]?) {
+    init(endpoint: TVMazeEndpoint, pathComponents: [TVMazePathComponents]?, queryItems: [TVMazeQueryItems]?) {
         self.endpoint = endpoint
         self.pathComponents = pathComponents ?? []
         self.queryItems = queryItems ?? []
@@ -27,10 +28,10 @@ struct TVMazeRequest: TVMazeRequestProtocol {
 
         return urlComponents.url
             .map {
-                pathComponents.isEmpty ? $0 : $0.appending(component: pathComponents.joined(separator: "/"))
+                pathComponents.isEmpty ? $0 : $0.appending(path: pathComponents.map({ $0.description }).joined(separator: "/"))
             }
             .map {
-                queryItems.isEmpty ? $0 : $0.appending(queryItems: queryItems)
+                queryItems.isEmpty ? $0 : $0.appending(queryItems: queryItems.map { $0.urlQueryItem() })
             }
     }
 
@@ -47,6 +48,6 @@ struct TVMazeRequest: TVMazeRequestProtocol {
     private let baseURL: String = "https://api.tvmaze.com/"
     private let httpMethod: String = "GET"
 
-    private let pathComponents: [String]
-    private let queryItems: [URLQueryItem]
+    private let pathComponents: [TVMazePathComponents]
+    private let queryItems: [TVMazeQueryItems]
 }

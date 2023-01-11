@@ -29,15 +29,15 @@ final class TVMazeRequestTests: XCTestCase {
         XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows")
     }
 
-    func testTVMazeRequestShouldProduceValidShowsWithEmbeddingURL() {
+    func testTVMazeRequestShouldProduceValidPagingURL() {
         // Given
         let endpoint = TVMazeEndpoint.shows
-        let embedding = "cast"
+        let pageNumber = 1
         let request = TVMazeRequest(
             endpoint: endpoint,
             pathComponents: nil,
             queryItems: [
-                .init(name: "embed", value: embedding)
+                .page(pageNumber)
             ]
         )
 
@@ -45,7 +45,7 @@ final class TVMazeRequestTests: XCTestCase {
         let url = request.url
 
         // Then
-        XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows?embed=\(embedding)")
+        XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows?page=\(pageNumber)")
     }
 
     func testTVMazeRequestShouldProduceValidFirstShowURL() {
@@ -54,7 +54,7 @@ final class TVMazeRequestTests: XCTestCase {
         let firstShowID = 1
         let request = TVMazeRequest(
             endpoint: endpoint,
-            pathComponents: [String(firstShowID)],
+            pathComponents: [.id(firstShowID)],
             queryItems: nil
         )
 
@@ -62,27 +62,27 @@ final class TVMazeRequestTests: XCTestCase {
         let url = request.url
 
         // Then
-        XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows/1")
+        XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows/\(firstShowID)")
     }
 
-    func testTVMazeRequestShouldProduceValidFirstShowWithEmbeddingEpisodesURL() {
+    func testTVMazeRequestShouldProduceValidFirstShowEpisodesURL() {
         // Given
         let endpoint = TVMazeEndpoint.shows
         let firstShowID = 1
-        let embedding = "episodes"
         let request = TVMazeRequest(
             endpoint: endpoint,
-            pathComponents: [String(firstShowID)],
-            queryItems: [
-                .init(name: "embed", value: embedding)
-            ]
+            pathComponents: [
+                .id(firstShowID),
+                .episodes
+            ],
+            queryItems: nil
         )
 
         // When
         let url = request.url
 
         // Then
-        XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows/1?embed=\(embedding)")
+        XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows/1/episodes")
     }
 
     func testTVMazeRequestShouldProduceValidEpisodesURL() {
