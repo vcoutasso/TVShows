@@ -12,6 +12,7 @@ protocol TVShowsListViewModelProtocol: UICollectionViewDelegate, UICollectionVie
     func fetchNextPage() async
 }
 
+@MainActor
 protocol TVShowsListViewModelDelegate: AnyObject {
     func didFetchNextPage(with indexPathsToAdd: [IndexPath])
 }

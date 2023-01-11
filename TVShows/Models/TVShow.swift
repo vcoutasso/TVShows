@@ -7,8 +7,8 @@ struct TVShow: Codable {
     let name: String
     let genres: [String]
     let schedule: TVShowSchedule
-    let summary: String
-    let image: String
+    let summary: String?
+    let image: String?
 
     // MARK: Lifecycle
 
@@ -27,8 +27,8 @@ struct TVShow: Codable {
         self.name = try container.decode(String.self, forKey: .name)
         self.genres = try container.decode([String].self, forKey: .genres)
         self.schedule = try container.decode(TVShowSchedule.self, forKey: .schedule)
-        self.summary = try container.decode(String.self, forKey: .summary)
-        let image = try container.decode(TVMazeImage.self, forKey: .image)
-        self.image = image.medium
+        self.summary = (try? container.decode(String.self, forKey: .summary)) ?? "No summary available"
+        let image = try? container.decode(TVMazeImage.self, forKey: .image)
+        self.image = image?.medium
     }
 }
