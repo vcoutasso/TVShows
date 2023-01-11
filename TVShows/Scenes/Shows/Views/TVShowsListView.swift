@@ -1,7 +1,11 @@
 import UIKit
 
+protocol TVShowsListViewProtocol {
+    func searchShows(with query: String)
+}
+
 /// Displays collection of shows
-final class TVShowsListView: UIView {
+final class TVShowsListView: UIView, TVShowsListViewProtocol {
     // MARK: Lifecycle
 
     init(viewModel: TVShowsListViewModelProtocol) {
@@ -21,6 +25,10 @@ final class TVShowsListView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func searchShows(with query: String) {
+        
     }
 
     // MARK: Private

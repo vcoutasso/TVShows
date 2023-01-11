@@ -1,5 +1,7 @@
 import Foundation
 
+// MARK: - TVShowsListCollectionViewCellViewModelProtocol
+
 protocol TVShowsListCollectionViewCellViewModelProtocol {
     var show: TVShow { get }
     var imageData: Data? { get }
@@ -8,6 +10,8 @@ protocol TVShowsListCollectionViewCellViewModelProtocol {
 
     func fetchImage() async
 }
+
+// MARK: - TVShowsListCollectionViewCellViewModel
 
 final class TVShowsListCollectionViewCellViewModel: TVShowsListCollectionViewCellViewModelProtocol {
     // MARK: Lifecycle

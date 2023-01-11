@@ -249,8 +249,6 @@
 		4C6253A9296E1DD6006AC733 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */,
-				4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */,
 				4CB6CFB3296D9EEB00E2A229 /* Assets.xcassets */,
 				4CB6CFB8296D9EEB00E2A229 /* Info.plist */,
 				4CB6CFB5296D9EEB00E2A229 /* LaunchScreen.storyboard */,
@@ -327,6 +325,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		4C6C2594296F0AB40004FB3F /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */,
+				4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		4CB6CF9E296D9EE900E2A229 = {
 			isa = PBXGroup;
 			children = (
@@ -351,6 +358,7 @@
 				4CB6CFEB296DAC6300E2A229 /* APIClient */,
 				4C6253D1296E4F8D006AC733 /* Common */,
 				4C625392296DF76B006AC733 /* Extensions */,
+				4C6C2594296F0AB40004FB3F /* Main */,
 				4C6253A2296E1715006AC733 /* Misc */,
 				4CB6CFDA296DA0E500E2A229 /* Models */,
 				4C625384296DEE74006AC733 /* Networking */,
