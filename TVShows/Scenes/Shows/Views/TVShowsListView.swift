@@ -24,6 +24,7 @@ final class TVShowsListView: UIView {
     // MARK: Private
 
     private func setUpView() {
+        backgroundColor = .systemBackground
         addSubviews()
         addConstraints()
         loadingSpinner.startAnimating()

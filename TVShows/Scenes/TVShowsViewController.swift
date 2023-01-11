@@ -19,6 +19,8 @@ final class TVShowsViewController: UIViewController {
     }()
 
     private func setUpView() {
+        title = "TV Shows"
+
         view.addSubview(showsListView)
 
         NSLayoutConstraint.activate([
