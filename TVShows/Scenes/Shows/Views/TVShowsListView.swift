@@ -35,13 +35,9 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
 
     private func setUpView() {
         backgroundColor = .systemBackground
-        addSubviews()
+        addSubviews(loadingSpinner, collectionView)
         addConstraints()
         loadingSpinner.startAnimating()
-    }
-
-    private func addSubviews() {
-        addSubviews(loadingSpinner, collectionView)
     }
 
     private func addConstraints() {

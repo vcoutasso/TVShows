@@ -5,7 +5,7 @@ import UIKit
 protocol TVShowsListViewModelProtocol: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     init(mazeAPIService: TVMazeServiceProtocol)
 
-    var cellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] { get }
+    var cellViewModels: NSMutableOrderedSet { get }
     var delegate: TVShowsListViewModelDelegate? { get set }
 
     func fetchInitialPage() async
@@ -27,7 +27,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
     // MARK: Internal
 
-    private(set) var cellViewModels: [TVShowsListCollectionViewCellViewModelProtocol]
+    private(set) var cellViewModels: NSMutableOrderedSet
 
     weak var delegate: TVShowsListViewModelDelegate?
 
@@ -35,8 +35,11 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
         let request = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: nil)
         switch await self.mazeAPIService.execute(request, expecting: [TVShow].self) {
             case .success(let shows):
-                let viewModels = shows.map { TVShowsListCollectionViewCellViewModel(show: $0) }
-                self.cellViewModels.append(contentsOf: viewModels)
+                shows
+                    .map { TVShowsListCollectionViewCellViewModel(show: $0) }
+                    .forEach {
+                        cellViewModels.add($0)
+                    }
             case .failure(let error):
                 print("Failed to fetch shows with error \(error)")
         }
@@ -55,8 +58,11 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
                 let startingIndex = cellViewModels.count
                 let indexPathsToAdd = Array(startingIndex..<(startingIndex+shows.count)).map { IndexPath(row: $0, section: 0) }
 
-                let viewModels = shows.map { TVShowsListCollectionViewCellViewModel(show: $0) }
-                self.cellViewModels.append(contentsOf: viewModels)
+                shows
+                    .map { TVShowsListCollectionViewCellViewModel(show: $0) }
+                    .forEach {
+                        cellViewModels.add($0)
+                    }
 
                 self.delegate?.didFetchNextPage(with: indexPathsToAdd)
             case .failure(let error):
@@ -99,11 +105,13 @@ extension TVShowsListViewModel {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(TVShowsListCollectionViewCell.self, for: indexPath) else {
-            preconditionFailure("Unsupported cell")
+        guard let cell = collectionView.dequeueReusableCell(TVShowsListCollectionViewCell.self, for: indexPath),
+              let viewModel = cellViewModels[indexPath.row] as? TVShowsListCollectionViewCellViewModelProtocol
+        else {
+            preconditionFailure("Unsupported cell/viewModel")
         }
 
-        cell.configure(with: cellViewModels[indexPath.row])
+        cell.configure(with: viewModel)
         return cell
     }
 
