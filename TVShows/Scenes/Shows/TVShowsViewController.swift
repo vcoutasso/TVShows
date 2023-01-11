@@ -7,8 +7,9 @@ import Combine
 final class TVShowsViewController: UIViewController {
     // MARK: Lifecycle
 
-    init(showsListView: UIView & TVShowsListViewProtocol) {
+    init(showsListView: UIView & TVShowsListViewProtocol, searchController: UISearchController & TVShowsSearchControllerProtocol) {
         self.showsListView = showsListView
+        self.searchController = searchController
         super.init(nibName: nil, bundle: nil)
 
         self.showsListView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +26,7 @@ final class TVShowsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
-        attachSearchBarDebouncer()
+        attachSearchBarSubscriber()
     }
 
     // MARK: Private
@@ -34,6 +35,7 @@ final class TVShowsViewController: UIViewController {
         title = "TV Shows"
 
         navigationItem.searchController = searchController
+        navigationItem.searchController?.searchBar.delegate = searchController
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.hidesSearchBarWhenScrolling = true
 
@@ -48,43 +50,25 @@ final class TVShowsViewController: UIViewController {
         ])
     }
 
-    private func attachSearchBarDebouncer() {
-        searchBarSubscriber = searchBarSubject
+    private func attachSearchBarSubscriber() {
+        searchBarSubscriber = searchController.searchBarSubject
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
-            .sink { [weak self] query in
-                self?.showsListView.searchShows(with: query)
+            .sink { [weak self] event in
+                guard let self else { return }
+                
+                switch event {
+                    case .receivedQuery(let query):
+                        self.showsListView.searchShows(with: query)
+                    case .cancelledSearch:
+                        self.showsListView.clearFilters()
+                }
             }
     }
 
-    private lazy var searchController: UISearchController = {
-        let searchController = UISearchController()
-        searchController.searchBar.delegate = self
-
-        return searchController
-    }()
-
+    private let searchController: UISearchController & TVShowsSearchControllerProtocol
     private var showsListView: UIView & TVShowsListViewProtocol
 
     private var searchBarSubscriber: AnyCancellable?
-    private let searchBarSubject: PassthroughSubject<String, Never> = .init()
-}
-
-// MARK: - UISearchBarDelegate
-
-extension TVShowsViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        !searchText.isEmpty ? searchBarSubject.send(searchText) : cancelSearch()
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        cancelSearch()
-    }
-
-    private func cancelSearch() {
-        searchBarSubscriber?.cancel()
-        showsListView.clearFilters()
-        attachSearchBarDebouncer()
-    }
 }
 
 // MARK: - TVShowsListViewDelegate
