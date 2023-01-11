@@ -20,9 +20,10 @@ final class TVShowsListCollectionViewCellViewModel: TVShowsListCollectionViewCel
     // MARK: Internal
 
     func fetchImage() async {
-        guard let imageUrl = show.image,
-              let url = URL(string: imageUrl) else {
-            return print("Failed to generate URL for \(show.image ?? "null image url")")
+        // No image to be fetched
+        guard let imageUrl = show.image else { return }
+        guard let url = URL(string: imageUrl) else {
+            return print("Failed to generate URL for \(imageUrl)")
         }
 
         switch await imageLoader.fetchImageData(for: url) {

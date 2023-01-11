@@ -7,7 +7,7 @@ enum TVMazeQueryItems {
     func urlQueryItem() -> URLQueryItem {
         switch self {
             case .page(let value):
-                let name = String(describing: self).replacingOccurrences(of: "[^A-za-z]+", with: "", options: [.regularExpression])
+                let name = String(describing: self).alphabeticalOnly()
                 return .init(name: name, value: String(value))
         }
     }
