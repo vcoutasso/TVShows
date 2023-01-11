@@ -12,4 +12,8 @@ extension UICollectionView {
     func dequeueReusableCell<T: ReusableView>(_: T.Type, for indexPath: IndexPath) -> T? {
         dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T
     }
+
+    func dequeueReusableSupplementaryView<T>(_: T.Type, ofKind kind: String, for indexPath: IndexPath) -> T? where T: UICollectionReusableView & ReusableView {
+        dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T
+    }
 }

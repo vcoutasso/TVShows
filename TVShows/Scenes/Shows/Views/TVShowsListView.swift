@@ -8,6 +8,8 @@ final class TVShowsListView: UIView {
         self.viewModel = viewModel
         super.init(frame: .zero)
 
+        viewModel.delegate = self
+
         setUpView()
 
         Task {
@@ -80,7 +82,14 @@ final class TVShowsListView: UIView {
         collectionView.alpha = 0
 
         collectionView.register(TVShowsListCollectionViewCell.self)
+        collectionView.register(LoadingCollectionViewFooter.self, forSupplementaryKind: UICollectionView.elementKindSectionFooter)
 
         return collectionView
     }()
+}
+
+extension TVShowsListView: TVShowsListViewModelDelegate {
+    func didFetchNextPage(with indexPathsToAdd: [IndexPath]) {
+        collectionView.insertItems(at: indexPathsToAdd)
+    }
 }
