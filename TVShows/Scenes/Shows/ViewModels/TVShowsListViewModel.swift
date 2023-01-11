@@ -168,8 +168,8 @@ extension TVShowsListViewModel {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // Available width is calculated by subtracting horizontal insets and paddings
-        let width = (UIScreen.main.bounds.width - 30) / 2
+        let unavailableSpace = 2 * TVShowsListView.Constants.horizontalInset + TVShowsListView.Constants.padding
+        let width = (UIScreen.main.bounds.width - unavailableSpace) / 2
         return CGSize(width: width, height: width * 1.5)
     }
 

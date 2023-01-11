@@ -5,10 +5,11 @@ final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .secondarySystemBackground
+        contentView.backgroundColor = .tertiarySystemGroupedBackground
+        contentView.layer.masksToBounds = true
+        contentView.layer.cornerRadius = 8
         addSubviews()
         addConstraints()
-        setupLayer()
     }
 
     @available(*, unavailable)
@@ -35,11 +36,6 @@ final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
         nameLabel.text = nil
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        setupLayer()
-    }
-
     // MARK: Private
 
     private func addSubviews() {
@@ -60,13 +56,6 @@ final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
         ])
     }
 
-    private func setupLayer() {
-        contentView.layer.cornerRadius = 4
-        contentView.layer.shadowColor = UIColor.tertiarySystemBackground.cgColor
-        contentView.layer.shadowOffset = .init(width: -4, height: 4)
-        contentView.layer.shadowOpacity = 0.75
-    }
-
     private func uiImageFromData(_ data: Data?) -> UIImage? {
         guard let imageData = data else { return nil }
 
@@ -78,6 +67,7 @@ final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
+        imageView.layer.masksToBounds = true
 
         return imageView
     }()

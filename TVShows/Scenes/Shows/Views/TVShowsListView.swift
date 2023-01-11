@@ -42,6 +42,11 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
         collectionView.reloadData()
     }
 
+    enum Constants {
+        static let horizontalInset: CGFloat = 20
+        static let padding: CGFloat = 10
+    }
+
     // MARK: Private
 
     private func setUpView() {
@@ -87,7 +92,7 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
