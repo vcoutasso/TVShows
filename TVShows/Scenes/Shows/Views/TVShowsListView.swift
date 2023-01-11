@@ -72,10 +72,13 @@ final class TVShowsListView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .systemGreen
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = viewModel
+        collectionView.dataSource = viewModel
         collectionView.isHidden = true
         collectionView.alpha = 0
+
+        collectionView.register(TVShowsListCollectionViewCell.self)
 
         return collectionView
     }()

@@ -20,6 +20,6 @@ struct TVShow: Codable {
         self.schedule = try container.decode(TVShowSchedule.self, forKey: .schedule)
         self.summary = try container.decode(String.self, forKey: .summary)
         let image = try container.decode(TVMazeImage.self, forKey: .image)
-        self.image = image.original
+        self.image = image.medium
     }
 }
