@@ -4,17 +4,23 @@ import UIKit
 final class TVShowDetailsController: UIViewController {
     // MARK: Lifecycle
 
-    init(show: TVShow) {
-        self.show = show
+    init(detailsView: UIView & TVShowDetailsViewProtocol) {
+        self.detailsView = detailsView
         super.init(nibName: nil, bundle: nil)
-        setUpView()
-        navigationItem.largeTitleDisplayMode = .never
-        navigationController?.navigationBar.backgroundColor = .clear
+
+        self.detailsView.translatesAutoresizingMaskIntoConstraints = false
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Internal
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpView()
     }
     
 
@@ -22,6 +28,9 @@ final class TVShowDetailsController: UIViewController {
 
     private func setUpView() {
         view.addSubview(detailsView)
+
+        navigationItem.largeTitleDisplayMode = .never
+        navigationController?.navigationBar.backgroundColor = .clear
 
         view.backgroundColor = .systemBackground
 
@@ -33,12 +42,5 @@ final class TVShowDetailsController: UIViewController {
         ])
     }
 
-    private lazy var detailsView: TVShowDetailsView = {
-        let view = TVShowDetailsView(viewModel: TVShowDetailsViewModel(show: show))
-        view.translatesAutoresizingMaskIntoConstraints = false
-
-        return view
-    }()
-
-    private let show: TVShow
+    private let detailsView: UIView & TVShowDetailsViewProtocol
 }

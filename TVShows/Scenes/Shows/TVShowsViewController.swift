@@ -1,8 +1,24 @@
 import UIKit
 import Combine
 
+// MARK: - TVShowsViewController
+
 /// Main TV Shows controller
 final class TVShowsViewController: UIViewController {
+    // MARK: Lifecycle
+
+    init(showsListView: UIView & TVShowsListViewProtocol) {
+        self.showsListView = showsListView
+        super.init(nibName: nil, bundle: nil)
+
+        self.showsListView.translatesAutoresizingMaskIntoConstraints = false
+        self.showsListView.delegate = self
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: Internal
 
@@ -40,19 +56,14 @@ final class TVShowsViewController: UIViewController {
             }
     }
 
-    private lazy var showsListView: UIView & TVShowsListViewProtocol = {
-        let view = TVShowsListView(viewModel: TVShowsListViewModel(mazeAPIService: TVMazeService(jsonDecoder: JSONDecoder(), networkService: NetworkSession(urlSession: URLSession.shared))))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.delegate = self
-        return view
-    }()
-
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController()
         searchController.searchBar.delegate = self
 
         return searchController
     }()
+
+    private var showsListView: UIView & TVShowsListViewProtocol
 
     private var searchBarSubscriber: AnyCancellable?
     private let searchBarSubject: PassthroughSubject<String, Never> = .init()
@@ -76,8 +87,10 @@ extension TVShowsViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - TVShowsListViewDelegate
+
 extension TVShowsViewController: TVShowsListViewDelegate {
     func presentShowDetails(_ show: TVShow) {
-        navigationController?.pushViewController(TVShowDetailsController(show: show), animated: true)
+        navigationController?.pushViewController(TVShowDetailsControllerFactory.make(show: show), animated: true)
     }
 }

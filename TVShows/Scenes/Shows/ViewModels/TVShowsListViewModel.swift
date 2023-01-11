@@ -5,7 +5,7 @@ import UIKit
 
 @MainActor
 protocol TVShowsListViewModelProtocol: AnyObject {
-    init(mazeAPIService: TVMazeServiceProtocol)
+    init(apiService: TVMazeServiceProtocol)
 
     var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] { get }
     var delegate: TVShowsListViewModelDelegate? { get set }
@@ -29,8 +29,8 @@ protocol TVShowsListViewModelDelegate: AnyObject {
 
 final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
     // MARK: Lifecycle
-    init(mazeAPIService: TVMazeServiceProtocol) {
-        self.mazeAPIService = mazeAPIService
+    init(apiService: TVMazeServiceProtocol) {
+        self.apiService = apiService
         self.cellViewModels = []
         self.displayedCellViewModels = []
     }
@@ -47,7 +47,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
     func fetchInitialPage() async {
         let request = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: nil)
-        switch await mazeAPIService.execute(request, expecting: [TVShow].self) {
+        switch await apiService.execute(request, expecting: [TVShow].self) {
             case .success(let shows):
                 didLoadFirstPage = true
                 updateList(with: shows)
@@ -71,7 +71,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
         let request = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: [.page(nextPage)])
 
-        switch await mazeAPIService.execute(request, expecting: [TVShow].self) {
+        switch await apiService.execute(request, expecting: [TVShow].self) {
             case .success(let shows):
                 nextPage += 1
                 let startingIndex = cellViewModels.count
@@ -106,7 +106,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
         let request = TVMazeRequest(endpoint: .search, pathComponents: [.shows], queryItems: [.query(query)])
 
-        switch await mazeAPIService.execute(request, expecting: [TVMazeFuzzySearchResults.Shows].self) {
+        switch await apiService.execute(request, expecting: [TVMazeFuzzySearchResults.Shows].self) {
             case .success(let results):
                 let shows = results.map { $0.show }
                 updateList(with: shows)
@@ -128,7 +128,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
     // MARK: Private
 
-    private let mazeAPIService: TVMazeServiceProtocol
+    private let apiService: TVMazeServiceProtocol
 
     private var didLoadFirstPage: Bool = false
     private var isLoadingNextPage: Bool = false

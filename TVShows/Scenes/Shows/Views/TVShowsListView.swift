@@ -2,7 +2,7 @@ import UIKit
 
 @MainActor
 protocol TVShowsListViewProtocol {
-    var delegate: TVShowsListViewDelegate? { get }
+    var delegate: TVShowsListViewDelegate? { get set }
 
     /// Filters show with the `query` parameter
     func searchShows(with query: String)
