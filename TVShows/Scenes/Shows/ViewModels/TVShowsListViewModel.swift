@@ -78,6 +78,10 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
         isLoadingNextPage = false
     }
 
+    enum Constants {
+        static let delayBetweenRetries: UInt64 = 1_000_000_000
+    }
+
     // MARK: Private
 
     private let mazeAPIService: TVMazeServiceProtocol
@@ -85,10 +89,6 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
     private var isLoadingNextPage: Bool = false
     private var canLoadMorePages: Bool = true
     private var nextPage: Int = 1
-
-    private enum Constants {
-        static let delayBetweenRetries: UInt64 = 2_000_000_000
-    }
 }
 
 // MARK: - UICollectionViewDelegate + UICollectionViewDataSource + UICollectionViewDelegateFlowLayout
