@@ -22,6 +22,7 @@ final class TVShowsViewController: UIViewController {
         title = "TV Shows"
 
         view.addSubview(showsListView)
+        view.backgroundColor = .systemBackground
 
         NSLayoutConstraint.activate([
             showsListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
