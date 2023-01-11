@@ -43,22 +43,31 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
     func fetchInitialPage() async {
         let request = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: nil)
-        switch await self.mazeAPIService.execute(request, expecting: [TVShow].self) {
+        switch await mazeAPIService.execute(request, expecting: [TVShow].self) {
             case .success(let shows):
+                didLoadFirstPage = true
                 updateList(with: shows)
             case .failure(let error):
+                if case .exceededAPIRateLimit = error as? TVMazeService.TVMazeServiceError {
+                    // Try again after some delay
+                    Task {
+                        try await Task.sleep(nanoseconds: Constants.delayBetweenRetries)
+                        await fetchNextPage()
+                    }
+                }
+
                 print("Failed to fetch shows with error \(error)")
         }
     }
 
     func fetchNextPage() async {
-        guard canLoadMorePages, !isLoadingNextPage, !isSearching else { return }
+        guard didLoadFirstPage, canLoadMorePages, !isLoadingNextPage, !isSearching else { return }
 
         isLoadingNextPage = true
 
         let request = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: [.page(nextPage)])
 
-        switch await self.mazeAPIService.execute(request, expecting: [TVShow].self) {
+        switch await mazeAPIService.execute(request, expecting: [TVShow].self) {
             case .success(let shows):
                 nextPage += 1
                 let startingIndex = cellViewModels.count
@@ -93,7 +102,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
         let request = TVMazeRequest(endpoint: .search, pathComponents: [.shows], queryItems: [.query(query)])
 
-        switch await self.mazeAPIService.execute(request, expecting: [TVMazeFuzzySearchResults.Shows].self) {
+        switch await mazeAPIService.execute(request, expecting: [TVMazeFuzzySearchResults.Shows].self) {
             case .success(let results):
                 let shows = results.map { $0.show }
                 updateList(with: shows)
@@ -117,6 +126,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
     private let mazeAPIService: TVMazeServiceProtocol
 
+    private var didLoadFirstPage: Bool = false
     private var isLoadingNextPage: Bool = false
     private var canLoadMorePages: Bool = true
     private var isSearching: Bool = false

@@ -3,8 +3,6 @@ import UIKit
 @MainActor
 protocol TVShowDetailsViewProtocol {
     var delegate: TVShowsListViewDelegate? { get set }
-
-    
 }
 
 @MainActor
@@ -18,6 +16,7 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
     init(viewModel: TVShowDetailsViewModelProtocol) {
         self.viewModel = viewModel
         super.init(frame: .zero)
+        setUpView()
     }
 
     @available(*, unavailable)
@@ -31,5 +30,35 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
 
     // MARK: Private
 
+    private func setUpView() {
+        backgroundColor = .systemBackground
+
+        addSubviews(posterImageView)
+
+        Task {
+            await viewModel.fetchImage()
+
+            if let imageData = viewModel.imageData,
+               let image = UIImage(data: imageData) {
+                self.posterImageView.image = image
+            }
+        }
+
+        NSLayoutConstraint.activate([
+            posterImageView.topAnchor.constraint(equalTo: topAnchor),
+            posterImageView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
+            posterImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
+            posterImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2)
+        ])
+    }
+
     private let viewModel: TVShowDetailsViewModelProtocol
+
+    private lazy var posterImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+
+        return imageView
+    }()
 }

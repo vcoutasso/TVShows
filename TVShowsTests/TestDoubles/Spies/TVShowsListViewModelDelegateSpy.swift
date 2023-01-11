@@ -10,4 +10,7 @@ final class TVShowsListViewModelDelegateSpy: TVShowsListViewModelDelegate {
 
     func didFetchFilteredShows() {
     }
+
+    func didSelectCell(for show: TVShows.TVShow) {
+    }
 }

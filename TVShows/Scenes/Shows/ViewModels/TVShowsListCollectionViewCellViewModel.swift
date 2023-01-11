@@ -25,7 +25,7 @@ final class TVShowsListCollectionViewCellViewModel: TVShowsListCollectionViewCel
 
     func fetchImage() async {
         // No image to be fetched
-        guard let imageUrl = show.image else { return }
+        guard let imageUrl = show.image?.medium else { return }
         guard let url = URL(string: imageUrl) else {
             return print("Failed to generate URL for \(imageUrl)")
         }
