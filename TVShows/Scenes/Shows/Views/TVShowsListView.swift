@@ -2,10 +2,17 @@ import UIKit
 
 @MainActor
 protocol TVShowsListViewProtocol {
+    var delegate: TVShowsListViewDelegate? { get }
+
     /// Filters show with the `query` parameter
     func searchShows(with query: String)
     /// Clears previous queries and displays unfiltered cached data
     func clearFilters()
+}
+
+@MainActor
+protocol TVShowsListViewDelegate: AnyObject {
+    func presentShowDetails(_ show: TVShow)
 }
 
 /// Displays collection of shows
@@ -30,6 +37,10 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: Internal
+
+    weak var delegate: TVShowsListViewDelegate?
 
     func searchShows(with query: String) {
         Task {
@@ -113,7 +124,11 @@ extension TVShowsListView: TVShowsListViewModelDelegate {
         collectionView.insertItems(at: indexPathsToAdd)
     }
 
-    func didSearchShows() {
+    func didFetchFilteredShows() {
         collectionView.reloadData()
+    }
+
+    func didSelectCell(for show: TVShow) {
+        delegate?.presentShowDetails(show)
     }
 }

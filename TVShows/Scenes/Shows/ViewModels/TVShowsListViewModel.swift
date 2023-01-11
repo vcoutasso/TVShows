@@ -17,7 +17,8 @@ protocol TVShowsListViewModelProtocol: UICollectionViewDelegate, UICollectionVie
 @MainActor
 protocol TVShowsListViewModelDelegate: AnyObject {
     func didFetchNextPage(with indexPathsToAdd: [IndexPath])
-    func didSearchShows()
+    func didFetchFilteredShows()
+    func didSelectCell(for show: TVShow)
 }
 
 final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
@@ -97,7 +98,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
                 let shows = results.map { $0.show }
                 updateList(with: shows)
                 displayedCellViewModels = shows.map { TVShowsListCollectionViewCellViewModel(show: $0) }
-                delegate?.didSearchShows()
+                delegate?.didFetchFilteredShows()
             case .failure(let error):
                 print("Failed to search shows with error \(error)")
         }
@@ -171,6 +172,11 @@ extension TVShowsListViewModel {
         let unavailableSpace = 2 * TVShowsListView.Constants.horizontalInset + TVShowsListView.Constants.padding
         let width = (UIScreen.main.bounds.width - unavailableSpace) / 2
         return CGSize(width: width, height: width * 1.5)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        delegate?.didSelectCell(for: displayedCellViewModels[indexPath.row].show)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

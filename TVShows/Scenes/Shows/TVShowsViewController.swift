@@ -1,7 +1,7 @@
 import UIKit
 import Combine
 
-/// Controller to display and list TV Shows
+/// Main TV Shows controller
 final class TVShowsViewController: UIViewController {
 
     // MARK: Internal
@@ -17,6 +17,7 @@ final class TVShowsViewController: UIViewController {
     private lazy var showsListView: UIView & TVShowsListViewProtocol = {
         let view = TVShowsListView(viewModel: TVShowsListViewModel())
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
         return view
     }()
 
@@ -37,7 +38,7 @@ final class TVShowsViewController: UIViewController {
     }
 
     private func attachSearchBarDebouncer() {
-        searchBarEventListener = searchBarSubject
+        searchBarSubscriber = searchBarSubject
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
             .sink { [weak self] query in
                 self?.showsListView.searchShows(with: query)
@@ -51,7 +52,7 @@ final class TVShowsViewController: UIViewController {
         return searchController
     }()
 
-    private var searchBarEventListener: AnyCancellable?
+    private var searchBarSubscriber: AnyCancellable?
     private let searchBarSubject: PassthroughSubject<String, Never> = .init()
 }
 
@@ -67,8 +68,14 @@ extension TVShowsViewController: UISearchBarDelegate {
     }
 
     private func cancelSearch() {
-        searchBarEventListener?.cancel()
+        searchBarSubscriber?.cancel()
         showsListView.clearFilters()
         attachSearchBarDebouncer()
+    }
+}
+
+extension TVShowsViewController: TVShowsListViewDelegate {
+    func presentShowDetails(_ show: TVShow) {
+        navigationController?.pushViewController(TVShowDetailsController(show: show), animated: true)
     }
 }

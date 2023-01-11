@@ -8,6 +8,6 @@ final class TVShowsListViewModelDelegateSpy: TVShowsListViewModelDelegate {
         receivedDidFetchNextPageWithIndexPathsToAdd = indexPathsToAdd
     }
 
-    func didSearchShows() {
+    func didFetchFilteredShows() {
     }
 }
