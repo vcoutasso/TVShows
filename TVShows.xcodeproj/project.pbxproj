@@ -32,8 +32,11 @@
 		4C6253BF296E387A006AC733 /* TVShowsListViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253BE296E387A006AC733 /* TVShowsListViewTests.swift */; };
 		4C6253C1296E3899006AC733 /* TVShowsListViewModelSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253C0296E3899006AC733 /* TVShowsListViewModelSpy.swift */; };
 		4C6253C3296E3BCA006AC733 /* TVShowsListCollectionViewCellViewModelSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253C2296E3BCA006AC733 /* TVShowsListCollectionViewCellViewModelSpy.swift */; };
-		4C6253C5296E3D24006AC733 /* ImageLoadingStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253C4296E3D24006AC733 /* ImageLoadingStub.swift */; };
+		4C6253C5296E3D24006AC733 /* ImageLoaderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253C4296E3D24006AC733 /* ImageLoaderStub.swift */; };
 		4C6253C7296E3E13006AC733 /* TVShowsListCollectionViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253C6296E3E13006AC733 /* TVShowsListCollectionViewCellTests.swift */; };
+		4C6253CA296E40F8006AC733 /* TVShowsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253C9296E40F8006AC733 /* TVShowsListViewModelTests.swift */; };
+		4C6253CC296E4125006AC733 /* TVMazeAPIServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253CB296E4125006AC733 /* TVMazeAPIServiceSpy.swift */; };
+		4C6253CE296E42AF006AC733 /* TVShowsListCollectionViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6253CD296E42AF006AC733 /* TVShowsListCollectionViewCellViewModelTests.swift */; };
 		4CB6CFAB296D9EE900E2A229 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */; };
 		4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */; };
 		4CB6CFAF296D9EE900E2A229 /* TVShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAE296D9EE900E2A229 /* TVShowsViewController.swift */; };
@@ -92,8 +95,11 @@
 		4C6253BE296E387A006AC733 /* TVShowsListViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsListViewTests.swift; sourceTree = "<group>"; };
 		4C6253C0296E3899006AC733 /* TVShowsListViewModelSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsListViewModelSpy.swift; sourceTree = "<group>"; };
 		4C6253C2296E3BCA006AC733 /* TVShowsListCollectionViewCellViewModelSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsListCollectionViewCellViewModelSpy.swift; sourceTree = "<group>"; };
-		4C6253C4296E3D24006AC733 /* ImageLoadingStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadingStub.swift; sourceTree = "<group>"; };
+		4C6253C4296E3D24006AC733 /* ImageLoaderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoaderStub.swift; sourceTree = "<group>"; };
 		4C6253C6296E3E13006AC733 /* TVShowsListCollectionViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsListCollectionViewCellTests.swift; sourceTree = "<group>"; };
+		4C6253C9296E40F8006AC733 /* TVShowsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsListViewModelTests.swift; sourceTree = "<group>"; };
+		4C6253CB296E4125006AC733 /* TVMazeAPIServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeAPIServiceSpy.swift; sourceTree = "<group>"; };
+		4C6253CD296E42AF006AC733 /* TVShowsListCollectionViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsListCollectionViewCellViewModelTests.swift; sourceTree = "<group>"; };
 		4CB6CFA7296D9EE900E2A229 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +169,7 @@
 				4C62538B296DF192006AC733 /* NetworkSessionSpy.swift */,
 				4C6253C0296E3899006AC733 /* TVShowsListViewModelSpy.swift */,
 				4C6253C2296E3BCA006AC733 /* TVShowsListCollectionViewCellViewModelSpy.swift */,
+				4C6253CB296E4125006AC733 /* TVMazeAPIServiceSpy.swift */,
 			);
 			path = Spies;
 			sourceTree = "<group>";
@@ -172,7 +179,7 @@
 			children = (
 				4C62538E296DF450006AC733 /* NetworkURLSessionStub.swift */,
 				4C6253A0296E0EEF006AC733 /* JSONDecoderStub.swift */,
-				4C6253C4296E3D24006AC733 /* ImageLoadingStub.swift */,
+				4C6253C4296E3D24006AC733 /* ImageLoaderStub.swift */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -266,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				4C6253BD296E385F006AC733 /* Views */,
+				4C6253C8296E40C6006AC733 /* ViewModels */,
 			);
 			path = Shows;
 			sourceTree = "<group>";
@@ -277,6 +285,15 @@
 				4C6253C6296E3E13006AC733 /* TVShowsListCollectionViewCellTests.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		4C6253C8296E40C6006AC733 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				4C6253C9296E40F8006AC733 /* TVShowsListViewModelTests.swift */,
+				4C6253CD296E42AF006AC733 /* TVShowsListCollectionViewCellViewModelTests.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		4CB6CF9E296D9EE900E2A229 = {
@@ -512,20 +529,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C6253C5296E3D24006AC733 /* ImageLoadingStub.swift in Sources */,
+				4C6253C5296E3D24006AC733 /* ImageLoaderStub.swift in Sources */,
 				4CB6CFF4296DAFF900E2A229 /* TVMazeRequestTests.swift in Sources */,
 				4C62538C296DF192006AC733 /* NetworkSessionSpy.swift in Sources */,
+				4C6253CC296E4125006AC733 /* TVMazeAPIServiceSpy.swift in Sources */,
 				4C6253C7296E3E13006AC733 /* TVShowsListCollectionViewCellTests.swift in Sources */,
 				4C6253C3296E3BCA006AC733 /* TVShowsListCollectionViewCellViewModelSpy.swift in Sources */,
 				4CB6CFFA296DB9FC00E2A229 /* TVMazeImageTests.swift in Sources */,
 				4C6253BF296E387A006AC733 /* TVShowsListViewTests.swift in Sources */,
 				4CB6CFE8296DAB6500E2A229 /* TVShowEpisodeTests.swift in Sources */,
 				4C62539B296E0885006AC733 /* TVMazeServiceTests.swift in Sources */,
+				4C6253CA296E40F8006AC733 /* TVShowsListViewModelTests.swift in Sources */,
 				4CB6CFE4296DA79300E2A229 /* TVShowTests.swift in Sources */,
 				4C6253A1296E0EEF006AC733 /* JSONDecoderStub.swift in Sources */,
 				4C625397296DFBD8006AC733 /* NetworkSessionTests.swift in Sources */,
 				4C6253A6296E1A71006AC733 /* CachedImageLoaderTests.swift in Sources */,
 				4C6253C1296E3899006AC733 /* TVShowsListViewModelSpy.swift in Sources */,
+				4C6253CE296E42AF006AC733 /* TVShowsListCollectionViewCellViewModelTests.swift in Sources */,
 				4C62538F296DF450006AC733 /* NetworkURLSessionStub.swift in Sources */,
 				4CB6CFF6296DB91100E2A229 /* TVShowScheduleTests.swift in Sources */,
 				4C625399296E0400006AC733 /* Fixtures.swift in Sources */,

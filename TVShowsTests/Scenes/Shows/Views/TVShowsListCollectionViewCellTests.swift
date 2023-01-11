@@ -4,7 +4,7 @@ import XCTest
 
 @MainActor
 final class TVShowsListCollectionViewCellTests: XCTestCase {
-    private let imageLoadingStub = ImageLoadingStub()
+    private let imageLoadingStub = ImageLoaderStub()
     private lazy var viewModelSpy = TVShowsListCollectionViewCellViewModelSpy(show: Fixtures.mockTVShow, imageLoader: imageLoadingStub)
     private lazy var sut = TVShowsListCollectionViewCell()
 
