@@ -1,5 +1,7 @@
 import Foundation
 
+@testable import TVShows
+
 enum Fixtures {
     static let mockURL: URL = URL(string: "http://localhost/")!
 
@@ -8,6 +10,8 @@ enum Fixtures {
     static let mockURLRequest: URLRequest = URLRequest(url: mockURL)
 
     static let mockURLResponse: URLResponse = URLResponse(url: mockURL, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+
+    static let mockTVShow: TVShow = .init(id: 0, name: "", genres: [], schedule: .init(time: "", days: []), summary: "", image: "")
 
     static func mockHTTPURLResponse(statusCode: Int = 200) -> HTTPURLResponse {
         HTTPURLResponse(url: mockURL, statusCode: statusCode, httpVersion: "HTTP/1.1", headerFields: nil)!

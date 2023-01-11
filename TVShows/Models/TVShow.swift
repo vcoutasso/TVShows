@@ -12,6 +12,15 @@ struct TVShow: Codable {
 
     // MARK: Lifecycle
 
+    init(id: Int, name: String, genres: [String], schedule: TVShowSchedule, summary: String, image: String) {
+        self.id = id
+        self.name = name
+        self.genres = genres
+        self.schedule = schedule
+        self.summary = summary
+        self.image = image
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)

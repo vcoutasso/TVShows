@@ -5,9 +5,12 @@ import UIKit
 @testable import TVShows
 
 final class TVShowsListViewModelSpy: NSObject, TVShowsListViewModelProtocol {
+    // MARK: Lifecycle
 
     override init() {}
     init(mazeAPIService: TVMazeServiceProtocol) {}
+
+    // MARK: Internal
 
     var expectation: XCTestExpectation?
 
