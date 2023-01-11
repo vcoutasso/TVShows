@@ -14,17 +14,12 @@ final class TVShowsViewController: UIViewController {
 
     // MARK: Private
 
-    private lazy var showsListView: UIView & TVShowsListViewProtocol = {
-        let view = TVShowsListView(viewModel: TVShowsListViewModel())
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.delegate = self
-        return view
-    }()
-
     private func setUpView() {
         title = "TV Shows"
 
         navigationItem.searchController = searchController
+        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.hidesSearchBarWhenScrolling = true
 
         view.addSubview(showsListView)
         view.backgroundColor = .systemBackground
@@ -44,6 +39,13 @@ final class TVShowsViewController: UIViewController {
                 self?.showsListView.searchShows(with: query)
             }
     }
+
+    private lazy var showsListView: UIView & TVShowsListViewProtocol = {
+        let view = TVShowsListView(viewModel: TVShowsListViewModel())
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
+        return view
+    }()
 
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController()

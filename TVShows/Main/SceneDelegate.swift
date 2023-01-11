@@ -14,8 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         let vc = TVShowsViewController()
-        vc.navigationItem.largeTitleDisplayMode = .automatic
-        vc.navigationItem.hidesSearchBarWhenScrolling = true
         let navController = UINavigationController(rootViewController: vc)
         navController.navigationBar.prefersLargeTitles = true
 
