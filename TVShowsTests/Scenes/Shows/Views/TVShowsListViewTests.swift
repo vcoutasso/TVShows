@@ -8,7 +8,7 @@ final class TVShowsListViewTests: XCTestCase {
     private let viewModelSpy = TVShowsListViewModelSpy()
     private lazy var sut = TVShowsListView(viewModel: viewModelSpy)
 
-    func testTVShowsListViewShouldFetchInitialPageOnInit() {
+    func testShouldFetchInitialPageOnInit() {
         // Given
         viewModelSpy.expectation = expectation(description: "Should fetch initial page")
         XCTAssertFalse(viewModelSpy.didFetchInitialPage)

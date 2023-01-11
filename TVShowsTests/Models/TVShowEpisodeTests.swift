@@ -5,7 +5,7 @@ import XCTest
 final class TVShowEpisodeTests: XCTestCase {
     private let testBundle = Bundle(for: TVShowEpisodeTests.self)
 
-    func testTVShowEpisodeShouldDecodeFromJSON() throws {
+    func testShouldDecodeFromJSON() throws {
         // Given
         let jsonUrl = try XCTUnwrap(testBundle.url(forResource: "UnderTheDome-EP1", withExtension: ".json"))
         let jsonData = try XCTUnwrap(Data(contentsOf: jsonUrl))

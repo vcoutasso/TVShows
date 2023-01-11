@@ -10,7 +10,7 @@ final class TVMazeServiceTests: XCTestCase {
     private lazy var networkSessionSpy = NetworkSessionSpy(urlSession: urlSessionStub)
     private lazy var sut = TVMazeService(jsonDecoder: jsonDecoderStub, networkService: networkSessionSpy)
 
-    func testTVMazeServiceShouldFailWithURLSessionError() async {
+    func testExecuteShouldFailWithURLSessionError() async {
         // Given
         let expectedError = Fixtures.EquatableError.error
         let dummyRequest = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: nil)
@@ -29,7 +29,7 @@ final class TVMazeServiceTests: XCTestCase {
         XCTAssertEqual(actualError, expectedError)
     }
 
-    func testTVMazeServiceShouldSucceedWithDecodedURLSessionData() async throws {
+    func testExecuteShouldSucceedWithDecodedURLSessionData() async throws {
         // Given
         let dummyRequest = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: nil)
         let expectedData = 42
@@ -45,7 +45,7 @@ final class TVMazeServiceTests: XCTestCase {
         XCTAssertEqual(resultData, expectedData)
     }
 
-    func testTVMazeServiceShouldHandleAPIRateLimitErrors() async {
+    func testExecuteShouldHandleAPIRateLimitErrors() async {
         // Given
         let dummyRequest = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: nil)
         let expectedError = TVMazeService.TVMazeServiceError.exceededAPIRateLimit

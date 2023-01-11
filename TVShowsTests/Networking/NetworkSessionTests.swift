@@ -8,7 +8,7 @@ final class NetworkSessionTests: XCTestCase {
 
     private let testBundle = Bundle(for: NetworkSessionTests.self)
 
-    func testNetworkSessionShouldYieldResultsFromURLSession() async throws {
+    func testExecuteShouldYieldResultsFromURLSession() async throws {
         // Given
         let resourceURL = try XCTUnwrap(testBundle.url(forResource: "UnderTheDome", withExtension: "json"))
         urlSessionStub.resultData = try Data(contentsOf: resourceURL)
@@ -22,7 +22,7 @@ final class NetworkSessionTests: XCTestCase {
         XCTAssertEqual(response, urlSessionStub.resultResponse)
     }
 
-    func testNetworkSessionShouldThrowErrorsFromURLSession() async {
+    func testExecuteShouldThrowErrorsFromURLSession() async {
         // Given
         let expectedError = urlSessionStub.resultError as NSError
 

@@ -5,7 +5,7 @@ import XCTest
 final class TVMazeRequestTests: XCTestCase {
     private let testBundle = Bundle(for: TVMazeRequestTests.self)
 
-    func testTVMazeRequestYieldsValidURLRequest() {
+    func testURLRequestShouldReturnValidRequest() {
         // Given
         let endpoint = TVMazeEndpoint.shows
         let request = TVMazeRequest(endpoint: endpoint, pathComponents: nil, queryItems: nil)
@@ -17,7 +17,7 @@ final class TVMazeRequestTests: XCTestCase {
         XCTAssertNotNil(urlRequest)
     }
 
-    func testTVMazeRequestShouldProduceValidShowsURL() {
+    func testURLShouldYieldValidShowsURL() {
         // Given
         let endpoint = TVMazeEndpoint.shows
         let request = TVMazeRequest(endpoint: endpoint, pathComponents: nil, queryItems: nil)
@@ -29,7 +29,7 @@ final class TVMazeRequestTests: XCTestCase {
         XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows")
     }
 
-    func testTVMazeRequestShouldProduceValidPagingURL() {
+    func testURLShouldYieldValidPagingURL() {
         // Given
         let endpoint = TVMazeEndpoint.shows
         let pageNumber = 1
@@ -48,7 +48,7 @@ final class TVMazeRequestTests: XCTestCase {
         XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows?page=\(pageNumber)")
     }
 
-    func testTVMazeRequestShouldProduceValidFirstShowURL() {
+    func testURLShouldYieldValidFirstShowURL() {
         // Given
         let endpoint = TVMazeEndpoint.shows
         let firstShowID = 1
@@ -65,7 +65,7 @@ final class TVMazeRequestTests: XCTestCase {
         XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows/\(firstShowID)")
     }
 
-    func testTVMazeRequestShouldProduceValidFirstShowEpisodesURL() {
+    func testURLShouldYieldValidFirstShowEpisodesURL() {
         // Given
         let endpoint = TVMazeEndpoint.shows
         let firstShowID = 1
@@ -85,7 +85,7 @@ final class TVMazeRequestTests: XCTestCase {
         XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/shows/1/episodes")
     }
 
-    func testTVMazeRequestShouldProduceValidEpisodesURL() {
+    func testURLShouldYieldValidEpisodesURL() {
         // Given
         let endpoint = TVMazeEndpoint.episodes
         let request = TVMazeRequest(endpoint: endpoint, pathComponents: nil, queryItems: nil)
@@ -97,7 +97,7 @@ final class TVMazeRequestTests: XCTestCase {
         XCTAssertEqual(url?.absoluteString, "https://api.tvmaze.com/episodes")
     }
 
-    func testTVMazeRequestShouldProduceValidPeopleURL() {
+    func testURLShouldYieldValidPeopleURL() {
         // Given
         let endpoint = TVMazeEndpoint.people
         let request = TVMazeRequest(endpoint: endpoint, pathComponents: nil, queryItems: nil)

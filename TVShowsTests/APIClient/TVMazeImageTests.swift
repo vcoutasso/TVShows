@@ -5,7 +5,7 @@ import XCTest
 final class TVMazeImageTests: XCTestCase {
     private let testBundle = Bundle(for: TVMazeImageTests.self)
 
-    func testTVMazeImageShouldDecodeFromJSON() throws {
+    func testShouldDecodeFromJSON() throws {
         let jsonUrl = try XCTUnwrap(testBundle.url(forResource: "UnderTheDomeImage", withExtension: "json"))
         let jsonData = try XCTUnwrap(Data(contentsOf: jsonUrl))
 

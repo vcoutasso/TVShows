@@ -7,7 +7,7 @@ final class CachedImageLoaderTests: XCTestCase {
     private lazy var networkServiceSpy = NetworkSessionSpy(urlSession: urlSessionStub)
     private lazy var sut = CachedImageLoader(networkService: networkServiceSpy)
 
-    func testCachedImageLoaderShouldRetrieveDataFromNetworkService() async throws {
+    func testFetchImageDataShouldRetrieveDataFromNetworkService() async throws {
         // Given
         var meaningOfLife = 42
         let dummyData = Data(bytes: &meaningOfLife, count: MemoryLayout.size(ofValue: meaningOfLife))
@@ -23,7 +23,7 @@ final class CachedImageLoaderTests: XCTestCase {
         XCTAssertEqual(data, dummyData)
     }
 
-    func testCachedImageLoaderShouldRetrieveDataFromCache() async throws {
+    func testFetchImageDataShouldRetrieveDataFromCache() async throws {
         // Given
         var meaningOfLife = 42
         let dummyData = Data(bytes: &meaningOfLife, count: MemoryLayout.size(ofValue: meaningOfLife))
@@ -45,7 +45,7 @@ final class CachedImageLoaderTests: XCTestCase {
         XCTAssertEqual(data, dummyData)
     }
 
-    func testCachedImageLoaderShouldFailWithURLSessionError() async {
+    func testFetchImageDataShouldFailWithURLSessionError() async {
         // Given
         let expectedError = Fixtures.EquatableError.error
         urlSessionStub.resultError = expectedError

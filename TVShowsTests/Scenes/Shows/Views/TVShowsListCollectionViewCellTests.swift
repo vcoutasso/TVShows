@@ -8,7 +8,7 @@ final class TVShowsListCollectionViewCellTests: XCTestCase {
     private lazy var viewModelSpy = TVShowsListCollectionViewCellViewModelSpy(show: Fixtures.mockTVShow, imageLoader: imageLoadingStub)
     private lazy var sut = TVShowsListCollectionViewCell()
 
-    func testTVShowsListCollectionViewCellShouldFetchDataWhenViewModelDataIsNil() {
+    func testShouldFetchDataWhenViewModelDataIsNil() {
         // Given
         XCTAssertNil(viewModelSpy.imageData)
         viewModelSpy.expectation = expectation(description: "Should fetch image data")
@@ -21,7 +21,7 @@ final class TVShowsListCollectionViewCellTests: XCTestCase {
         XCTAssertTrue(viewModelSpy.didFetchImage)
     }
 
-    func testTVShowsListCollectionViewCellShouldNotFetchDataWhenViewModelDataIsPresent() {
+    func testShouldNotFetchDataWhenViewModelDataIsPresent() {
         // Given
         viewModelSpy.imageData = Data()
 

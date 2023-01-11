@@ -64,7 +64,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
                     if error == .exceededAPIRateLimit {
                         // Try again after two seconds
                         Task {
-                            try await Task.sleep(nanoseconds: 2_000_000_000)
+                            try await Task.sleep(nanoseconds: Constants.delayBetweenRetries)
                             await fetchNextPage()
                         }
                     } else if error == .noMoreData {
@@ -85,6 +85,10 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
     private var isLoadingNextPage: Bool = false
     private var canLoadMorePages: Bool = true
     private var nextPage: Int = 1
+
+    private enum Constants {
+        static let delayBetweenRetries: UInt64 = 2_000_000_000
+    }
 }
 
 // MARK: - UICollectionViewDelegate + UICollectionViewDataSource + UICollectionViewDelegateFlowLayout
@@ -96,7 +100,7 @@ extension TVShowsListViewModel {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(TVShowsListCollectionViewCell.self, for: indexPath) else {
-            fatalError("Unsupported cell")
+            preconditionFailure("Unsupported cell")
         }
 
         cell.configure(with: cellViewModels[indexPath.row])
@@ -110,7 +114,7 @@ extension TVShowsListViewModel {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionFooter,
               let footer = collectionView.dequeueReusableSupplementaryView(LoadingCollectionViewFooter.self, ofKind: kind, for: indexPath) else {
-            fatalError("Unsupported supplementary view kind")
+            preconditionFailure("Unsupported supplementary view kind")
         }
         footer.startAnimating()
         return footer
