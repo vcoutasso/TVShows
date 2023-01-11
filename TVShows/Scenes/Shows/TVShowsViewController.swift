@@ -41,7 +41,7 @@ final class TVShowsViewController: UIViewController {
     }
 
     private lazy var showsListView: UIView & TVShowsListViewProtocol = {
-        let view = TVShowsListView(viewModel: TVShowsListViewModel())
+        let view = TVShowsListView(viewModel: TVShowsListViewModel(mazeAPIService: TVMazeService(jsonDecoder: JSONDecoder(), networkService: NetworkSession(urlSession: URLSession.shared))))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = self
         return view

@@ -19,10 +19,13 @@ protocol TVShowsListViewDelegate: AnyObject {
 final class TVShowsListView: UIView, TVShowsListViewProtocol {
     // MARK: Lifecycle
 
-    init(viewModel: TVShowsListViewModelProtocol) {
+    let collectionAdapter: TVShowListViewCollectionViewAdapterProtocol = TVShowListViewCollectionViewAdapter()
+
+    init(viewModel: TVShowsListViewModelProtocol & TVShowListViewCollectionViewAdapterDelegate) {
         self.viewModel = viewModel
         super.init(frame: .zero)
 
+        collectionAdapter.delegate = viewModel
         viewModel.delegate = self
 
         setUpView()
@@ -107,8 +110,8 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.delegate = viewModel
-        collectionView.dataSource = viewModel
+        collectionView.delegate = collectionAdapter
+        collectionView.dataSource = collectionAdapter
         collectionView.isHidden = true
         collectionView.alpha = 0
 

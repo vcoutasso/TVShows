@@ -47,6 +47,7 @@
 		4C6C2599296F421B0004FB3F /* TVShowDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C2598296F421B0004FB3F /* TVShowDetailsController.swift */; };
 		4C6C259B296F46BA0004FB3F /* TVShowDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C259A296F46BA0004FB3F /* TVShowDetailsView.swift */; };
 		4C6C259D296F46D10004FB3F /* TVShowDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C259C296F46D10004FB3F /* TVShowDetailsViewModel.swift */; };
+		4C6C25A0296F5E200004FB3F /* TVShowListViewCollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C259F296F5E200004FB3F /* TVShowListViewCollectionViewAdapter.swift */; };
 		4CB6CFAB296D9EE900E2A229 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */; };
 		4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */; };
 		4CB6CFAF296D9EE900E2A229 /* TVShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAE296D9EE900E2A229 /* TVShowsViewController.swift */; };
@@ -120,6 +121,7 @@
 		4C6C2598296F421B0004FB3F /* TVShowDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsController.swift; sourceTree = "<group>"; };
 		4C6C259A296F46BA0004FB3F /* TVShowDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsView.swift; sourceTree = "<group>"; };
 		4C6C259C296F46D10004FB3F /* TVShowDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsViewModel.swift; sourceTree = "<group>"; };
+		4C6C259F296F5E200004FB3F /* TVShowListViewCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowListViewCollectionViewAdapter.swift; sourceTree = "<group>"; };
 		4CB6CFA7296D9EE900E2A229 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 		4C6253A8296E1DC1006AC733 /* Shows */ = {
 			isa = PBXGroup;
 			children = (
+				4C6C259E296F5DFE0004FB3F /* Adapters */,
 				4C6C2597296F420C0004FB3F /* Controllers */,
 				4C6253AD296E2024006AC733 /* Views */,
 				4C6253AE296E2028006AC733 /* ViewModels */,
@@ -351,6 +354,14 @@
 				4C6C2598296F421B0004FB3F /* TVShowDetailsController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4C6C259E296F5DFE0004FB3F /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				4C6C259F296F5E200004FB3F /* TVShowListViewCollectionViewAdapter.swift */,
+			);
+			path = Adapters;
 			sourceTree = "<group>";
 		};
 		4CB6CF9E296D9EE900E2A229 = {
@@ -578,6 +589,7 @@
 				4CB6CFDC296DA16B00E2A229 /* TVShow.swift in Sources */,
 				4C6C2596296F32A30004FB3F /* TVMazeFuzzySearchResults.swift in Sources */,
 				4C625383296DBECB006AC733 /* TVMazeService.swift in Sources */,
+				4C6C25A0296F5E200004FB3F /* TVShowListViewCollectionViewAdapter.swift in Sources */,
 				4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */,
 				4C6253B4296E2A8B006AC733 /* ReusableView.swift in Sources */,
 				4C625394296DF775006AC733 /* URLSession+.swift in Sources */,

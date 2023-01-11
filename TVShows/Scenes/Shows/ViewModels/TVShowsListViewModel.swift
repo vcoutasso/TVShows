@@ -1,8 +1,10 @@
 import Foundation
 import UIKit
 
+// MARK: - TVShowsListViewModelProtocol
+
 @MainActor
-protocol TVShowsListViewModelProtocol: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol TVShowsListViewModelProtocol: AnyObject {
     init(mazeAPIService: TVMazeServiceProtocol)
 
     var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] { get }
@@ -14,6 +16,8 @@ protocol TVShowsListViewModelProtocol: UICollectionViewDelegate, UICollectionVie
     func cancelSearch()
 }
 
+// MARK: - TVShowsListViewModelDelegate
+
 @MainActor
 protocol TVShowsListViewModelDelegate: AnyObject {
     func didFetchNextPage(with indexPathsToAdd: [IndexPath])
@@ -21,10 +25,11 @@ protocol TVShowsListViewModelDelegate: AnyObject {
     func didSelectCell(for show: TVShow)
 }
 
+// MARK: - TVShowsListViewModel
+
 final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
     // MARK: Lifecycle
-
-    init(mazeAPIService: TVMazeServiceProtocol = TVMazeService(jsonDecoder: JSONDecoder(), networkService: NetworkSession.default)) {
+    init(mazeAPIService: TVMazeServiceProtocol) {
         self.mazeAPIService = mazeAPIService
         self.cellViewModels = []
         self.displayedCellViewModels = []
@@ -37,7 +42,6 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
     // View models for cells that are in display
     private(set) var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol]
-
 
     weak var delegate: TVShowsListViewModelDelegate?
 
@@ -147,53 +151,20 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
     }
 }
 
-// MARK: - UICollectionViewDelegate + UICollectionViewDataSource + UICollectionViewDelegateFlowLayout
+// MARK: -
 
-extension TVShowsListViewModel {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        displayedCellViewModels.count
+extension TVShowsListViewModel: TVShowListViewCollectionViewAdapterDelegate {
+    var shouldDisplayLoadingFooter: Bool {
+        isLoadingNextPage
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(TVShowsListCollectionViewCell.self, for: indexPath)
-        else {
-            preconditionFailure("Unsupported cell/viewModel")
-        }
-
-        let viewModel = displayedCellViewModels[indexPath.row] as TVShowsListCollectionViewCellViewModelProtocol
-        cell.configure(with: viewModel)
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        isLoadingNextPage ? CGSize(width: collectionView.frame.width, height: LoadingCollectionViewFooter.LayoutMetrics.spinnerHeight) : .zero
-    }
-
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard kind == UICollectionView.elementKindSectionFooter,
-              let footer = collectionView.dequeueReusableSupplementaryView(LoadingCollectionViewFooter.self, ofKind: kind, for: indexPath) else {
-            preconditionFailure("Unsupported supplementary view kind")
-        }
-        footer.startAnimating()
-        return footer
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let unavailableSpace = 2 * TVShowsListView.Constants.horizontalInset + TVShowsListView.Constants.padding
-        let width = (UIScreen.main.bounds.width - unavailableSpace) / 2
-        return CGSize(width: width, height: width * 1.5)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+    func didSelectCell(at indexPath: IndexPath) {
         delegate?.didSelectCell(for: displayedCellViewModels[indexPath.row].show)
     }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= (scrollView.contentSize.height - (scrollView.visibleSize.height * 1.1)) {
-            Task {
-                await fetchNextPage()
-            }
+    func didScrollPastCurrentContent() {
+        Task {
+            await fetchNextPage()
         }
     }
 }
