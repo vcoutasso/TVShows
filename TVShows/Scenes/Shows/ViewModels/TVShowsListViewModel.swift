@@ -89,8 +89,18 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
         guard !isLoadingNextPage else { return }
 
         isSearching = true
-        displayedCellViewModels = cellViewModels.array.compactMap { $0 as? TVShowsListCollectionViewCellViewModelProtocol }.filter { $0.show.name.contains(query) }
-        delegate?.didSearchShows()
+
+        let request = TVMazeRequest(endpoint: .search, pathComponents: [.shows], queryItems: [.query(query)])
+
+        switch await self.mazeAPIService.execute(request, expecting: [TVMazeFuzzySearchResults.Shows].self) {
+            case .success(let results):
+                let shows = results.map { $0.show }
+                updateList(with: shows)
+                displayedCellViewModels = shows.map { TVShowsListCollectionViewCellViewModel(show: $0) }
+                delegate?.didSearchShows()
+            case .failure(let error):
+                print("Failed to search shows with error \(error)")
+        }
     }
 
     func cancelSearch() {

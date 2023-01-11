@@ -7,4 +7,7 @@ final class TVShowsListViewModelDelegateSpy: TVShowsListViewModelDelegate {
     func didFetchNextPage(with indexPathsToAdd: [IndexPath]) {
         receivedDidFetchNextPageWithIndexPathsToAdd = indexPathsToAdd
     }
+
+    func didSearchShows() {
+    }
 }

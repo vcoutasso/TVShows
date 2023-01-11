@@ -4,6 +4,7 @@ import Foundation
 enum TVMazePathComponents: CustomStringConvertible {
     case id(Int)
     case episodes
+    case shows
 
     var description: String {
         switch self {
@@ -11,6 +12,8 @@ enum TVMazePathComponents: CustomStringConvertible {
                 return "\(id)"
             case .episodes:
                 return "episodes"
+            case .shows:
+                return "shows"
         }
     }
 }
