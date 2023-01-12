@@ -19,6 +19,7 @@ final class StretchyImageHeaderView: UICollectionReusableView, ReusableView {
 
     func configure(with image: UIImage) {
         imageView.image = image
+        visualEffectAnimator.fractionComplete = 0
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -52,8 +53,6 @@ final class StretchyImageHeaderView: UICollectionReusableView, ReusableView {
             imageViewBottomConstraint,
             imageViewHeightConstraint,
         ])
-
-        visualEffectAnimator.fractionComplete = 0
     }
 
     private var containerViewHeightConstraint = NSLayoutConstraint()
@@ -80,6 +79,7 @@ final class StretchyImageHeaderView: UICollectionReusableView, ReusableView {
             self.visualEffectView.effect = nil
         }
         animator.isReversed = true
+        animator.pausesOnCompletion = true
         return animator
     }()
 
