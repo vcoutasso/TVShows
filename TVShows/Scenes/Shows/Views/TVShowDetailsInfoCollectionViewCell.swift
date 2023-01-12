@@ -20,7 +20,7 @@ final class TVShowDetailsInfoCollectionViewCell: UICollectionViewCell, ReusableV
 
     func configure(with show: TVShow) {
         nameLabel.text = show.name
-        premieredLabel.text = show.premiered?.localizedDateString()
+        premieredLabel.text = show.premiered?.localizedDateString() ?? "Premiered date unavailable."
         scoreIndicator.updatePercentage(with: Int(show.rating?.average ?? 0) * 10)
         statusLabel.text = show.status
         genresLabel.text = show.genres.joined(separator: " | ")
@@ -28,12 +28,14 @@ final class TVShowDetailsInfoCollectionViewCell: UICollectionViewCell, ReusableV
         for day in show.schedule.days {
             scheduleText.append("\(day) \(show.schedule.time)\n")
         }
+        scheduleStackView.isHidden = scheduleText.isEmpty
         scheduleLabel.text = scheduleText
         summaryLabel.text = show.summary?.strippingHTMLTags() ?? "No description available."
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        scheduleStackView.isHidden = false
         nameLabel.text = nil
         premieredLabel.text = nil
         scoreIndicator.updatePercentage(with: 0)
