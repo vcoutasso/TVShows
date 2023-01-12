@@ -85,11 +85,14 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
                 section.boundarySupplementaryItems = [header]
                 return section
             case .season:
+                let isPortrait = frame.height > frame.width
+                let groupFractionalHeight: CGFloat = isPortrait ? 1.0 / 16 : 1.0 / 8
+                let headerFractionalHeight: CGFloat = isPortrait ? 1.0 / 12 : 1.0 / 6
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0 / 16))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(groupFractionalHeight))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0 / 12))
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(headerFractionalHeight))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 header.extendsBoundary = false
                 header.contentInsets = .init(top: 20, leading: 0, bottom: 10, trailing: 0)
