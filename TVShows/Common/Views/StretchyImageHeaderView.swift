@@ -24,6 +24,7 @@ final class StretchyImageHeaderView: UICollectionReusableView, ReusableView {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         containerViewHeightConstraint.constant = scrollView.contentInset.top
         let verticalOffset = -(scrollView.contentOffset.y + scrollView.contentInset.top)
+        visualEffectAnimator.fractionComplete = verticalOffset <= 0 ? -verticalOffset / scrollView.visibleSize.height : 0
         containerView.clipsToBounds = verticalOffset <= 0
         imageViewBottomConstraint.constant = verticalOffset >= 0 ? 0 : -verticalOffset / 2
         imageViewHeightConstraint.constant = max(verticalOffset + scrollView.contentInset.top, scrollView.contentInset.top)
@@ -34,22 +35,25 @@ final class StretchyImageHeaderView: UICollectionReusableView, ReusableView {
     private func setUpView() {
         addSubview(containerView)
         containerView.addSubview(imageView)
-
-        NSLayoutConstraint.activate([
-            containerView.widthAnchor.constraint(equalTo: widthAnchor),
-            containerView.centerXAnchor.constraint(equalTo: centerXAnchor),
-        ])
+        containerView.addSubview(visualEffectView)
 
         containerViewHeightConstraint = containerView.heightAnchor.constraint(equalTo: heightAnchor)
         imageViewBottomConstraint = imageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         imageViewHeightConstraint = imageView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
 
         NSLayoutConstraint.activate([
+            containerView.widthAnchor.constraint(equalTo: widthAnchor),
+            containerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            imageView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
+            visualEffectView.heightAnchor.constraint(equalTo: imageView.heightAnchor),
+            visualEffectView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+            visualEffectView.widthAnchor.constraint(equalTo: imageView.widthAnchor),
             containerViewHeightConstraint,
             imageViewBottomConstraint,
             imageViewHeightConstraint,
-            imageView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
         ])
+
+        visualEffectAnimator.fractionComplete = 0
     }
 
     private var containerViewHeightConstraint = NSLayoutConstraint()
@@ -67,6 +71,22 @@ final class StretchyImageHeaderView: UICollectionReusableView, ReusableView {
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
         return view
+    }()
+
+    private lazy var visualEffectAnimator: UIViewPropertyAnimator = {
+        let animator = UIViewPropertyAnimator(duration: 0, curve: .linear) {
+            self.visualEffectView.effect = nil
+        }
+        animator.isReversed = true
+        return animator
+    }()
+
+    private lazy var visualEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .regular)
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        effectView.translatesAutoresizingMaskIntoConstraints = false
+        return effectView
     }()
 }
