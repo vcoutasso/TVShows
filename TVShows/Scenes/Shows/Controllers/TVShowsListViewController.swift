@@ -4,10 +4,10 @@ import Combine
 // MARK: - TVShowsViewController
 
 /// Main TV Shows controller
-final class TVShowsViewController: UIViewController {
+final class TVShowsListViewController: UIViewController {
     // MARK: Lifecycle
 
-    init(showsListView: UIView & TVShowsListViewProtocol, searchController: UISearchController & TVShowsSearchControllerProtocol) {
+    init(showsListView: UIView & TVShowsListViewProtocol, searchController: UISearchController & TVShowsListSearchControllerProtocol) {
         self.showsListView = showsListView
         self.searchController = searchController
         super.init(nibName: nil, bundle: nil)
@@ -65,7 +65,7 @@ final class TVShowsViewController: UIViewController {
             }
     }
 
-    private let searchController: UISearchController & TVShowsSearchControllerProtocol
+    private let searchController: UISearchController & TVShowsListSearchControllerProtocol
     private var showsListView: UIView & TVShowsListViewProtocol
 
     private var searchBarSubscriber: AnyCancellable?
@@ -73,7 +73,7 @@ final class TVShowsViewController: UIViewController {
 
 // MARK: - TVShowsListViewDelegate
 
-extension TVShowsViewController: TVShowsListViewDelegate {
+extension TVShowsListViewController: TVShowsListViewDelegate {
     func presentShowDetails(_ show: TVShow) {
         let vc = TVShowDetailsViewControllerFactory.make(show: show)
         navigationController?.pushViewController(vc, animated: true)

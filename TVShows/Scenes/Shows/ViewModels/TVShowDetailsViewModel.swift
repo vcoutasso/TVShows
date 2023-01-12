@@ -4,14 +4,22 @@ import Foundation
 
 @MainActor
 protocol TVShowDetailsViewModelProtocol: AnyObject {
+    init(show: TVShow, apiService: TVMazeServiceProtocol, imageLoader: ImageLoading)
+
+    var delegate: TVShowDetailsViewModelDelegate? { get set }
+
     var show: TVShow { get }
     var imageData: Data? { get }
     var episodes: [TVShowEpisode]? { get }
 
-    init(show: TVShow, apiService: TVMazeServiceProtocol, imageLoader: ImageLoading)
 
     func fetchImage() async
     func fetchEpisodes() async
+}
+
+@MainActor
+protocol TVShowDetailsViewModelDelegate: AnyObject {
+    func didSelectEpisode(_ episode: TVShowEpisode)
 }
 
 // MARK: - TVShowDetailsViewModel
@@ -26,6 +34,8 @@ final class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
     }
 
     // MARK: Internal
+
+    weak var delegate: TVShowDetailsViewModelDelegate?
 
     let show: TVShow
     private(set) var imageData: Data?
@@ -68,6 +78,8 @@ extension TVShowDetailsViewModel: TVShowDetailsViewCollectionViewAdapterDelegate
     }
 
     func didSelectCell(at indexPath: IndexPath) {
-        print("selected \(indexPath)")
+        if let episode = episodes?.first(where: { $0.season == indexPath.section && $0.number == indexPath.row }) {
+            delegate?.didSelectEpisode(episode)
+        }
     }
 }

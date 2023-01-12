@@ -7,6 +7,7 @@ final class TVShowDetailsViewController: UIViewController {
     init(detailsView: UIView & TVShowDetailsViewProtocol) {
         self.detailsView = detailsView
         super.init(nibName: nil, bundle: nil)
+        detailsView.delegate = self
     }
 
     @available(*, unavailable)
@@ -20,7 +21,6 @@ final class TVShowDetailsViewController: UIViewController {
         super.viewDidLoad()
         setUpView()
     }
-    
 
     // MARK: Private
 
@@ -44,3 +44,12 @@ final class TVShowDetailsViewController: UIViewController {
 
     private let detailsView: UIView & TVShowDetailsViewProtocol
 }
+
+extension TVShowDetailsViewController: TVShowDetailsViewDelegate {
+    func presentEpisodeDetails(_ episode: TVShowEpisode) {
+        let vc = TVShowEpisodeDetailsViewController()
+        print(episode.name)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+

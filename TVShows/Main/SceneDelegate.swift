@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
-        let vc = TVShowsViewControllerFactory.default()
+        let vc = TVShowsListViewControllerFactory.default()
         let navController = UINavigationController(rootViewController: vc)
         navController.navigationBar.prefersLargeTitles = true
 

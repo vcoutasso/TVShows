@@ -3,14 +3,14 @@ import UIKit
 // MARK: - TVShowDetailsViewProtocol
 
 @MainActor
-protocol TVShowDetailsViewProtocol {
-    var delegate: TVShowsListViewDelegate? { get set }
+protocol TVShowDetailsViewProtocol: AnyObject {
+    var delegate: TVShowDetailsViewDelegate? { get set }
 }
 
 // MARK: - TVShowDetailsViewDelegate
 
 @MainActor
-protocol TVShowDetailsViewDelegate {
+protocol TVShowDetailsViewDelegate: AnyObject {
     func presentEpisodeDetails(_ episode: TVShowEpisode)
 }
 
@@ -24,6 +24,7 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
         self.collectionAdapter = collectionAdapter
         super.init(frame: .zero)
         collectionAdapter.delegate = viewModel
+        viewModel.delegate = self
         setUpView()
         requestData()
     }
@@ -35,7 +36,7 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
 
     // MARK: Internal
 
-    weak var delegate: TVShowsListViewDelegate?
+    weak var delegate: TVShowDetailsViewDelegate?
 
     // MARK: Private
 
@@ -119,4 +120,10 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
 
         return collectionView
     }()
+}
+
+extension TVShowDetailsView: TVShowDetailsViewModelDelegate {
+    func didSelectEpisode(_ episode: TVShowEpisode) {
+        delegate?.presentEpisodeDetails(episode)
+    }
 }

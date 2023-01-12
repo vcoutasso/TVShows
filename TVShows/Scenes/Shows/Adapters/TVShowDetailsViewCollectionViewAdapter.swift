@@ -22,7 +22,7 @@ enum TVShowDetailsViewCollectionSections {
 
     struct SeasonInfo {
         let season: Int
-        let episodes: Int
+        let episodes: [TVShowEpisode]
     }
 }
 
@@ -54,12 +54,19 @@ final class TVShowDetailsViewCollectionViewAdapter: NSObject, TVShowDetailsViewC
     private(set) var sections: [TVShowDetailsViewCollectionSections]
 
     func updateSectionsWithEpisodes(_ episodes: [TVShowEpisode]) {
-        var seasonEpisodes = [Int:Int]()
-        let seasons = Set(episodes.map({ $0.season }))
-        seasons.forEach { season in
-            seasonEpisodes[season] = episodes.filter({ $0.season == season }).count
-        }
-        sections.append(contentsOf: seasonEpisodes.map { .season(.init(season: $0.key, episodes: $0.value)) })
+        var seasonEpisodes = [Int:[TVShowEpisode]]()
+
+        let allSeasons: Set<Int> = Set(episodes.map({ $0.season }))
+        allSeasons
+            .forEach { season in
+                seasonEpisodes[season] = episodes.filter({ $0.season == season }).sorted { $0.number < $1.number }
+            }
+
+        seasonEpisodes
+            .sorted { $0.key < $1.key }
+            .forEach {
+                sections.append(.season(.init(season: $0.key, episodes: $0.value)))
+            }
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -83,7 +90,7 @@ extension TVShowDetailsViewCollectionViewAdapter: UICollectionViewDelegate, UICo
             case .info:
                 return 1
             case .season(let info):
-                return info.episodes
+                return info.episodes.count
         }
     }
 
