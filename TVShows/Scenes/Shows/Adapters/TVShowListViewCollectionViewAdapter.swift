@@ -9,12 +9,13 @@ protocol TVShowListViewCollectionViewAdapterProtocol: AnyObject, UICollectionVie
 
 // MARK: - TVShowListViewCollectionViewAdapterDelegate
 
+@MainActor
 protocol TVShowListViewCollectionViewAdapterDelegate: AnyObject {
-    func cellViewModel(for indexPath: IndexPath) -> TVShowsListCollectionViewCellViewModelProtocol
-    func cellsCount() -> Int
-    func shouldDisplayLoadingFooter() -> Bool
-    func didSelectCell(at indexPath: IndexPath) async
-    func didScrollPastCurrentContent() async
+    var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] { get }
+    var shouldDisplayLoadingFooter: Bool { get }
+
+    func didSelectCell(at indexPath: IndexPath)
+    func didScrollPastCurrentContent()
 }
 
 // MARK: - TVShowListViewCollectionViewAdapter
@@ -25,23 +26,21 @@ final class TVShowListViewCollectionViewAdapter: NSObject, TVShowListViewCollect
     weak var delegate: TVShowListViewCollectionViewAdapterDelegate?
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        delegate?.cellsCount() ?? .zero
+        delegate?.displayedCellViewModels.count ?? .zero
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(TVShowsListCollectionViewCell.self, for: indexPath),
-              let viewModel = delegate?.cellViewModel(for: indexPath)
+              let viewModel = delegate?.displayedCellViewModels[indexPath.row]
         else {
             preconditionFailure("Unsupported cell/viewModel")
         }
-        Task {
-            await cell.configure(with: viewModel)
-        }
+        cell.configure(with: viewModel)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard let delegate, delegate.shouldDisplayLoadingFooter() else { return .zero }
+        guard let delegate, delegate.shouldDisplayLoadingFooter else { return .zero }
 
         return CGSize(width: collectionView.frame.width, height: LoadingCollectionViewFooter.LayoutMetrics.spinnerHeight)
     }
@@ -63,16 +62,12 @@ final class TVShowListViewCollectionViewAdapter: NSObject, TVShowListViewCollect
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        Task {
-            await delegate?.didSelectCell(at: indexPath)
-        }
+        delegate?.didSelectCell(at: indexPath)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y >= (scrollView.contentSize.height - (scrollView.visibleSize.height * 1.1)) {
-            Task {
-                await delegate?.didScrollPastCurrentContent()
-            }
+            delegate?.didScrollPastCurrentContent()
         }
     }
 }

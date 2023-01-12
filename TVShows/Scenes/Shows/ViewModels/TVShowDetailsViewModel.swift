@@ -2,6 +2,7 @@ import Foundation
 
 // MARK: - TVShowDetailsViewModelProtocol
 
+@MainActor
 protocol TVShowDetailsViewModelProtocol: AnyObject {
     var show: TVShow { get }
     var imageData: Data? { get }

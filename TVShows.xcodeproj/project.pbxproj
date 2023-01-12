@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4C08F1742970889A00FDA2C9 /* TVShowDetailsInfoSeasonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C08F1732970889A00FDA2C9 /* TVShowDetailsInfoSeasonHeaderView.swift */; };
 		4C08F1762970A0AE00FDA2C9 /* TVShowDetailsInfoSeasonHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C08F1752970A0AE00FDA2C9 /* TVShowDetailsInfoSeasonHeaderViewModel.swift */; };
+		4C08F1782970AF7200FDA2C9 /* TVShowListViewCollectionViewAdapterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C08F1772970AF7200FDA2C9 /* TVShowListViewCollectionViewAdapterSpy.swift */; };
 		4C625383296DBECB006AC733 /* TVMazeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C625382296DBECB006AC733 /* TVMazeService.swift */; };
 		4C625386296DEEB7006AC733 /* NetworkRequesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C625385296DEEB7006AC733 /* NetworkRequesting.swift */; };
 		4C625388296DEF39006AC733 /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C625387296DEF39006AC733 /* NetworkSession.swift */; };
@@ -96,6 +97,7 @@
 /* Begin PBXFileReference section */
 		4C08F1732970889A00FDA2C9 /* TVShowDetailsInfoSeasonHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsInfoSeasonHeaderView.swift; sourceTree = "<group>"; };
 		4C08F1752970A0AE00FDA2C9 /* TVShowDetailsInfoSeasonHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsInfoSeasonHeaderViewModel.swift; sourceTree = "<group>"; };
+		4C08F1772970AF7200FDA2C9 /* TVShowListViewCollectionViewAdapterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowListViewCollectionViewAdapterSpy.swift; sourceTree = "<group>"; };
 		4C625382296DBECB006AC733 /* TVMazeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeService.swift; sourceTree = "<group>"; };
 		4C625385296DEEB7006AC733 /* NetworkRequesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequesting.swift; sourceTree = "<group>"; };
 		4C625387296DEF39006AC733 /* NetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				4C6253C2296E3BCA006AC733 /* TVShowsListCollectionViewCellViewModelSpy.swift */,
 				4C6253CB296E4125006AC733 /* TVMazeAPIServiceSpy.swift */,
 				4C6C2592296F065C0004FB3F /* TVShowsListViewModelDelegateSpy.swift */,
+				4C08F1772970AF7200FDA2C9 /* TVShowListViewCollectionViewAdapterSpy.swift */,
 			);
 			path = Spies;
 			sourceTree = "<group>";
@@ -681,6 +684,7 @@
 				4CB6CFFA296DB9FC00E2A229 /* TVMazeImageTests.swift in Sources */,
 				4C6253BF296E387A006AC733 /* TVShowsListViewTests.swift in Sources */,
 				4CB6CFE8296DAB6500E2A229 /* TVShowEpisodeTests.swift in Sources */,
+				4C08F1782970AF7200FDA2C9 /* TVShowListViewCollectionViewAdapterSpy.swift in Sources */,
 				4C62539B296E0885006AC733 /* TVMazeServiceTests.swift in Sources */,
 				4C6253CA296E40F8006AC733 /* TVShowsListViewModelTests.swift in Sources */,
 				4CB6CFE4296DA79300E2A229 /* TVShowTests.swift in Sources */,

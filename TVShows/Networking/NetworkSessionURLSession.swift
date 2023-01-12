@@ -1,5 +1,5 @@
 import Foundation
 
-protocol NetworkSessionURLSession: Sendable {
+protocol NetworkSessionURLSession {
     func data(for: URLRequest) async throws -> (Data, URLResponse)
 }

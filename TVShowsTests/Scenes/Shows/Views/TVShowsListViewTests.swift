@@ -6,7 +6,8 @@ import XCTest
 final class TVShowsListViewTests: XCTestCase {
     
     private let viewModelSpy = TVShowsListViewModelSpy()
-    private lazy var sut = TVShowsListView(viewModel: viewModelSpy)
+    private let collectionAdapterSpy = TVShowListViewCollectionViewAdapterSpy()
+    private lazy var sut = TVShowsListView(viewModel: viewModelSpy, collectionAdapter: collectionAdapterSpy)
 
     func testShouldFetchInitialPageOnInit() {
         // Given

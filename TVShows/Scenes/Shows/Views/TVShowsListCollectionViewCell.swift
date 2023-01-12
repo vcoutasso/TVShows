@@ -21,13 +21,14 @@ final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
 
     // MARK: Internal
 
-    func configure(with viewModel: TVShowsListCollectionViewCellViewModelProtocol) async {
+    func configure(with viewModel: TVShowsListCollectionViewCellViewModelProtocol) {
         nameLabel.text = viewModel.show.name
-        if let imageData = await viewModel.getImageData()  {
-            posterImageView.image = uiImageFromData(imageData)
+        if viewModel.imageData != nil {
+            posterImageView.image = uiImageFromData(viewModel.imageData)
         } else {
             Task {
-                posterImageView.image = uiImageFromData(await viewModel.fetchImageData())
+                await viewModel.fetchImage()
+                posterImageView.image = uiImageFromData(viewModel.imageData)
             }
         }
     }

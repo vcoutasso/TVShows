@@ -1,23 +1,25 @@
-@preconcurrency import Combine
+import Foundation
 import UIKit
 
 // MARK: - TVShowsListViewModelProtocol
 
-protocol TVShowsListViewModelProtocol: AnyActor {
+@MainActor
+protocol TVShowsListViewModelProtocol: AnyObject {
     init(apiService: TVMazeServiceProtocol)
 
-    func setDelegate(_ delegate: TVShowsListViewModelDelegate) async
-    func getDisplayedCellViewModel(for indexPath: IndexPath) async -> TVShowsListCollectionViewCellViewModelProtocol
+    var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] { get }
+    var delegate: TVShowsListViewModelDelegate? { get set }
+
     func fetchInitialPage() async
     func fetchNextPage() async
     func searchShows(with query: String) async
-    func cancelSearch() async
+    func cancelSearch()
 }
 
 // MARK: - TVShowsListViewModelDelegate
 
 @MainActor
-protocol TVShowsListViewModelDelegate: AnyObject, Sendable {
+protocol TVShowsListViewModelDelegate: AnyObject {
     func didFetchNextPage(with indexPathsToAdd: [IndexPath])
     func didFetchFilteredShows()
     func didSelectCell(for show: TVShow)
@@ -25,7 +27,7 @@ protocol TVShowsListViewModelDelegate: AnyObject, Sendable {
 
 // MARK: - TVShowsListViewModel
 
-actor TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
+final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
     // MARK: Lifecycle
     init(apiService: TVMazeServiceProtocol) {
         self.apiService = apiService
@@ -35,13 +37,13 @@ actor TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
     // MARK: Internal
 
-    func setDelegate(_ delegate: TVShowsListViewModelDelegate) {
-        self.delegate = delegate
-    }
+    // Collection with all cached cell view models
+    private var cellViewModels: NSMutableOrderedSet
 
-    func getDisplayedCellViewModel(for indexPath: IndexPath) async -> TVShowsListCollectionViewCellViewModelProtocol {
-        displayedCellViewModels[indexPath.row]
-    }
+    // View models for cells that are in display
+    private(set) var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol]
+
+    weak var delegate: TVShowsListViewModelDelegate?
 
     func fetchInitialPage() async {
         let request = TVMazeRequest(endpoint: .shows, pathComponents: nil, queryItems: nil)
@@ -74,7 +76,7 @@ actor TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
                 updateList(with: shows)
 
-                await self.delegate?.didFetchNextPage(with: indexPathsToAdd)
+                self.delegate?.didFetchNextPage(with: indexPathsToAdd)
             case .failure(let error):
                 if let error = error as? TVMazeService.TVMazeServiceError {
                     handleTVMazeError(error) {
@@ -99,7 +101,7 @@ actor TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
                 let shows = results.map { $0.show }
                 updateList(with: shows)
                 displayedCellViewModels = shows.map { TVShowsListCollectionViewCellViewModel(show: $0) }
-                await delegate?.didFetchFilteredShows()
+                delegate?.didFetchFilteredShows()
             case .failure(let error):
                 if let error = error as? TVMazeService.TVMazeServiceError {
                     handleTVMazeError(error)
@@ -122,23 +124,8 @@ actor TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
     private let apiService: TVMazeServiceProtocol
 
-    private weak var delegate: TVShowsListViewModelDelegate?
-
-    // Collection with all cached cell view models
-    private var cellViewModels: NSMutableOrderedSet
-    // View models for cells that are in display
-    private var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] {
-        didSet {
-            displayedCellViewModelsSubject.send(displayedCellViewModels)
-        }
-    }
-
     private var didLoadFirstPage: Bool = false
-    private var isLoadingNextPage: Bool = false {
-        didSet {
-            shouldDisplayLoadingFooterSubject.send(isLoadingNextPage)
-        }
-    }
+    private var isLoadingNextPage: Bool = false
     private var canLoadMorePages: Bool = true
     private var isSearching: Bool = false
     private var isRetrying: Bool = false
@@ -175,32 +162,22 @@ actor TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
                 break
         }
     }
-
-    private let shouldDisplayLoadingFooterSubject: CurrentValueSubject<Bool, Never> = .init(false)
-    private let displayedCellViewModelsSubject: CurrentValueSubject<[TVShowsListCollectionViewCellViewModelProtocol], Never> = .init([])
 }
 
 // MARK: - TVShowListViewCollectionViewAdapterDelegate
 
 extension TVShowsListViewModel: TVShowListViewCollectionViewAdapterDelegate {
-    nonisolated func cellViewModel(for indexPath: IndexPath) -> TVShowsListCollectionViewCellViewModelProtocol {
-        displayedCellViewModelsSubject.value[indexPath.row]
+    var shouldDisplayLoadingFooter: Bool {
+        isLoadingNextPage
     }
 
-    nonisolated func cellsCount() -> Int {
-        displayedCellViewModelsSubject.value.count
+    func didSelectCell(at indexPath: IndexPath) {
+        delegate?.didSelectCell(for: displayedCellViewModels[indexPath.row].show)
     }
 
-    nonisolated func shouldDisplayLoadingFooter() -> Bool {
-        shouldDisplayLoadingFooterSubject.value
-    }
-
-    func didSelectCell(at indexPath: IndexPath) async {
-        let models = displayedCellViewModels[indexPath.row]
-        await delegate?.didSelectCell(for: models.show)
-    }
-
-    func didScrollPastCurrentContent() async {
-        await fetchNextPage()
+    func didScrollPastCurrentContent() {
+        Task {
+            await fetchNextPage()
+        }
     }
 }
