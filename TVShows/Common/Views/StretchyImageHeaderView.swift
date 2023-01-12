@@ -34,7 +34,6 @@ final class StretchyImageHeaderView: UICollectionReusableView, ReusableView {
     private func setUpView() {
         addSubview(containerView)
         containerView.addSubview(imageView)
-        containerView.addSubview(gradientView)
 
         NSLayoutConstraint.activate([
             containerView.widthAnchor.constraint(equalTo: widthAnchor),
@@ -50,9 +49,6 @@ final class StretchyImageHeaderView: UICollectionReusableView, ReusableView {
             imageViewBottomConstraint,
             imageViewHeightConstraint,
             imageView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
-            gradientView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            gradientView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
-            gradientView.heightAnchor.constraint(equalTo: containerView.heightAnchor),
         ])
     }
 
@@ -71,16 +67,6 @@ final class StretchyImageHeaderView: UICollectionReusableView, ReusableView {
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    private lazy var gradientView: GradientView = {
-        let colors: [UIColor] = [
-            .init(white: 0.2, alpha: 0),
-            .black
-        ]
-        let view = GradientView(gradientColors: colors)
-
         return view
     }()
 }
