@@ -11,7 +11,7 @@ enum Fixtures {
 
     static let mockURLResponse: URLResponse = URLResponse(url: mockURL, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
 
-    static let mockTVShow: TVShow = .init(id: 0, name: "", genres: [], schedule: .init(time: "", days: []), summary: "", image: .init(medium: mockURL.absoluteString, original: mockURL.absoluteString))
+    static let mockTVShow: TVShow = .init(id: 0, name: "", genres: [], schedule: .init(time: "", days: []), status: "", rating: .init(average: 5), summary: "", image: .init(medium: mockURL.absoluteString, original: mockURL.absoluteString))
 
     static func mockHTTPURLResponse(statusCode: Int = 200) -> HTTPURLResponse {
         HTTPURLResponse(url: mockURL, statusCode: statusCode, httpVersion: "HTTP/1.1", headerFields: nil)!

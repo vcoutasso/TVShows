@@ -53,6 +53,9 @@
 		4C6C25A7296F68330004FB3F /* TVShowDetailsControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C25A6296F68330004FB3F /* TVShowDetailsControllerFactory.swift */; };
 		4C6C25A9296F685B0004FB3F /* TVShowDetailsViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C25A8296F685B0004FB3F /* TVShowDetailsViewFactory.swift */; };
 		4C6C25AB296F69BA0004FB3F /* TVShowsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C25AA296F69BA0004FB3F /* TVShowsSearchController.swift */; };
+		4C6C25AD296F7C720004FB3F /* TVMazeRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C25AC296F7C720004FB3F /* TVMazeRating.swift */; };
+		4C6C25AF296F7F9A0004FB3F /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C25AE296F7F9A0004FB3F /* Date+.swift */; };
+		4C6C25B1296F84DD0004FB3F /* CircularProgressIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C25B0296F84DD0004FB3F /* CircularProgressIndicatorView.swift */; };
 		4CB6CFAB296D9EE900E2A229 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */; };
 		4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */; };
 		4CB6CFAF296D9EE900E2A229 /* TVShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAE296D9EE900E2A229 /* TVShowsViewController.swift */; };
@@ -132,6 +135,9 @@
 		4C6C25A6296F68330004FB3F /* TVShowDetailsControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsControllerFactory.swift; sourceTree = "<group>"; };
 		4C6C25A8296F685B0004FB3F /* TVShowDetailsViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsViewFactory.swift; sourceTree = "<group>"; };
 		4C6C25AA296F69BA0004FB3F /* TVShowsSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsSearchController.swift; sourceTree = "<group>"; };
+		4C6C25AC296F7C720004FB3F /* TVMazeRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeRating.swift; sourceTree = "<group>"; };
+		4C6C25AE296F7F9A0004FB3F /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		4C6C25B0296F84DD0004FB3F /* CircularProgressIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressIndicatorView.swift; sourceTree = "<group>"; };
 		4CB6CFA7296D9EE900E2A229 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -226,6 +232,7 @@
 				4C6253B7296E2B57006AC733 /* UICollectionView+.swift */,
 				4C6253CF296E4658006AC733 /* UIFont+.swift */,
 				4C6C2590296EF8550004FB3F /* String+.swift */,
+				4C6C25AE296F7F9A0004FB3F /* Date+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -347,6 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				4C6253D5296E4FB7006AC733 /* LoadingCollectionViewFooter.swift */,
+				4C6C25B0296F84DD0004FB3F /* CircularProgressIndicatorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -438,9 +446,11 @@
 		4CB6CFDA296DA0E500E2A229 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4CB6CFEC296DAC7100E2A229 /* TVMazeImage.swift */,
 				4CB6CFDB296DA16B00E2A229 /* TVShow.swift */,
 				4CB6CFDD296DA64600E2A229 /* TVShowSchedule.swift */,
 				4CB6CFE5296DAB4900E2A229 /* TVShowEpisode.swift */,
+				4C6C25AC296F7C720004FB3F /* TVMazeRating.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -469,7 +479,6 @@
 		4CB6CFEB296DAC6300E2A229 /* APIClient */ = {
 			isa = PBXGroup;
 			children = (
-				4CB6CFEC296DAC7100E2A229 /* TVMazeImage.swift */,
 				4CB6CFEE296DAD5D00E2A229 /* TVMazeEndpoint.swift */,
 				4CB6CFF0296DAE0200E2A229 /* TVMazeRequest.swift */,
 				4C625382296DBECB006AC733 /* TVMazeService.swift */,
@@ -595,9 +604,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CB6CFAF296D9EE900E2A229 /* TVShowsViewController.swift in Sources */,
+				4C6C25AD296F7C720004FB3F /* TVMazeRating.swift in Sources */,
 				4C6C25A3296F64190004FB3F /* TVShowsViewControllerFactory.swift in Sources */,
 				4CB6CFAB296D9EE900E2A229 /* AppDelegate.swift in Sources */,
 				4CB6CFE6296DAB4900E2A229 /* TVShowEpisode.swift in Sources */,
+				4C6C25AF296F7F9A0004FB3F /* Date+.swift in Sources */,
 				4CB6CFF1296DAE0200E2A229 /* TVMazeRequest.swift in Sources */,
 				4C6253BA296E2EEE006AC733 /* TVShowsListCollectionViewCellViewModel.swift in Sources */,
 				4C6253B2296E265C006AC733 /* UIView+.swift in Sources */,
@@ -618,6 +629,7 @@
 				4C6C25A0296F5E200004FB3F /* TVShowListViewCollectionViewAdapter.swift in Sources */,
 				4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */,
 				4C6253B4296E2A8B006AC733 /* ReusableView.swift in Sources */,
+				4C6C25B1296F84DD0004FB3F /* CircularProgressIndicatorView.swift in Sources */,
 				4C625394296DF775006AC733 /* URLSession+.swift in Sources */,
 				4C6253B0296E2040006AC733 /* TVShowsListViewModel.swift in Sources */,
 				4C6C25AB296F69BA0004FB3F /* TVShowsSearchController.swift in Sources */,

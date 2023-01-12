@@ -75,7 +75,7 @@ final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        if let boldFont = UIFont.preferredFont(forTextStyle: .title3).bold() {
+        if let boldFont = UIFont.preferredFont(forTextStyle: .headline).bold() {
             label.font = boldFont
         }
 
