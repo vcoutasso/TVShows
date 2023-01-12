@@ -1,20 +1,26 @@
 import Foundation
 
-@MainActor
+// MARK: - TVShowDetailsViewModelProtocol
+
 protocol TVShowDetailsViewModelProtocol: AnyObject {
     var show: TVShow { get }
     var imageData: Data? { get }
+    var episodes: [TVShowEpisode]? { get }
 
-    init(show: TVShow, imageLoader: ImageLoading)
+    init(show: TVShow, apiService: TVMazeServiceProtocol, imageLoader: ImageLoading)
 
     func fetchImage() async
+    func fetchEpisodes() async
 }
+
+// MARK: - TVShowDetailsViewModel
 
 final class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
     // MARK: Lifecycle
 
-    init(show: TVShow, imageLoader: ImageLoading = CachedImageLoader.shared) {
+    init(show: TVShow, apiService: TVMazeServiceProtocol, imageLoader: ImageLoading = CachedImageLoader.shared) {
         self.show = show
+        self.apiService = apiService
         self.imageLoader = imageLoader
     }
 
@@ -22,6 +28,7 @@ final class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
 
     let show: TVShow
     private(set) var imageData: Data?
+    private(set) var episodes: [TVShowEpisode]?
 
     func fetchImage() async {
         // No image to be fetched
@@ -38,7 +45,28 @@ final class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
         }
     }
 
+    func fetchEpisodes() async {
+        let request = TVMazeRequest(endpoint: .shows, pathComponents: [.id(show.id), .episodes], queryItems: nil)
+        switch await apiService.execute(request, expecting: [TVShowEpisode].self) {
+            case .success(let episodes):
+                self.episodes = episodes
+            case .failure(let error):
+                print("Failed to fetch shows with error \(error)")
+        }
+    }
+
     // MARK: Private
 
     private let imageLoader: ImageLoading
+    private let apiService: TVMazeServiceProtocol
+}
+
+extension TVShowDetailsViewModel: TVShowDetailsViewCollectionViewAdapterDelegate {
+    func episodeName(season: Int, episode: Int) -> String? {
+        episodes?.first(where: { $0.season == season && $0.number == episode }).map { $0.name }
+    }
+
+    func didSelectCell(at indexPath: IndexPath) {
+        print("selected \(indexPath)")
+    }
 }

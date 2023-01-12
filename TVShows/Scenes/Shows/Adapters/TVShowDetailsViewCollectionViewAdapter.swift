@@ -9,19 +9,28 @@ protocol TVShowDetailsViewCollectionViewAdapterProtocol: AnyObject, UICollection
     var show: TVShow { get }
     var sections: [TVShowDetailsViewCollectionSections] { get }
     var stretchyHeaderImage: UIImage? { get set }
+
+    func updateSectionsWithEpisodes(_ episodes: [TVShowEpisode])
 }
 
 // MARK: - TVShowDetailsViewCollectionSections
 
 enum TVShowDetailsViewCollectionSections {
     case info
-    case seasons
+    /// Represents
+    case season(SeasonInfo)
+
+    struct SeasonInfo {
+        let season: Int
+        let episodes: Int
+    }
 }
 
 // MARK: - TVShowDetailsViewCollectionViewAdapterDelegate
 
 @MainActor
 protocol TVShowDetailsViewCollectionViewAdapterDelegate: AnyObject {
+    func episodeName(season: Int, episode: Int) -> String?
     func didSelectCell(at indexPath: IndexPath)
 }
 
@@ -44,6 +53,15 @@ final class TVShowDetailsViewCollectionViewAdapter: NSObject, TVShowDetailsViewC
     private(set) var show: TVShow
     private(set) var sections: [TVShowDetailsViewCollectionSections]
 
+    func updateSectionsWithEpisodes(_ episodes: [TVShowEpisode]) {
+        var seasonEpisodes = [Int:Int]()
+        let seasons = Set(episodes.map({ $0.season }))
+        seasons.forEach { season in
+            seasonEpisodes[season] = episodes.filter({ $0.season == season }).count
+        }
+        sections.append(contentsOf: seasonEpisodes.map { .season(.init(season: $0.key, episodes: $0.value)) })
+    }
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         stretchyHeader?.scrollViewDidScroll(scrollView: scrollView)
     }
@@ -64,8 +82,8 @@ extension TVShowDetailsViewCollectionViewAdapter: UICollectionViewDelegate, UICo
         switch sections[section] {
             case .info:
                 return 1
-            case .seasons:
-                return 10
+            case .season(let info):
+                return info.episodes
         }
     }
 
@@ -77,9 +95,13 @@ extension TVShowDetailsViewCollectionViewAdapter: UICollectionViewDelegate, UICo
                 }
                 cell.configure(with: show)
                 return cell
-            case .seasons:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-                cell.backgroundColor = .systemPink
+            case .season(let info):
+                guard let cell = collectionView.dequeueReusableCell(TVShowDetailsEpisodeNameCollectionViewCell.self, for: indexPath) else {
+                    preconditionFailure("Unsupported cell")
+                }
+                if let name = delegate?.episodeName(season: info.season, episode: indexPath.row) {
+                    cell.configure(with: name)
+                }
                 return cell
         }
     }
@@ -102,13 +124,18 @@ extension TVShowDetailsViewCollectionViewAdapter: UICollectionViewDelegate, UICo
                     header.configure(with: stretchyHeaderImage)
                 }
                 return header
-            case .seasons:
+            case .season:
                 guard let header = collectionView.dequeueReusableSupplementaryView(TVShowDetailsInfoSeasonHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader, for: indexPath) else {
                     preconditionFailure("Unsupported cell type")
                 }
                 header.configure(with: indexPath.section)
                 return header
         }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        delegate?.didSelectCell(at: indexPath)
     }
 }
 

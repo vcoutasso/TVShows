@@ -4,7 +4,6 @@ import Foundation
 
 protocol TVShowsListCollectionViewCellViewModelProtocol: AnyActor {
     nonisolated var show: TVShow { get }
-//    var imageData: Data? { get }
 
     init(show: TVShow, imageLoader: ImageLoading)
 

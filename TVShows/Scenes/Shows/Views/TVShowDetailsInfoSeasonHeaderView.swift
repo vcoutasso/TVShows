@@ -1,5 +1,7 @@
 import UIKit
 
+// MARK: - TVShowDetailsInfoSeasonHeaderView
+
 final class TVShowDetailsInfoSeasonHeaderView: UICollectionReusableView, ReusableView {
     // MARK: Lifecycle
 
@@ -17,6 +19,11 @@ final class TVShowDetailsInfoSeasonHeaderView: UICollectionReusableView, Reusabl
 
     func configure(with season: Int) {
         titleLabel.text = "Season \(season)"
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
     }
 
     // MARK: Private

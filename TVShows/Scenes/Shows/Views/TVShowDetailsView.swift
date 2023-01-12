@@ -19,12 +19,13 @@ protocol TVShowDetailsViewDelegate {
 final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
     // MARK: Lifecycle
 
-    init(viewModel: TVShowDetailsViewModelProtocol, collectionAdapter: TVShowDetailsViewCollectionViewAdapterProtocol) {
+    init(viewModel: TVShowDetailsViewModelProtocol & TVShowDetailsViewCollectionViewAdapterDelegate, collectionAdapter: TVShowDetailsViewCollectionViewAdapterProtocol) {
         self.viewModel = viewModel
         self.collectionAdapter = collectionAdapter
         super.init(frame: .zero)
+        collectionAdapter.delegate = viewModel
         setUpView()
-        populateStretchyHeader()
+        requestData()
     }
 
     @available(*, unavailable)
@@ -52,13 +53,17 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
 
     }
 
-    private func populateStretchyHeader() {
+    private func requestData() {
         Task {
-            await viewModel.fetchImage()
+            async let _ = await viewModel.fetchEpisodes()
+            async let _ = await viewModel.fetchImage()
             if let imageData = viewModel.imageData {
                 collectionAdapter.stretchyHeaderImage = UIImage(data: imageData)
-                collectionView.reloadData()
             }
+            if let episodes = viewModel.episodes {
+                collectionAdapter.updateSectionsWithEpisodes(episodes)
+            }
+            collectionView.reloadData()
         }
     }
 
@@ -70,25 +75,24 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
             case .info:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = .init(top: 2, leading: 0, bottom: 10, trailing: 0)
+                item.contentInsets = .init(top: 2, leading: 0, bottom: 0, trailing: 0)
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.9))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.5))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
                 section.boundarySupplementaryItems = [header]
                 return section
-            case .seasons:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(150))
+            case .season(let info):
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.8 / CGFloat(info.episodes)))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = .init(top: 2, leading: 5, bottom: 2, trailing: 5)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / 3), heightDimension: .fractionalHeight(0.2))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.1))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.05))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .groupPaging
+                section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+                section.orthogonalScrollingBehavior = .none
                 section.boundarySupplementaryItems = [header]
                 return section
         }
@@ -106,8 +110,8 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
         collectionView.delegate = collectionAdapter
         collectionView.dataSource = collectionAdapter
 
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.register(TVShowDetailsInfoCollectionViewCell.self)
+        collectionView.register(TVShowDetailsEpisodeNameCollectionViewCell.self)
         collectionView.register(StretchyImageHeaderView.self, forSupplementaryKind: UICollectionView.elementKindSectionHeader)
         collectionView.register(TVShowDetailsInfoSeasonHeaderView.self, forSupplementaryKind: UICollectionView.elementKindSectionHeader)
 
