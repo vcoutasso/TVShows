@@ -19,10 +19,9 @@ protocol TVShowsListViewDelegate: AnyObject {
 final class TVShowsListView: UIView, TVShowsListViewProtocol {
     // MARK: Lifecycle
 
-    let collectionAdapter: TVShowListViewCollectionViewAdapterProtocol = TVShowListViewCollectionViewAdapter()
-
-    init(viewModel: TVShowsListViewModelProtocol & TVShowListViewCollectionViewAdapterDelegate) {
+    init(viewModel: TVShowsListViewModelProtocol & TVShowListViewCollectionViewAdapterDelegate, collectionAdapter: TVShowListViewCollectionViewAdapterProtocol) {
         self.viewModel = viewModel
+        self.collectionAdapter = collectionAdapter
         super.init(frame: .zero)
 
         collectionAdapter.delegate = viewModel
@@ -94,6 +93,7 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
     }
 
     private let viewModel: TVShowsListViewModelProtocol
+    private let collectionAdapter: TVShowListViewCollectionViewAdapterProtocol
 
     private lazy var loadingSpinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()

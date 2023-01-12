@@ -1,5 +1,7 @@
 import UIKit
 
+// MARK: - TVShowsListCollectionViewCell
+
 final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
     // MARK: Lifecycle
 

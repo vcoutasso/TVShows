@@ -3,7 +3,7 @@ import UIKit
 final class CircularProgressIndicatorView: UIView {
     // MARK: Lifecycle
 
-    init(fillPercentage: Int) {
+    init(fillPercentage: Int = 0) {
         self.fillPercentage = fillPercentage
         super.init(frame: .zero)
         addSubview(progressLabel)
@@ -21,13 +21,16 @@ final class CircularProgressIndicatorView: UIView {
 
     // MARK: Internal
 
-    let fillPercentage: Int
-
     override func layoutSubviews() {
         super.layoutSubviews()
         circleLayer.removeFromSuperlayer()
         progressLayer.removeFromSuperlayer()
         createCircularPath()
+    }
+
+    func updatePercentage(with value: Int) {
+        fillPercentage = value
+        setNeedsLayout()
     }
 
     // MARK: Private
@@ -50,10 +53,12 @@ final class CircularProgressIndicatorView: UIView {
         progressLayer.lineWidth = radius / 3
         progressLayer.strokeColor = colorForFillPercentage().cgColor
 
+        progressLabel.text = String(fillPercentage)
+        progressLabel.font = .systemFont(ofSize: 0.85 * radius, weight: .bold)
+        progressLabel.textColor = colorForFillPercentage()
+
         layer.addSublayer(circleLayer)
         layer.addSublayer(progressLayer)
-
-        progressLabel.font = .systemFont(ofSize: 0.85 * radius, weight: .bold)
     }
 
     private func colorForFillPercentage() -> UIColor {
@@ -81,12 +86,12 @@ final class CircularProgressIndicatorView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.contentMode = .center
         label.textAlignment = .center
-        label.text = String(fillPercentage)
-        label.textColor = colorForFillPercentage()
 
         return label
     }()
 
     private let startAngle = CGFloat(-Double.pi / 2)
     private let endAngle = CGFloat(3 * Double.pi / 2)
+
+    private var fillPercentage: Int
 }

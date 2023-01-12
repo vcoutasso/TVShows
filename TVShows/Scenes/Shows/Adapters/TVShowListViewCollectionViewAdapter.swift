@@ -7,6 +7,8 @@ protocol TVShowListViewCollectionViewAdapterProtocol: AnyObject, UICollectionVie
     var delegate: TVShowListViewCollectionViewAdapterDelegate? { get set }
 }
 
+// MARK: - TVShowListViewCollectionViewAdapterDelegate
+
 @MainActor
 protocol TVShowListViewCollectionViewAdapterDelegate: AnyObject {
     var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] { get }

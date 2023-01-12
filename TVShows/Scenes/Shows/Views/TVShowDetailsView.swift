@@ -1,22 +1,30 @@
 import UIKit
 
+// MARK: - TVShowDetailsViewProtocol
+
 @MainActor
 protocol TVShowDetailsViewProtocol {
     var delegate: TVShowsListViewDelegate? { get set }
 }
+
+// MARK: - TVShowDetailsViewDelegate
 
 @MainActor
 protocol TVShowDetailsViewDelegate {
     func presentEpisodeDetails(_ episode: TVShowEpisode)
 }
 
+// MARK: - TVShowDetailsView
+
 final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
     // MARK: Lifecycle
 
-    init(viewModel: TVShowDetailsViewModelProtocol) {
+    init(viewModel: TVShowDetailsViewModelProtocol, collectionAdapter: TVShowDetailsViewCollectionViewAdapterProtocol) {
         self.viewModel = viewModel
+        self.collectionAdapter = collectionAdapter
         super.init(frame: .zero)
         setUpView()
+        populateStretchyHeader()
     }
 
     @available(*, unavailable)
@@ -33,186 +41,69 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
     private func setUpView() {
         backgroundColor = .systemBackground
 
-        populateImageView()
-
-        addSubviews(posterImageView, headerStackView, statusLabel, genresLabel)
-        addSubviews(scheduleStackView, summaryStackView)
+        addSubview(collectionView)
 
         NSLayoutConstraint.activate([
-            posterImageView.topAnchor.constraint(equalTo: topAnchor),
-            posterImageView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
-            posterImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
-            posterImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4),
-
-            headerStackView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
-            headerStackView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor),
-            headerStackView.topAnchor.constraint(equalTo: posterImageView.bottomAnchor),
-
-            scoreIndicator.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
-
-            statusLabel.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
-            statusLabel.topAnchor.constraint(equalTo: headerStackView.bottomAnchor),
-
-            genresLabel.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
-            genresLabel.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor),
-            genresLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3),
-
-            scheduleStackView.topAnchor.constraint(equalTo: genresLabel.bottomAnchor, constant: 10),
-            scheduleStackView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
-            scheduleStackView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor),
-
-            summaryStackView.topAnchor.constraint(equalTo: scheduleStackView.bottomAnchor, constant: 10),
-            summaryStackView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
-            summaryStackView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor),
+            collectionView.topAnchor.constraint(equalTo: topAnchor),
+            collectionView.rightAnchor.constraint(equalTo: rightAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
         ])
+
     }
 
-    private func populateImageView() {
+    private func populateStretchyHeader() {
         Task {
             await viewModel.fetchImage()
-
-            if let imageData = viewModel.imageData,
-               let image = UIImage(data: imageData) {
-                self.posterImageView.image = image
+            if let imageData = viewModel.imageData {
+                collectionAdapter.stretchyHeaderImage = UIImage(data: imageData)
+                collectionView.reloadData()
             }
         }
     }
 
-    private let viewModel: TVShowDetailsViewModelProtocol
+    private func createSection(for sectionIndex: Int) -> NSCollectionLayoutSection {
+        let sections = TVShowDetailsViewCollectionViewAdapter.Sections.allCases
 
-    private lazy var posterImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-
-        return imageView
-    }()
-
-    private lazy var titleStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [nameLabel, premieredLabel])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        return stack
-    }()
-
-    private lazy var headerStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [titleStackView, scoreIndicator])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .horizontal
-        stack.distribution = .fill
-
-        return stack
-    }()
-
-    private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = viewModel.show.name
-        label.font = .preferredFont(forTextStyle: .title1).bold()
-        label.textColor = .label
-
-        return label
-    }()
-
-    private lazy var premieredLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = viewModel.show.premiered?.localizedDateString()
-        label.font = .preferredFont(forTextStyle: .headline).bold()
-        label.textColor = .secondaryLabel
-
-        return label
-    }()
-
-    private lazy var scoreIndicator: CircularProgressIndicatorView = {
-        let averageRating = viewModel.show.rating?.average ?? 0
-        let percentage = Int(averageRating * 10.0)
-        let score = CircularProgressIndicatorView(fillPercentage: percentage)
-        score.translatesAutoresizingMaskIntoConstraints = false
-        return score
-    }()
-
-    private lazy var statusLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = viewModel.show.status
-        label.font = .preferredFont(forTextStyle: .headline).bold()
-        label.textColor = .secondaryLabel
-
-        return label
-    }()
-
-    private lazy var genresLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.text = viewModel.show.genres.joined(separator: " | ")
-        label.font = .preferredFont(forTextStyle: .subheadline)
-        label.textColor = .tertiaryLabel
-
-        return label
-    }()
-
-    private lazy var scheduleTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Schedule"
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .label
-
-        return label
-    }()
-
-    private lazy var scheduleLabel: UILabel = {
-        let label = UILabel()
-        var scheduleText = ""
-        for day in viewModel.show.schedule.days {
-            scheduleText.append("\(day) \(viewModel.show.schedule.time)\n")
+        switch sections[sectionIndex] {
+            case .info:
+                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
+                item.contentInsets = .init(top: 0, leading: 0, bottom: 10, trailing: 0)
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)), subitems: [item])
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.55))
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                let section = NSCollectionLayoutSection(group: group)
+                section.boundarySupplementaryItems = [header]
+                return section
+            case .episodes:
+                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
+                item.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.3), heightDimension: .absolute(150)), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .groupPaging
+                return section
         }
-        label.numberOfLines = 0
-        label.text = scheduleText
-        label.font = .preferredFont(forTextStyle: .body)
-        label.textColor = .secondaryLabel
+    }
 
-        return label
-    }()
+    private let viewModel: TVShowDetailsViewModelProtocol
+    private let collectionAdapter: TVShowDetailsViewCollectionViewAdapterProtocol
 
-    private lazy var scheduleStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [scheduleTitleLabel, scheduleLabel])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.alignment = .leading
-        stack.axis = .vertical
-        stack.spacing = 3
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
+            self.createSection(for: sectionIndex)
+        }
 
-        return stack
-    }()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = collectionAdapter
+        collectionView.dataSource = collectionAdapter
 
-    private lazy var summaryTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Summary"
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .label
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(TVShowDetailsInfoCollectionViewCell.self)
+        collectionView.register(StretchyImageHeaderView.self, forSupplementaryKind: UICollectionView.elementKindSectionHeader)
 
-        return label
-    }()
-
-    private lazy var summaryLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.text = viewModel.show.summary?.strippingHTMLTags() ?? "No description available."
-        label.font = .preferredFont(forTextStyle: .body)
-        label.textColor = .secondaryLabel
-
-        return label
-    }()
-
-    private lazy var summaryStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [summaryTitleLabel, summaryLabel])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.alignment = .leading
-        stack.axis = .vertical
-        stack.spacing = 3
-
-        return stack
+        return collectionView
     }()
 }
