@@ -1,7 +1,9 @@
 import UIKit
 
+// MARK: - TVShowsListViewProtocol
+
 @MainActor
-protocol TVShowsListViewProtocol {
+protocol TVShowsListViewProtocol: AnyObject {
     var delegate: TVShowsListViewDelegate? { get set }
 
     /// Filters show with the `query` parameter
@@ -10,10 +12,14 @@ protocol TVShowsListViewProtocol {
     func clearFilters()
 }
 
+// MARK: - TVShowsListViewDelegate
+
 @MainActor
 protocol TVShowsListViewDelegate: AnyObject {
     func presentShowDetails(_ show: TVShow)
 }
+
+// MARK: - TVShowsListView
 
 /// Displays collection of shows
 final class TVShowsListView: UIView, TVShowsListViewProtocol {

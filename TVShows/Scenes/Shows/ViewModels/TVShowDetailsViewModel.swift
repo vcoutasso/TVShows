@@ -12,7 +12,6 @@ protocol TVShowDetailsViewModelProtocol: AnyObject {
     var imageData: Data? { get }
     var episodes: [TVShowEpisode]? { get }
 
-
     func fetchImage() async
     func fetchEpisodes() async
 }

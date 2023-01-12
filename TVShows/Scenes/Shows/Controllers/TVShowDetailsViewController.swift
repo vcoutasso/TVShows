@@ -47,8 +47,7 @@ final class TVShowDetailsViewController: UIViewController {
 
 extension TVShowDetailsViewController: TVShowDetailsViewDelegate {
     func presentEpisodeDetails(_ episode: TVShowEpisode) {
-        let vc = TVShowEpisodeDetailsViewController()
-        print(episode.name)
+        let vc = TVShowEpisodeDetailsViewControllerFactory.make(episode: episode)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
