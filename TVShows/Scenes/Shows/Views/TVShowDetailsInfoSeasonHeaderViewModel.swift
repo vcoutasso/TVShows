@@ -48,7 +48,7 @@ final class TVShowDetailsEpisodeNameCollectionViewCell: UICollectionViewCell, Re
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .preferredFont(forTextStyle: .callout)
+        label.font = .preferredFont(forTextStyle: .subheadline)
         label.textColor = .secondaryLabel
         return label
     }()
