@@ -62,35 +62,41 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
         }
     }
 
-    private func createSection(for sectionIndex: Int) -> NSCollectionLayoutSection {
-        let sections = TVShowDetailsViewCollectionViewAdapter.Sections.allCases
+    private let viewModel: TVShowDetailsViewModelProtocol
+    private let collectionAdapter: TVShowDetailsViewCollectionViewAdapterProtocol
 
-        switch sections[sectionIndex] {
+    private func sectionProvider(for sectionIndex: Int) -> NSCollectionLayoutSection {
+        switch collectionAdapter.sections[sectionIndex] {
             case .info:
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
-                item.contentInsets = .init(top: 0, leading: 0, bottom: 10, trailing: 0)
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)), subitems: [item])
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.55))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = .init(top: 2, leading: 0, bottom: 10, trailing: 0)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.9))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 1)
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.5))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
                 section.boundarySupplementaryItems = [header]
                 return section
-            case .episodes:
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
-                item.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.3), heightDimension: .absolute(150)), subitems: [item])
+            case .seasons:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(150))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = .init(top: 2, leading: 5, bottom: 2, trailing: 5)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / 3), heightDimension: .fractionalHeight(0.2))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.1))
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPaging
+                section.boundarySupplementaryItems = [header]
                 return section
         }
     }
 
-    private let viewModel: TVShowDetailsViewModelProtocol
-    private let collectionAdapter: TVShowDetailsViewCollectionViewAdapterProtocol
-
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
-            self.createSection(for: sectionIndex)
+        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+            self?.sectionProvider(for: sectionIndex)
         }
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -103,6 +109,7 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.register(TVShowDetailsInfoCollectionViewCell.self)
         collectionView.register(StretchyImageHeaderView.self, forSupplementaryKind: UICollectionView.elementKindSectionHeader)
+        collectionView.register(TVShowDetailsInfoSeasonHeaderView.self, forSupplementaryKind: UICollectionView.elementKindSectionHeader)
 
         return collectionView
     }()

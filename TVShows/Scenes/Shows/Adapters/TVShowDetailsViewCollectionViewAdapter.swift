@@ -7,7 +7,15 @@ protocol TVShowDetailsViewCollectionViewAdapterProtocol: AnyObject, UICollection
     var delegate: TVShowDetailsViewCollectionViewAdapterDelegate? { get set }
 
     var show: TVShow { get }
+    var sections: [TVShowDetailsViewCollectionSections] { get }
     var stretchyHeaderImage: UIImage? { get set }
+}
+
+// MARK: - TVShowDetailsViewCollectionSections
+
+enum TVShowDetailsViewCollectionSections {
+    case info
+    case seasons
 }
 
 // MARK: - TVShowDetailsViewCollectionViewAdapterDelegate
@@ -22,23 +30,22 @@ protocol TVShowDetailsViewCollectionViewAdapterDelegate: AnyObject {
 final class TVShowDetailsViewCollectionViewAdapter: NSObject, TVShowDetailsViewCollectionViewAdapterProtocol {
     // MARK: Lifecycle
 
-    init(show: TVShow) {
+    init(show: TVShow, sections: [TVShowDetailsViewCollectionSections]) {
         self.show = show
+        self.sections = sections
     }
 
     // MARK: Internal
 
     weak var delegate: TVShowDetailsViewCollectionViewAdapterDelegate?
+
     var stretchyHeaderImage: UIImage?
+
     private(set) var show: TVShow
+    private(set) var sections: [TVShowDetailsViewCollectionSections]
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         stretchyHeader?.scrollViewDidScroll(scrollView: scrollView)
-    }
-
-    enum Sections: Int, CaseIterable {
-        case info
-        case episodes
     }
 
     // MARK: Private
@@ -50,30 +57,27 @@ final class TVShowDetailsViewCollectionViewAdapter: NSObject, TVShowDetailsViewC
 
 extension TVShowDetailsViewCollectionViewAdapter: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        Sections.allCases.count
+        sections.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let section = Sections(rawValue: section) else { return 0 }
-        switch section {
+        switch sections[section] {
             case .info:
                 return 1
-            case .episodes:
+            case .seasons:
                 return 10
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let section = Sections(rawValue: indexPath.section) else { preconditionFailure("Unsupported section") }
-
-        switch section {
+        switch sections[indexPath.section] {
             case .info:
                 guard let cell = collectionView.dequeueReusableCell(TVShowDetailsInfoCollectionViewCell.self, for: indexPath) else {
                     preconditionFailure("Unsupported cell")
                 }
                 cell.configure(with: show)
                 return cell
-            case .episodes:
+            case .seasons:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
                 cell.backgroundColor = .systemPink
                 return cell
@@ -81,15 +85,30 @@ extension TVShowDetailsViewCollectionViewAdapter: UICollectionViewDelegate, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard kind == UICollectionView.elementKindSectionHeader,
-              let header = collectionView.dequeueReusableSupplementaryView(StretchyImageHeaderView.self, ofKind: kind, for: indexPath) else {
+        guard kind == UICollectionView.elementKindSectionHeader else {
             preconditionFailure("Unsupported supplementary view kind")
         }
-        stretchyHeader = header
-        if let stretchyHeaderImage {
-            header.configure(with: stretchyHeaderImage)
+        return sectionHeader(collectionView, at: indexPath)
+    }
+
+    private func sectionHeader(_ collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch sections[indexPath.section] {
+            case .info:
+                guard let header = collectionView.dequeueReusableSupplementaryView(StretchyImageHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader, for: indexPath) else {
+                    preconditionFailure("Unsupported cell type")
+                }
+                stretchyHeader = header
+                if let stretchyHeaderImage {
+                    header.configure(with: stretchyHeaderImage)
+                }
+                return header
+            case .seasons:
+                guard let header = collectionView.dequeueReusableSupplementaryView(TVShowDetailsInfoSeasonHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader, for: indexPath) else {
+                    preconditionFailure("Unsupported cell type")
+                }
+                header.configure(with: indexPath.section)
+                return header
         }
-        return header
     }
 }
 

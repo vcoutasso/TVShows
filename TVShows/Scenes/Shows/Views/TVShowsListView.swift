@@ -114,9 +114,17 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
     }()
 
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
+        let layout = UICollectionViewCompositionalLayout { _, _ in
+            let isPortrait = self.frame.height > self.frame.width
+            let itemSize: NSCollectionLayoutSize = isPortrait ? .init(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)) : .init(widthDimension: .fractionalWidth(0.2), heightDimension: .fractionalHeight(1.0))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = .init(top: 2, leading: 2, bottom: 2, trailing: 2)
+            let groupHeight: NSCollectionLayoutDimension = isPortrait ? .fractionalHeight(1.0 / 3) : .fractionalHeight(1.0 / 2)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: groupHeight), subitems: [item])
+            group.contentInsets = .init(top: 0, leading: Constants.horizontalInset, bottom: 0, trailing: Constants.horizontalInset)
+            let section = NSCollectionLayoutSection(group: group)
+            return section
+        }
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false

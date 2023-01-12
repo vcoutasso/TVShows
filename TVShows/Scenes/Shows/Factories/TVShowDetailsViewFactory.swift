@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 @MainActor
 enum TVShowDetailsViewFactory {

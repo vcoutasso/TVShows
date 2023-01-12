@@ -15,6 +15,10 @@ final class StretchyImageHeaderView: UICollectionReusableView, ReusableView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        visualEffectAnimator.stopAnimation(true)
+    }
+
     // MARK: Internal
 
     func configure(with image: UIImage) {

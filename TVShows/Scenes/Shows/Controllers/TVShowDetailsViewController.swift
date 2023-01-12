@@ -1,14 +1,12 @@
 import UIKit
 
 /// Controller for displaying details about a particular show
-final class TVShowDetailsController: UIViewController {
+final class TVShowDetailsViewController: UIViewController {
     // MARK: Lifecycle
 
     init(detailsView: UIView & TVShowDetailsViewProtocol) {
         self.detailsView = detailsView
         super.init(nibName: nil, bundle: nil)
-
-        self.detailsView.translatesAutoresizingMaskIntoConstraints = false
     }
 
     @available(*, unavailable)
@@ -27,6 +25,8 @@ final class TVShowDetailsController: UIViewController {
     // MARK: Private
 
     private func setUpView() {
+        detailsView.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(detailsView)
 
         navigationItem.largeTitleDisplayMode = .never

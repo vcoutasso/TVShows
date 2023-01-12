@@ -2,7 +2,6 @@ import UIKit
 
 // MARK: - TVShowDetailsViewCollectionViewCell
 
-@MainActor
 final class TVShowDetailsInfoCollectionViewCell: UICollectionViewCell, ReusableView {
     // MARK: Lifecycle
 

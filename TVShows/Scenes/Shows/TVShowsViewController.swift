@@ -75,6 +75,7 @@ final class TVShowsViewController: UIViewController {
 
 extension TVShowsViewController: TVShowsListViewDelegate {
     func presentShowDetails(_ show: TVShow) {
-        navigationController?.pushViewController(TVShowDetailsControllerFactory.make(show: show), animated: true)
+        let vc = TVShowDetailsViewControllerFactory.make(show: show)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
