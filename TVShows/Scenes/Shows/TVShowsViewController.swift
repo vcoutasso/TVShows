@@ -43,7 +43,7 @@ final class TVShowsViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         NSLayoutConstraint.activate([
-            showsListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            showsListView.topAnchor.constraint(equalTo: view.topAnchor),
             showsListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             showsListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             showsListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
