@@ -5,4 +5,8 @@ extension String {
     func alphabeticalOnly() -> String {
         self.replacingOccurrences(of: "[^A-za-z]+", with: "", options: [.regularExpression])
     }
+
+    func strippingHTMLTags() -> String {
+        self.replacingOccurrences(of: "<.*?>+", with: "", options: [.regularExpression])
+    }
 }

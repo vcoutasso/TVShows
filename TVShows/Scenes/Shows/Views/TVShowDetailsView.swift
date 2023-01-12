@@ -36,6 +36,7 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
         populateImageView()
 
         addSubviews(posterImageView, headerStackView, statusLabel, genresLabel)
+        addSubviews(scheduleStackView, summaryStackView)
 
         NSLayoutConstraint.activate([
             posterImageView.topAnchor.constraint(equalTo: topAnchor),
@@ -47,6 +48,8 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
             headerStackView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor),
             headerStackView.topAnchor.constraint(equalTo: posterImageView.bottomAnchor),
 
+            scoreIndicator.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
+
             statusLabel.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
             statusLabel.topAnchor.constraint(equalTo: headerStackView.bottomAnchor),
 
@@ -54,7 +57,13 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
             genresLabel.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor),
             genresLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3),
 
-            scoreIndicator.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
+            scheduleStackView.topAnchor.constraint(equalTo: genresLabel.bottomAnchor, constant: 10),
+            scheduleStackView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
+            scheduleStackView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor),
+
+            summaryStackView.topAnchor.constraint(equalTo: scheduleStackView.bottomAnchor, constant: 10),
+            summaryStackView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
+            summaryStackView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor),
         ])
     }
 
@@ -143,5 +152,67 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
         label.textColor = .tertiaryLabel
 
         return label
+    }()
+
+    private lazy var scheduleTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Schedule"
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.textColor = .label
+
+        return label
+    }()
+
+    private lazy var scheduleLabel: UILabel = {
+        let label = UILabel()
+        var scheduleText = ""
+        for day in viewModel.show.schedule.days {
+            scheduleText.append("\(day) \(viewModel.show.schedule.time)\n")
+        }
+        label.numberOfLines = 0
+        label.text = scheduleText
+        label.font = .preferredFont(forTextStyle: .body)
+        label.textColor = .secondaryLabel
+
+        return label
+    }()
+
+    private lazy var scheduleStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [scheduleTitleLabel, scheduleLabel])
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.alignment = .leading
+        stack.axis = .vertical
+        stack.spacing = 3
+
+        return stack
+    }()
+
+    private lazy var summaryTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Summary"
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.textColor = .label
+
+        return label
+    }()
+
+    private lazy var summaryLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.text = viewModel.show.summary?.strippingHTMLTags() ?? "No description available."
+        label.font = .preferredFont(forTextStyle: .body)
+        label.textColor = .secondaryLabel
+
+        return label
+    }()
+
+    private lazy var summaryStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [summaryTitleLabel, summaryLabel])
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.alignment = .leading
+        stack.axis = .vertical
+        stack.spacing = 3
+
+        return stack
     }()
 }
