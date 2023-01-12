@@ -22,8 +22,12 @@ struct TVShow: Codable {
         self.genres = try container.decode([String].self, forKey: .genres)
         self.schedule = try container.decode(TVShowSchedule.self, forKey: .schedule)
         self.status = try container.decode(String.self, forKey: .status)
-        let premieredDate = try container.decode(String.self, forKey: .premiered)
-        self.premiered = Date(premieredDate, dateFormat: "yyyy-MM-dd")
+        let premieredDate = try? container.decodeIfPresent(String.self, forKey: .premiered)
+        if let premieredDate {
+            self.premiered = Date(premieredDate, dateFormat: "yyyy-MM-dd")
+        } else {
+            self.premiered = nil
+        }
         self.rating = try? container.decodeIfPresent(TVMazeRating.self, forKey: .rating)
         self.summary = try container.decodeIfPresent(String.self, forKey: .summary)
         self.image = try container.decodeIfPresent(TVMazeImage.self, forKey: .image)
