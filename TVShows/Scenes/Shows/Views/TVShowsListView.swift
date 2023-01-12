@@ -1,5 +1,7 @@
 import UIKit
 
+// MARK: - TVShowsListViewProtocol
+
 @MainActor
 protocol TVShowsListViewProtocol {
     var delegate: TVShowsListViewDelegate? { get set }
@@ -10,10 +12,14 @@ protocol TVShowsListViewProtocol {
     func clearFilters()
 }
 
+// MARK: - TVShowsListViewDelegate
+
 @MainActor
 protocol TVShowsListViewDelegate: AnyObject {
     func presentShowDetails(_ show: TVShow)
 }
+
+// MARK: - TVShowsListView
 
 /// Displays collection of shows
 final class TVShowsListView: UIView, TVShowsListViewProtocol {
@@ -25,7 +31,9 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
         super.init(frame: .zero)
 
         collectionAdapter.delegate = viewModel
-        viewModel.delegate = self
+        Task {
+            await viewModel.setDelegate(self)
+        }
 
         setUpView()
 
@@ -51,8 +59,10 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
     }
 
     func clearFilters() {
-        viewModel.cancelSearch()
-        collectionView.reloadData()
+        Task {
+            await viewModel.cancelSearch()
+            collectionView.reloadData()
+        }
     }
 
     enum Constants {

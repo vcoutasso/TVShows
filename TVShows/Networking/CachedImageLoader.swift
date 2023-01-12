@@ -1,6 +1,8 @@
 import Foundation
 
-protocol ImageLoading: AnyObject {
+// MARK: - ImageLoading
+
+protocol ImageLoading: AnyActor {
     init(networkService: NetworkRequesting)
 
     static var shared: Self { get }
@@ -8,7 +10,9 @@ protocol ImageLoading: AnyObject {
     func fetchImageData(for url: URL) async -> Result<Data, Error>
 }
 
-final class CachedImageLoader: ImageLoading {
+// MARK: - CachedImageLoader
+
+actor CachedImageLoader: ImageLoading {
     // MARK: Lifecycle
 
     init(networkService: NetworkRequesting) {

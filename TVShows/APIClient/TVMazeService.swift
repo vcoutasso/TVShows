@@ -1,10 +1,14 @@
 import Foundation
 
-protocol TVMazeServiceProtocol: AnyObject {
+// MARK: - TVMazeServiceProtocol
+
+protocol TVMazeServiceProtocol: AnyObject, Sendable {
     init(jsonDecoder: JSONDecoding, networkService: NetworkRequesting)
 
     func execute<T: Codable>(_ request: TVMazeRequest, expecting type: T.Type) async -> Result<T, Error>
 }
+
+// MARK: - TVMazeService
 
 /// Service for fetching data from TV Maze API
 final class TVMazeService: TVMazeServiceProtocol {

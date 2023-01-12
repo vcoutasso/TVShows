@@ -2,18 +2,19 @@ import Foundation
 
 // MARK: - TVShowsListCollectionViewCellViewModelProtocol
 
-protocol TVShowsListCollectionViewCellViewModelProtocol {
-    var show: TVShow { get }
-    var imageData: Data? { get }
+protocol TVShowsListCollectionViewCellViewModelProtocol: AnyActor {
+    nonisolated var show: TVShow { get }
+//    var imageData: Data? { get }
 
     init(show: TVShow, imageLoader: ImageLoading)
 
-    func fetchImage() async
+    func fetchImageData() async -> Data?
+    func getImageData() async -> Data?
 }
 
 // MARK: - TVShowsListCollectionViewCellViewModel
 
-final class TVShowsListCollectionViewCellViewModel: TVShowsListCollectionViewCellViewModelProtocol {
+actor TVShowsListCollectionViewCellViewModel: TVShowsListCollectionViewCellViewModelProtocol {
     // MARK: Lifecycle
 
     init(show: TVShow, imageLoader: ImageLoading = CachedImageLoader.shared) {
@@ -23,11 +24,14 @@ final class TVShowsListCollectionViewCellViewModel: TVShowsListCollectionViewCel
 
     // MARK: Internal
 
-    func fetchImage() async {
+    let show: TVShow
+
+    func fetchImageData() async -> Data? {
         // No image to be fetched
-        guard let imageUrl = show.image?.medium else { return }
+        guard let imageUrl = show.image?.medium else { return nil }
         guard let url = URL(string: imageUrl) else {
-            return print("Failed to generate URL for \(imageUrl)")
+            print("Failed to generate URL for \(imageUrl)")
+            return nil
         }
 
         switch await imageLoader.fetchImageData(for: url) {
@@ -36,12 +40,16 @@ final class TVShowsListCollectionViewCellViewModel: TVShowsListCollectionViewCel
             case .failure(let error):
                 print("Failed to fetch image for \(url.absoluteString) with \(error)")
         }
+
+        return imageData
     }
 
-    private(set) var show: TVShow
-    private(set) var imageData: Data?
+    func getImageData() async -> Data? {
+        imageData
+    }
 
     // MARK: Private
 
     private let imageLoader: ImageLoading
+    private var imageData: Data?
 }

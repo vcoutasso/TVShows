@@ -2,6 +2,7 @@ import UIKit
 
 // MARK: - TVShowsListCollectionViewCell
 
+@MainActor
 final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
     // MARK: Lifecycle
 
@@ -21,14 +22,13 @@ final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
 
     // MARK: Internal
 
-    func configure(with viewModel: TVShowsListCollectionViewCellViewModelProtocol) {
+    func configure(with viewModel: TVShowsListCollectionViewCellViewModelProtocol) async {
         nameLabel.text = viewModel.show.name
-        if viewModel.imageData != nil {
-            posterImageView.image = uiImageFromData(viewModel.imageData)
+        if let imageData = await viewModel.getImageData()  {
+            posterImageView.image = uiImageFromData(imageData)
         } else {
             Task {
-                await viewModel.fetchImage()
-                posterImageView.image = uiImageFromData(viewModel.imageData)
+                posterImageView.image = uiImageFromData(await viewModel.fetchImageData())
             }
         }
     }
