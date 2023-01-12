@@ -21,7 +21,7 @@ final class TVShowDetailsInfoCollectionViewCell: UICollectionViewCell, ReusableV
     func configure(with show: TVShow) {
         nameLabel.text = show.name
         premieredLabel.text = show.premiered?.localizedDateString() ?? "Premiered date unavailable."
-        scoreIndicator.updatePercentage(with: Int(show.rating?.average ?? 0) * 10)
+        scoreIndicator.updatePercentage(with: (show.rating?.average ?? 0) / 10)
         statusLabel.text = show.status
         genresLabel.text = show.genres.joined(separator: " | ")
         var scheduleText = ""

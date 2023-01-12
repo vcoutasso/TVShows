@@ -1,9 +1,12 @@
 import UIKit
 
+/// Circular progress indicator view that fills its outline according to the `fillPercentage` attribute
 final class CircularProgressIndicatorView: UIView {
     // MARK: Lifecycle
 
-    init(fillPercentage: Int = 0) {
+    /// Initializer
+    /// - Parameter fillPercentage: The relative location at which to stop stroking the outline
+    init(fillPercentage: CGFloat = 0.0) {
         self.fillPercentage = fillPercentage
         super.init(frame: .zero)
         addSubview(progressLabel)
@@ -28,10 +31,13 @@ final class CircularProgressIndicatorView: UIView {
         createCircularPath()
     }
 
-    func updatePercentage(with value: Int) {
+    func updatePercentage(with value: CGFloat) {
         fillPercentage = value
         setNeedsLayout()
     }
+
+
+    private(set) var fillPercentage: CGFloat
 
     // MARK: Private
 
@@ -53,7 +59,7 @@ final class CircularProgressIndicatorView: UIView {
         progressLayer.lineWidth = radius / 3
         progressLayer.strokeColor = colorForFillPercentage().cgColor
 
-        progressLabel.text = String(fillPercentage)
+        progressLabel.text = String(Int(fillPercentage * 100.0))
         progressLabel.font = .systemFont(ofSize: 0.85 * radius, weight: .bold)
         progressLabel.textColor = colorForFillPercentage()
 
@@ -62,7 +68,7 @@ final class CircularProgressIndicatorView: UIView {
     }
 
     private func colorForFillPercentage() -> UIColor {
-        fillPercentage < 50 ? UIColor.systemRed : fillPercentage < 80 ? UIColor.systemYellow : UIColor.systemGreen
+        fillPercentage < 0.5 ? UIColor.systemRed : fillPercentage < 0.8 ? UIColor.systemYellow : UIColor.systemGreen
     }
 
     private lazy var circleLayer: CAShapeLayer = {
@@ -77,7 +83,7 @@ final class CircularProgressIndicatorView: UIView {
         let layer = CAShapeLayer()
         layer.fillColor = UIColor.clear.cgColor
         layer.lineCap = .round
-        layer.strokeEnd = CGFloat(fillPercentage) / 100
+        layer.strokeEnd = fillPercentage
         return layer
     }()
 
@@ -92,6 +98,4 @@ final class CircularProgressIndicatorView: UIView {
 
     private let startAngle = CGFloat(-Double.pi / 2)
     private let endAngle = CGFloat(3 * Double.pi / 2)
-
-    private var fillPercentage: Int
 }
