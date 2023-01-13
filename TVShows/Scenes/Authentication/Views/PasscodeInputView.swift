@@ -5,9 +5,10 @@ import UIKit
 final class PasscodeInputView: UIView, UITextInputTraits {
     // MARK: Lifecycle
 
-    init(expectedCode: String, successfulAuthenticationHandler: @escaping () -> Void) {
+    init(expectedCode: String?, maxLength: Int, completionHandler: @escaping (String) -> Void) {
         self.expectedCode = expectedCode
-        self.successfulAuthenticationHandler = successfulAuthenticationHandler
+        self.maxLength = maxLength
+        self.completionHandler = completionHandler
         super.init(frame: .zero)
         setUpView()
         setUpTapGestureRecognizer()
@@ -50,9 +51,9 @@ final class PasscodeInputView: UIView, UITextInputTraits {
     private func codeDidChange() {
         updateStack(with: currentCode)
         guard currentCode.count == maxLength else { return }
-        if currentCode == expectedCode {
+        if currentCode == expectedCode || expectedCode == nil {
             resignFirstResponder()
-            successfulAuthenticationHandler?()
+            completionHandler?(currentCode)
         }
     }
 
@@ -68,11 +69,9 @@ final class PasscodeInputView: UIView, UITextInputTraits {
         for view in pins { contentView.addArrangedSubview(view) }
     }
 
-    private let expectedCode: String
-    private let successfulAuthenticationHandler: (() -> Void)?
-    private var maxLength: Int  {
-        expectedCode.count
-    }
+    private let expectedCode: String?
+    private let completionHandler: ((String) -> Void)?
+    private let maxLength: Int
 
     private var currentCode: String = "" {
         didSet {
@@ -81,7 +80,7 @@ final class PasscodeInputView: UIView, UITextInputTraits {
     }
 
     private lazy var contentView: UIStackView = {
-        let emptyPins = Array(0..<self.expectedCode.count).map{ _ in PasscodePinView.empty() }
+        let emptyPins = Array(0..<self.maxLength).map{ _ in PasscodePinView.empty() }
         let stack = UIStackView(arrangedSubviews: emptyPins)
         stack.distribution = .fillEqually
         stack.axis = .horizontal

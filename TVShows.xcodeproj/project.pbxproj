@@ -121,6 +121,16 @@
 		4CEFD3E42971EFB7007C9694 /* PasscodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3E32971EFB7007C9694 /* PasscodeInputView.swift */; };
 		4CEFD3E82971F938007C9694 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3E72971F938007C9694 /* UIStackView+.swift */; };
 		4CEFD3EA2971F9A3007C9694 /* PasscodePinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3E92971F9A3007C9694 /* PasscodePinView.swift */; };
+		4CEFD3EC297201E1007C9694 /* UserDefaultsPasscodeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3EB297201E1007C9694 /* UserDefaultsPasscodeStorage.swift */; };
+		4CEFD3EE29720377007C9694 /* RegisterPasscodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3ED29720377007C9694 /* RegisterPasscodeView.swift */; };
+		4CEFD3F0297208A8007C9694 /* ConfirmPasscodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3EF297208A8007C9694 /* ConfirmPasscodeView.swift */; };
+		4CEFD3F229720A0C007C9694 /* RegisterPasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3F129720A0C007C9694 /* RegisterPasscodeViewController.swift */; };
+		4CEFD3F429720C25007C9694 /* ConfirmPasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3F329720C25007C9694 /* ConfirmPasscodeViewController.swift */; };
+		4CEFD3F629720D4A007C9694 /* RegisterPasscodeViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3F529720D4A007C9694 /* RegisterPasscodeViewControllerFactory.swift */; };
+		4CEFD3F829720DFD007C9694 /* RegisterPasscodeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3F729720DFD007C9694 /* RegisterPasscodeViewFactory.swift */; };
+		4CEFD3FA29720E19007C9694 /* ConfirmPasscodeViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3F929720E19007C9694 /* ConfirmPasscodeViewControllerFactory.swift */; };
+		4CEFD3FC29720E50007C9694 /* ConfirmPasscodeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3FB29720E50007C9694 /* ConfirmPasscodeViewFactory.swift */; };
+		4CEFD3FE29721419007C9694 /* ConfirmPasscodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3FD29721419007C9694 /* ConfirmPasscodeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -251,6 +261,16 @@
 		4CEFD3E32971EFB7007C9694 /* PasscodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeInputView.swift; sourceTree = "<group>"; };
 		4CEFD3E72971F938007C9694 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		4CEFD3E92971F9A3007C9694 /* PasscodePinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodePinView.swift; sourceTree = "<group>"; };
+		4CEFD3EB297201E1007C9694 /* UserDefaultsPasscodeStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsPasscodeStorage.swift; sourceTree = "<group>"; };
+		4CEFD3ED29720377007C9694 /* RegisterPasscodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasscodeView.swift; sourceTree = "<group>"; };
+		4CEFD3EF297208A8007C9694 /* ConfirmPasscodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeView.swift; sourceTree = "<group>"; };
+		4CEFD3F129720A0C007C9694 /* RegisterPasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasscodeViewController.swift; sourceTree = "<group>"; };
+		4CEFD3F329720C25007C9694 /* ConfirmPasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeViewController.swift; sourceTree = "<group>"; };
+		4CEFD3F529720D4A007C9694 /* RegisterPasscodeViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasscodeViewControllerFactory.swift; sourceTree = "<group>"; };
+		4CEFD3F729720DFD007C9694 /* RegisterPasscodeViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPasscodeViewFactory.swift; sourceTree = "<group>"; };
+		4CEFD3F929720E19007C9694 /* ConfirmPasscodeViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeViewControllerFactory.swift; sourceTree = "<group>"; };
+		4CEFD3FB29720E50007C9694 /* ConfirmPasscodeViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeViewFactory.swift; sourceTree = "<group>"; };
+		4CEFD3FD29721419007C9694 /* ConfirmPasscodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -724,6 +744,7 @@
 		4CD26FAB2971CDC9002A75F6 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				4CEFD3FF29721485007C9694 /* ViewModels */,
 				4CEFD3E22971EFA1007C9694 /* Views */,
 				4CD26FB42971D92D002A75F6 /* Factories */,
 				4CD26FAF2971D674002A75F6 /* Controllers */,
@@ -736,6 +757,7 @@
 			isa = PBXGroup;
 			children = (
 				4CD26FAD2971CEB9002A75F6 /* BiometricAuthenticationService.swift */,
+				4CEFD3EB297201E1007C9694 /* UserDefaultsPasscodeStorage.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -744,6 +766,8 @@
 			isa = PBXGroup;
 			children = (
 				4CD26FB02971D693002A75F6 /* AuthenticationViewController.swift */,
+				4CEFD3F129720A0C007C9694 /* RegisterPasscodeViewController.swift */,
+				4CEFD3F329720C25007C9694 /* ConfirmPasscodeViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -752,6 +776,10 @@
 			isa = PBXGroup;
 			children = (
 				4CD26FB52971D96A002A75F6 /* AuthenticationViewControllerFactory.swift */,
+				4CEFD3F529720D4A007C9694 /* RegisterPasscodeViewControllerFactory.swift */,
+				4CEFD3F729720DFD007C9694 /* RegisterPasscodeViewFactory.swift */,
+				4CEFD3F929720E19007C9694 /* ConfirmPasscodeViewControllerFactory.swift */,
+				4CEFD3FB29720E50007C9694 /* ConfirmPasscodeViewFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -782,8 +810,18 @@
 			children = (
 				4CEFD3E32971EFB7007C9694 /* PasscodeInputView.swift */,
 				4CEFD3E92971F9A3007C9694 /* PasscodePinView.swift */,
+				4CEFD3ED29720377007C9694 /* RegisterPasscodeView.swift */,
+				4CEFD3EF297208A8007C9694 /* ConfirmPasscodeView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		4CEFD3FF29721485007C9694 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				4CEFD3FD29721419007C9694 /* ConfirmPasscodeViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -892,6 +930,7 @@
 			files = (
 				4CD26FA42971B23F002A75F6 /* FavoriteShowsListViewFactory.swift in Sources */,
 				4CB6CFAF296D9EE900E2A229 /* TVShowsListViewController.swift in Sources */,
+				4CEFD3F829720DFD007C9694 /* RegisterPasscodeViewFactory.swift in Sources */,
 				4C08F1762970A0AE00FDA2C9 /* TVShowDetailsInfoSeasonHeaderViewModel.swift in Sources */,
 				4C6C25AD296F7C720004FB3F /* TVMazeRating.swift in Sources */,
 				4C6C25A3296F64190004FB3F /* TVShowsListViewControllerFactory.swift in Sources */,
@@ -905,7 +944,10 @@
 				4CAE89B72971161000083877 /* ShowsFlowCoordinator.swift in Sources */,
 				4CB6CFF1296DAE0200E2A229 /* TVMazeRequest.swift in Sources */,
 				4CD26FB12971D693002A75F6 /* AuthenticationViewController.swift in Sources */,
+				4CEFD3EE29720377007C9694 /* RegisterPasscodeView.swift in Sources */,
+				4CEFD3F629720D4A007C9694 /* RegisterPasscodeViewControllerFactory.swift in Sources */,
 				4CEFD3E82971F938007C9694 /* UIStackView+.swift in Sources */,
+				4CEFD3F229720A0C007C9694 /* RegisterPasscodeViewController.swift in Sources */,
 				4C08F1802970BEA900FDA2C9 /* TVShowEpisodeDetailsViewModel.swift in Sources */,
 				4CAE89A729710A0300083877 /* TVShowsPeopleViewController.swift in Sources */,
 				4C6C25B3296FA3E30004FB3F /* StretchyImageHeaderView.swift in Sources */,
@@ -923,22 +965,27 @@
 				4C6253D6296E4FB7006AC733 /* LoadingCollectionViewFooter.swift in Sources */,
 				4CD26FAE2971CEB9002A75F6 /* BiometricAuthenticationService.swift in Sources */,
 				4CEFD3EA2971F9A3007C9694 /* PasscodePinView.swift in Sources */,
+				4CEFD3FE29721419007C9694 /* ConfirmPasscodeViewModel.swift in Sources */,
 				4C6C25A7296F68330004FB3F /* TVShowDetailsViewControllerFactory.swift in Sources */,
 				4CB6CFEF296DAD5D00E2A229 /* TVMazeEndpoint.swift in Sources */,
 				4C6C25A9296F685B0004FB3F /* TVShowDetailsViewFactory.swift in Sources */,
 				4C6253B8296E2B57006AC733 /* UICollectionView+.swift in Sources */,
 				4C08F18E2970DF2B00FDA2C9 /* CoreDataModel.xcdatamodeld in Sources */,
+				4CEFD3FA29720E19007C9694 /* ConfirmPasscodeViewControllerFactory.swift in Sources */,
 				4CD26F9E2971A9AB002A75F6 /* FavoriteShowsListTableViewCell.swift in Sources */,
 				4CB6CFED296DAC7100E2A229 /* TVMazeImage.swift in Sources */,
 				4CD26F8F29719763002A75F6 /* FavoriteTVShowsViewControllerFactory.swift in Sources */,
 				4CD26F972971A0F0002A75F6 /* FavoriteShowsListView.swift in Sources */,
 				4C6C2599296F421B0004FB3F /* TVShowDetailsViewController.swift in Sources */,
+				4CEFD3F429720C25007C9694 /* ConfirmPasscodeViewController.swift in Sources */,
 				4C6253B6296E2B18006AC733 /* TVShowsListCollectionViewCell.swift in Sources */,
 				4CD26F8D29719721002A75F6 /* TVShowsPeopleViewControllerFactory.swift in Sources */,
 				4CB6CFDC296DA16B00E2A229 /* TVShow.swift in Sources */,
 				4C6C2596296F32A30004FB3F /* TVMazeFuzzySearchResults.swift in Sources */,
 				4CD26F992971A205002A75F6 /* FavoriteShowsListViewModel.swift in Sources */,
+				4CEFD3F0297208A8007C9694 /* ConfirmPasscodeView.swift in Sources */,
 				4C625383296DBECB006AC733 /* TVMazeService.swift in Sources */,
+				4CEFD3FC29720E50007C9694 /* ConfirmPasscodeViewFactory.swift in Sources */,
 				4C6C25A0296F5E200004FB3F /* TVShowListViewCollectionViewAdapter.swift in Sources */,
 				4C08F17A2970B08100FDA2C9 /* TVShowEpisodeDetailsViewController.swift in Sources */,
 				4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */,
@@ -958,6 +1005,7 @@
 				4C08F1852970DD4300FDA2C9 /* DataPersisting.swift in Sources */,
 				4CAE89B02971114600083877 /* FlowCoordinator.swift in Sources */,
 				4C6C2591296EF8550004FB3F /* String+.swift in Sources */,
+				4CEFD3EC297201E1007C9694 /* UserDefaultsPasscodeStorage.swift in Sources */,
 				4CD26FB62971D96A002A75F6 /* AuthenticationViewControllerFactory.swift in Sources */,
 				4C62539D296E0DFC006AC733 /* JSONDecoding.swift in Sources */,
 				4CAE89AB29710A5800083877 /* FavoriteTVShowsViewController.swift in Sources */,

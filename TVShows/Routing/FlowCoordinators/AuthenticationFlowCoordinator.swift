@@ -3,8 +3,9 @@ import UIKit
 // MARK: - AuthenticationFlow
 
 enum AuthenticationFlow: FlowRoute {
-    case `default`
-    case fallback
+    case register
+    case confirm(String)
+    case authenticate
 }
 
 // MARK: - AuthenticationFlowCoordinator
@@ -19,7 +20,7 @@ final class AuthenticationFlowCoordinator: Coordinator {
     weak var parentCoordinator: (any MainCoordinator)?
 
     func start() -> UIViewController {
-        let mainController = AuthenticationViewControllerFactory.default()
+        let mainController = RegisterPasscodeViewControllerFactory.default()
         let navigationController = UINavigationController(rootViewController: mainController)
         rootViewController = navigationController
 
@@ -33,10 +34,14 @@ final class AuthenticationFlowCoordinator: Coordinator {
         }
 
         switch flow {
-            case .`default`:
+            case .register:
                 rootNavigationController?.popToRootViewController(animated: true)
-            case .fallback:
-                break
+            case .confirm(let passcode):
+                let destinationViewController = ConfirmPasscodeViewControllerFactory.make(passcode: passcode)
+                rootNavigationController?.pushViewController(destinationViewController, animated: true)
+            case .authenticate:
+                let destinationViewController = AuthenticationViewControllerFactory.default()
+                rootNavigationController?.setViewControllers([destinationViewController], animated: true)
         }
     }
 }

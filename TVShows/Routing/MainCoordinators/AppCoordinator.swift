@@ -73,7 +73,7 @@ final class AppCoordinator: MainCoordinator {
 
     func resetToRoot() -> Self {
         childrenCoordinators.first?.resetToRoot()
-        handleFlow(AppFlow.authentication(.default))
+        handleFlow(AppFlow.authentication(.register))
         return self
     }
 

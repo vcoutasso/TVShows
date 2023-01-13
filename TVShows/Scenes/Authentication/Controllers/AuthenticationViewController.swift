@@ -7,8 +7,13 @@ final class AuthenticationViewController: UIViewController, Coordinated {
 
     // MARK: Lifecycle
 
-    init(biometricAuthenticator: BiometricAuthenticationProtocol, coordinator: (any FlowCoordinator<AuthenticationFlow>)?) {
+    init(
+        biometricAuthenticator: BiometricAuthenticationProtocol,
+        passcodeStorage: UserPasscodeStoring,
+        coordinator: (any FlowCoordinator<AuthenticationFlow>)?
+    ) {
         self.biometricAuthenticator = biometricAuthenticator
+        self.passcodeStorage = passcodeStorage
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
         setUpView()
@@ -31,7 +36,7 @@ final class AuthenticationViewController: UIViewController, Coordinated {
             Task {
                 switch await biometricAuthenticator.evaluateBiometrics() {
                     case .success:
-                        coordinator?.handleFlow(AppFlow.tab(.shows(.list)))
+                        didAuthenticate()
                     case .failure:
                         fallBackToPasscode()
                 }
@@ -42,7 +47,6 @@ final class AuthenticationViewController: UIViewController, Coordinated {
     // MARK: Private
 
     private func setUpView() {
-        passcodeView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(passcodeView)
 
         NSLayoutConstraint.activate([
@@ -57,9 +61,20 @@ final class AuthenticationViewController: UIViewController, Coordinated {
         passcodeView.becomeFirstResponder()
     }
 
-    private let biometricAuthenticator: BiometricAuthenticationProtocol
-
-    private lazy var passcodeView = PasscodeInputView(expectedCode: "1234") { [weak self] in
-        self?.coordinator?.handleFlow(AppFlow.tab(.shows(.list)))
+    private func didAuthenticate() {
+        coordinator?.handleFlow(AppFlow.tab(.shows(.list)))
     }
+
+    private let biometricAuthenticator: BiometricAuthenticationProtocol
+    private let passcodeStorage: UserPasscodeStoring
+
+    private lazy var passcodeView: PasscodeInputView = {
+        let passcode = self.passcodeStorage.getPasscode()
+        let view = PasscodeInputView(expectedCode: passcode, maxLength: passcode?.count ?? .zero) { [weak self] _ in
+            self?.didAuthenticate()
+        }
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemPink
+        return view
+    }()
 }
