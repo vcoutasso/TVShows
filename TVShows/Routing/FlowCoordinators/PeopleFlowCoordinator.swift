@@ -15,7 +15,7 @@ final class PeopleFlowCoordinator: Coordinator {
     }
 
     func start() -> UIViewController {
-        let mainController = UIViewController()
+        let mainController = TVShowsPeopleViewController()
         let navigationController = UINavigationController(rootViewController: mainController)
         rootViewController = navigationController
         return rootViewController

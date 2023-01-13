@@ -101,6 +101,8 @@
 		4CB6CFF8296DB94000E2A229 /* UnderTheDomeSchedule.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFF7296DB94000E2A229 /* UnderTheDomeSchedule.json */; };
 		4CB6CFFA296DB9FC00E2A229 /* TVMazeImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFF9296DB9FC00E2A229 /* TVMazeImageTests.swift */; };
 		4CB6CFFC296DBA4E00E2A229 /* UnderTheDomeImage.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CB6CFFB296DBA4E00E2A229 /* UnderTheDomeImage.json */; };
+		4CD26F8D29719721002A75F6 /* TVShowsPeopleViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD26F8C29719721002A75F6 /* TVShowsPeopleViewControllerFactory.swift */; };
+		4CD26F8F29719763002A75F6 /* FavoriteTVShowsViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD26F8E29719763002A75F6 /* FavoriteTVShowsViewControllerFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +213,8 @@
 		4CB6CFF7296DB94000E2A229 /* UnderTheDomeSchedule.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = UnderTheDomeSchedule.json; sourceTree = "<group>"; };
 		4CB6CFF9296DB9FC00E2A229 /* TVMazeImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeImageTests.swift; sourceTree = "<group>"; };
 		4CB6CFFB296DBA4E00E2A229 /* UnderTheDomeImage.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = UnderTheDomeImage.json; sourceTree = "<group>"; };
+		4CD26F8C29719721002A75F6 /* TVShowsPeopleViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsPeopleViewControllerFactory.swift; sourceTree = "<group>"; };
+		4CD26F8E29719763002A75F6 /* FavoriteTVShowsViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTVShowsViewControllerFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -485,6 +489,7 @@
 		4CAE89A4297109EB00083877 /* People */ = {
 			isa = PBXGroup;
 			children = (
+				4CD26F9029719845002A75F6 /* Factories */,
 				4CAE89A5297109F100083877 /* Controllers */,
 			);
 			path = People;
@@ -501,6 +506,7 @@
 		4CAE89A829710A2900083877 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
+				4CD26F912971984D002A75F6 /* Factories */,
 				4CAE89A929710A3500083877 /* Controllers */,
 			);
 			path = Favorites;
@@ -628,6 +634,22 @@
 				4C62539A296E0885006AC733 /* TVMazeServiceTests.swift */,
 			);
 			path = APIClient;
+			sourceTree = "<group>";
+		};
+		4CD26F9029719845002A75F6 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				4CD26F8C29719721002A75F6 /* TVShowsPeopleViewControllerFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
+		4CD26F912971984D002A75F6 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				4CD26F8E29719763002A75F6 /* FavoriteTVShowsViewControllerFactory.swift */,
+			);
+			path = Factories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -764,8 +786,10 @@
 				4C6253B8296E2B57006AC733 /* UICollectionView+.swift in Sources */,
 				4C08F18E2970DF2B00FDA2C9 /* CoreDataModel.xcdatamodeld in Sources */,
 				4CB6CFED296DAC7100E2A229 /* TVMazeImage.swift in Sources */,
+				4CD26F8F29719763002A75F6 /* FavoriteTVShowsViewControllerFactory.swift in Sources */,
 				4C6C2599296F421B0004FB3F /* TVShowDetailsViewController.swift in Sources */,
 				4C6253B6296E2B18006AC733 /* TVShowsListCollectionViewCell.swift in Sources */,
+				4CD26F8D29719721002A75F6 /* TVShowsPeopleViewControllerFactory.swift in Sources */,
 				4CB6CFDC296DA16B00E2A229 /* TVShow.swift in Sources */,
 				4C6C2596296F32A30004FB3F /* TVMazeFuzzySearchResults.swift in Sources */,
 				4C625383296DBECB006AC733 /* TVMazeService.swift in Sources */,

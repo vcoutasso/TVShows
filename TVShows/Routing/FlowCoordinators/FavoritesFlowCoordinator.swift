@@ -15,7 +15,7 @@ final class FavoritesFlowCoordinator: Coordinator {
     }
 
     func start() -> UIViewController {
-        let mainController = UIViewController()
+        let mainController = FavoriteTVShowsViewControllerFactory.default()
         let navigationController = UINavigationController(rootViewController: mainController)
         rootViewController = navigationController
         return rootViewController
