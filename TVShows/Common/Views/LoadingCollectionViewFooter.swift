@@ -1,12 +1,13 @@
 import UIKit
 
+// MARK: - LoadingCollectionViewFooter
+
 final class LoadingCollectionViewFooter: UICollectionReusableView, ReusableView {
     // MARK: Lifecycle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(spinner)
-        addConstraints()
+        setUpView()
         startAnimating()
     }
 
@@ -27,7 +28,9 @@ final class LoadingCollectionViewFooter: UICollectionReusableView, ReusableView 
 
     // MARK: Private
 
-    private func addConstraints() {
+    private func setUpView() {
+        addSubview(spinner)
+
         NSLayoutConstraint.activate([
             spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: centerYAnchor),

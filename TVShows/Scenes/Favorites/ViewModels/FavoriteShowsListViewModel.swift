@@ -4,9 +4,18 @@ import Foundation
 
 @MainActor
 protocol FavoriteShowsListViewModelProtocol {
+    var delegate: FavoriteShowsListViewModelDelegate? { get set }
+
     var favoriteShowViewModels: [FavoriteShowsListTableCellViewModelProtocol] { get }
 
     func fetchFavoriteShows() async
+}
+
+// MARK: - FavoriteShowsListViewModelDelegate
+
+@MainActor
+protocol FavoriteShowsListViewModelDelegate {
+    func didSelectCellForShow(_ show: TVShow)
 }
 
 // MARK: - FavoriteShowsListViewModel
@@ -20,6 +29,7 @@ final class FavoriteShowsListViewModel: FavoriteShowsListViewModelProtocol {
 
     // MARK: Internal
 
+    var delegate: FavoriteShowsListViewModelDelegate?
     private(set) var favoriteShowViewModels: [FavoriteShowsListTableCellViewModelProtocol] = []
 
     func fetchFavoriteShows() async {
@@ -40,4 +50,7 @@ final class FavoriteShowsListViewModel: FavoriteShowsListViewModelProtocol {
 // MARK: - FavoriteShowsListViewModel + FavoriteShowsListTableViewAdapterDelegate
 
 extension FavoriteShowsListViewModel: FavoriteShowsListTableViewAdapterDelegate {
+    func didSelectCell(at indexPath: IndexPath) {
+        delegate?.didSelectCellForShow(favoriteShowViewModels[indexPath.row].show)
+    }
 }

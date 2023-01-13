@@ -6,11 +6,15 @@ import UIKit
 enum FavoriteTVShowsViewControllerFactory {
     static func `default`() -> FavoriteTVShowsViewController {
         let listView = FavoriteShowsListViewFactory.default()
-        return make(listView: listView)
+        let coordinator = AppCoordinator.shared.flowCoordinatorFor(FavoritesFlow.self)
+        return make(listView: listView, coordinator: coordinator)
     }
 
-    static func make(listView: UIView & FavoriteShowsListViewProtocol) -> FavoriteTVShowsViewController {
-        FavoriteTVShowsViewController(listView: listView)
+    static func make(
+        listView: UIView & FavoriteShowsListViewProtocol,
+        coordinator: (any FlowCoordinator<FavoritesFlow>)?
+    ) -> FavoriteTVShowsViewController {
+        FavoriteTVShowsViewController(listView: listView, coordinator: coordinator)
     }
 }
 

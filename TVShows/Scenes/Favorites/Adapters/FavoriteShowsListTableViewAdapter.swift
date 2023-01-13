@@ -10,6 +10,8 @@ protocol FavoriteShowsListTableViewAdapterProtocol: UITableViewDelegate, UITable
 @MainActor
 protocol FavoriteShowsListTableViewAdapterDelegate {
     var favoriteShowViewModels: [FavoriteShowsListTableCellViewModelProtocol] { get }
+
+    func didSelectCell(at indexPath: IndexPath)
 }
 
 // MARK: - FavoriteShowsListTableViewAdapter
@@ -39,5 +41,6 @@ final class FavoriteShowsListTableViewAdapter: NSObject, FavoriteShowsListTableV
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        delegate?.didSelectCell(at: indexPath)
     }
 }

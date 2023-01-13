@@ -3,8 +3,17 @@ import UIKit
 // MARK: - FavoriteShowsListViewProtocol
 
 @MainActor
-protocol FavoriteShowsListViewProtocol {
+protocol FavoriteShowsListViewProtocol: AnyObject {
+    var delegate: FavoriteShowsListViewDelegate? { get set }
+
     func reloadFavoritesList()
+}
+
+// MARK: - FavoriteShowsListViewDelegate
+
+@MainActor
+protocol FavoriteShowsListViewDelegate: AnyObject {
+    func displayShowDetails(_ show: TVShow)
 }
 
 // MARK: - FavoriteShowsListView
@@ -20,6 +29,7 @@ final class FavoriteShowsListView: UIView, FavoriteShowsListViewProtocol {
         self.adapter = adapter
         adapter.delegate = viewModel
         super.init(frame: .zero)
+        self.viewModel.delegate = self
         setUpView()
         Task {
             await viewModel.fetchFavoriteShows()
@@ -32,6 +42,8 @@ final class FavoriteShowsListView: UIView, FavoriteShowsListViewProtocol {
     }
 
     // MARK: Internal
+
+    var delegate: FavoriteShowsListViewDelegate?
 
     func reloadFavoritesList() {
         Task {
@@ -54,7 +66,8 @@ final class FavoriteShowsListView: UIView, FavoriteShowsListViewProtocol {
             tableView.leftAnchor.constraint(equalTo: leftAnchor),
         ])
     }
-    private let viewModel: FavoriteShowsListViewModelProtocol
+    
+    private var viewModel: FavoriteShowsListViewModelProtocol
     private let adapter: FavoriteShowsListTableViewAdapterProtocol
 
     private lazy var tableView: UITableView = {
@@ -65,4 +78,12 @@ final class FavoriteShowsListView: UIView, FavoriteShowsListViewProtocol {
         tableView.dataSource = adapter
         return tableView
     }()
+}
+
+// MARK: FavoriteShowsListView + FavoriteShowsListViewModelDelegate
+
+extension FavoriteShowsListView: FavoriteShowsListViewModelDelegate {
+    func didSelectCellForShow(_ show: TVShow) {
+        delegate?.displayShowDetails(show)
+    }
 }

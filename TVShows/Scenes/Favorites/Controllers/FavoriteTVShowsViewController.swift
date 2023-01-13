@@ -2,12 +2,19 @@ import UIKit
 
 // MARK: - FavoriteTVShowsViewController
 
-final class FavoriteTVShowsViewController: UIViewController {
+final class FavoriteTVShowsViewController: UIViewController, Coordinated {
+    typealias Flow = FavoritesFlow
+
     // MARK: Lifecycle
 
-    init(listView: UIView & FavoriteShowsListViewProtocol) {
+    init(
+        listView: UIView & FavoriteShowsListViewProtocol,
+        coordinator: (any FlowCoordinator<Flow>)?
+    ) {
         self.listView = listView
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
+        listView.delegate = self
         setUpView()
     }
 
@@ -20,6 +27,10 @@ final class FavoriteTVShowsViewController: UIViewController {
         super.viewWillAppear(true)
         listView.reloadFavoritesList()
     }
+
+    // MARK: Internal
+
+    private(set) var coordinator: (any FlowCoordinator<Flow>)?
 
     // MARK: Private
 
@@ -42,4 +53,10 @@ final class FavoriteTVShowsViewController: UIViewController {
     }
 
     private let listView: UIView & FavoriteShowsListViewProtocol
+}
+
+extension FavoriteTVShowsViewController: FavoriteShowsListViewDelegate {
+    func displayShowDetails(_ show: TVShow) {
+        coordinator?.handleFlow(AppFlow.shows(.showDetails(show)))
+    }
 }
