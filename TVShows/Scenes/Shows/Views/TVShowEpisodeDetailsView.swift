@@ -74,6 +74,8 @@ final class TVShowEpisodeDetailsView: UIView {
             episodeImageView.centerYAnchor.constraint(equalTo: backgroundCardView.topAnchor),
             episodeImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: frame.height > frame.width ? 0.55 : 0.35),
         ])
+
+        summaryStackView.isHidden = summaryLabel.text?.isEmpty == true
     }
 
     private let viewModel: TVShowEpisodeDetailsViewModelProtocol
@@ -167,7 +169,11 @@ final class TVShowEpisodeDetailsView: UIView {
         label.numberOfLines = 0
         label.font = .preferredFont(forTextStyle: .body)
         label.textColor = .secondaryLabel
-        label.text = viewModel.episode.summary?.strippingHTMLTags() ?? "No description available."
+        if let text = viewModel.episode.summary?.strippingHTMLTags(), !text.isEmpty {
+            label.text = text
+        } else {
+            label.text = "No description available."
+        }
         return label
     }()
 

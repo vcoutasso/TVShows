@@ -36,7 +36,6 @@ final class CircularProgressIndicatorView: UIView {
         setNeedsLayout()
     }
 
-
     private(set) var fillPercentage: CGFloat
 
     // MARK: Private
