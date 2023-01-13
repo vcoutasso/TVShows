@@ -37,16 +37,30 @@ final class TVShowEpisodeDetailsView: UIView {
         addSubview(backgroundSpacerView)
         addSubview(backgroundCardView)
         addSubview(episodeImageView)
-        addSubview(titleStackView)
-        addSubview(summaryStackView)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+
+        contentView.addArrangedSubview(titleStackView)
+        contentView.addArrangedSubview(summaryStackView)
 
         NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: episodeImageView.bottomAnchor, constant: 10),
+            scrollView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            scrollView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
+
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.rightAnchor.constraint(equalTo: scrollView.rightAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+
             backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
             backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             backgroundImageView.widthAnchor.constraint(equalTo: widthAnchor),
             backgroundImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5),
 
-            backgroundSpacerView.topAnchor.constraint(equalTo: backgroundImageView.bottomAnchor),
+            backgroundSpacerView.topAnchor.constraint(equalTo: bottomAnchor),
             backgroundSpacerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             backgroundSpacerView.widthAnchor.constraint(equalTo: widthAnchor),
             backgroundSpacerView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -58,19 +72,27 @@ final class TVShowEpisodeDetailsView: UIView {
 
             episodeImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             episodeImageView.centerYAnchor.constraint(equalTo: backgroundCardView.topAnchor),
-            episodeImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.55),
-
-            titleStackView.topAnchor.constraint(equalTo: episodeImageView.bottomAnchor, constant: 10),
-            titleStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            titleStackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-
-            summaryStackView.topAnchor.constraint(equalTo: titleStackView.bottomAnchor, constant: 20),
-            summaryStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            summaryStackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+            episodeImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: frame.height > frame.width ? 0.55 : 0.35),
         ])
     }
 
     private let viewModel: TVShowEpisodeDetailsViewModelProtocol
+
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    }()
+
+    private lazy var contentView: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.axis = .vertical
+        view.spacing = 20
+        return view
+    }()
 
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
