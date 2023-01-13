@@ -131,6 +131,8 @@
 		4CEFD3FA29720E19007C9694 /* ConfirmPasscodeViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3F929720E19007C9694 /* ConfirmPasscodeViewControllerFactory.swift */; };
 		4CEFD3FC29720E50007C9694 /* ConfirmPasscodeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3FB29720E50007C9694 /* ConfirmPasscodeViewFactory.swift */; };
 		4CEFD3FE29721419007C9694 /* ConfirmPasscodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3FD29721419007C9694 /* ConfirmPasscodeViewModel.swift */; };
+		4CEFD40129722023007C9694 /* CollectionViewSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD40029722023007C9694 /* CollectionViewSpy.swift */; };
+		4CEFD40329722174007C9694 /* TVShowsListViewDelegateSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD40229722174007C9694 /* TVShowsListViewDelegateSpy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -271,6 +273,8 @@
 		4CEFD3F929720E19007C9694 /* ConfirmPasscodeViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeViewControllerFactory.swift; sourceTree = "<group>"; };
 		4CEFD3FB29720E50007C9694 /* ConfirmPasscodeViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeViewFactory.swift; sourceTree = "<group>"; };
 		4CEFD3FD29721419007C9694 /* ConfirmPasscodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeViewModel.swift; sourceTree = "<group>"; };
+		4CEFD40029722023007C9694 /* CollectionViewSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSpy.swift; sourceTree = "<group>"; };
+		4CEFD40229722174007C9694 /* TVShowsListViewDelegateSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsListViewDelegateSpy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +334,8 @@
 				4C6253CB296E4125006AC733 /* TVMazeAPIServiceSpy.swift */,
 				4C6C2592296F065C0004FB3F /* TVShowsListViewModelDelegateSpy.swift */,
 				4C08F1772970AF7200FDA2C9 /* TVShowListViewCollectionViewAdapterSpy.swift */,
+				4CEFD40029722023007C9694 /* CollectionViewSpy.swift */,
+				4CEFD40229722174007C9694 /* TVShowsListViewDelegateSpy.swift */,
 			);
 			path = Spies;
 			sourceTree = "<group>";
@@ -1049,9 +1055,11 @@
 				4C625397296DFBD8006AC733 /* NetworkSessionTests.swift in Sources */,
 				4C6253A6296E1A71006AC733 /* CachedImageLoaderTests.swift in Sources */,
 				4C6253C1296E3899006AC733 /* TVShowsListViewModelSpy.swift in Sources */,
+				4CEFD40129722023007C9694 /* CollectionViewSpy.swift in Sources */,
 				4C6253CE296E42AF006AC733 /* TVShowsListCollectionViewCellViewModelTests.swift in Sources */,
 				4C62538F296DF450006AC733 /* NetworkURLSessionStub.swift in Sources */,
 				4CB6CFF6296DB91100E2A229 /* TVShowScheduleTests.swift in Sources */,
+				4CEFD40329722174007C9694 /* TVShowsListViewDelegateSpy.swift in Sources */,
 				4C625399296E0400006AC733 /* Fixtures.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

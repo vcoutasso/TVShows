@@ -14,23 +14,27 @@ final class TVShowsListViewModelSpy: NSObject, TVShowsListViewModelProtocol, TVS
 
     weak var delegate: TVShowsListViewModelDelegate?
 
-    var expectation: XCTestExpectation?
 
     private(set) var displayedCellViewModels: [TVShowsListCollectionViewCellViewModelProtocol] = []
 
 
     private(set) var didFetchInitialPage = false
+    var fetchInitialPageExpectation: XCTestExpectation?
     func fetchInitialPage() async {
         didFetchInitialPage = true
-        expectation?.fulfill()
+        fetchInitialPageExpectation?.fulfill()
     }
 
+    private(set) var didSearchShows = false
+    var searchShowsExpectation: XCTestExpectation?
     func searchShows(with query: String) async {
-
+        didSearchShows = true
+        searchShowsExpectation?.fulfill()
     }
 
+    private(set) var didCancelSearch = false
     func cancelSearch() {
-        
+        didCancelSearch = true
     }
 
     private(set) var didFetchNextPageCount = 0

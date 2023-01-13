@@ -25,8 +25,12 @@ protocol TVShowsListViewDelegate: AnyObject {
 final class TVShowsListView: UIView, TVShowsListViewProtocol {
     // MARK: Lifecycle
 
-    init(viewModel: TVShowsListViewModelProtocol & TVShowListViewCollectionViewAdapterDelegate, collectionAdapter: TVShowListViewCollectionViewAdapterProtocol) {
+    init(viewModel: TVShowsListViewModelProtocol & TVShowListViewCollectionViewAdapterDelegate,
+         collectionView: UICollectionView,
+         collectionAdapter: TVShowListViewCollectionViewAdapterProtocol
+    ) {
         self.viewModel = viewModel
+        self.collectionView = collectionView
         self.collectionAdapter = collectionAdapter
         super.init(frame: .zero)
 
@@ -70,9 +74,11 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
 
     private func setUpView() {
         backgroundColor = .systemBackground
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubviews(collectionView, loadingSpinner)
         addConstraints()
         loadingSpinner.startAnimating()
+        setUpCollectionView()
     }
 
     private func addConstraints() {
@@ -87,6 +93,28 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
             collectionView.leftAnchor.constraint(equalTo: leftAnchor),
         ])
+    }
+
+    private func setUpCollectionView() {
+        let layout = UICollectionViewCompositionalLayout { _, _ in
+            let isPortrait = self.frame.height > self.frame.width
+            let itemSize: NSCollectionLayoutSize = isPortrait ? .init(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)) : .init(widthDimension: .fractionalWidth(0.2), heightDimension: .fractionalHeight(1.0))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = .init(top: 4, leading: 4, bottom: 4, trailing: 4)
+            let groupHeight: NSCollectionLayoutDimension = isPortrait ? .fractionalHeight(1.0 / 3) : .fractionalHeight(1.0 / 2)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: groupHeight), subitems: [item])
+            group.contentInsets = .init(top: 0, leading: Constants.horizontalInset, bottom: 0, trailing: Constants.horizontalInset)
+            let section = NSCollectionLayoutSection(group: group)
+            return section
+        }
+        collectionView.collectionViewLayout = layout
+        collectionView.delegate = collectionAdapter
+        collectionView.dataSource = collectionAdapter
+        collectionView.isHidden = true
+        collectionView.alpha = 0
+
+        collectionView.register(TVShowsListCollectionViewCell.self)
+        collectionView.register(LoadingCollectionViewFooter.self, forSupplementaryKind: UICollectionView.elementKindSectionFooter)
     }
 
     private func displayInitialShows() {
@@ -109,31 +137,7 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
         return spinner
     }()
 
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewCompositionalLayout { _, _ in
-            let isPortrait = self.frame.height > self.frame.width
-            let itemSize: NSCollectionLayoutSize = isPortrait ? .init(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)) : .init(widthDimension: .fractionalWidth(0.2), heightDimension: .fractionalHeight(1.0))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = .init(top: 4, leading: 4, bottom: 4, trailing: 4)
-            let groupHeight: NSCollectionLayoutDimension = isPortrait ? .fractionalHeight(1.0 / 3) : .fractionalHeight(1.0 / 2)
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: groupHeight), subitems: [item])
-            group.contentInsets = .init(top: 0, leading: Constants.horizontalInset, bottom: 0, trailing: Constants.horizontalInset)
-            let section = NSCollectionLayoutSection(group: group)
-            return section
-        }
-
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.delegate = collectionAdapter
-        collectionView.dataSource = collectionAdapter
-        collectionView.isHidden = true
-        collectionView.alpha = 0
-
-        collectionView.register(TVShowsListCollectionViewCell.self)
-        collectionView.register(LoadingCollectionViewFooter.self, forSupplementaryKind: UICollectionView.elementKindSectionFooter)
-
-        return collectionView
-    }()
+    private let collectionView: UICollectionView
 }
 
 extension TVShowsListView: TVShowsListViewModelDelegate {
