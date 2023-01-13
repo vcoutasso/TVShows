@@ -29,7 +29,11 @@ final class TVShowDetailsInfoCollectionViewCell: UICollectionViewCell, ReusableV
         }
         scheduleStackView.isHidden = scheduleText.isEmpty
         scheduleLabel.text = scheduleText
-        summaryLabel.text = show.summary?.strippingHTMLTags() ?? "No description available."
+        if let text = show.summary?.strippingHTMLTags(), !text.isEmpty {
+            summaryLabel.text = text
+        } else {
+            summaryLabel.text = "No description available."
+        }
     }
 
     override func prepareForReuse() {
