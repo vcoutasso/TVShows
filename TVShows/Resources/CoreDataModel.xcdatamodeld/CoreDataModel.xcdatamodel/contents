@@ -7,19 +7,22 @@
         <attribute name="premiered" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="status" attributeType="String"/>
         <attribute name="summary" optional="YES" attributeType="String"/>
-        <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteShowImages"/>
-        <relationship name="rating" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteShowRating"/>
-        <relationship name="schedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteShowSchedule"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="FavoriteShowImages" inverseName="show" inverseEntity="FavoriteShowImages"/>
+        <relationship name="rating" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="FavoriteShowRating" inverseName="show" inverseEntity="FavoriteShowRating"/>
+        <relationship name="schedule" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="FavoriteShowSchedule" inverseName="show" inverseEntity="FavoriteShowSchedule"/>
     </entity>
     <entity name="FavoriteShowImages" representedClassName="FavoriteShowImages" syncable="YES" codeGenerationType="class">
         <attribute name="medium" attributeType="String"/>
         <attribute name="original" attributeType="String"/>
+        <relationship name="show" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteShow" inverseName="image" inverseEntity="FavoriteShow"/>
     </entity>
     <entity name="FavoriteShowRating" representedClassName="FavoriteShowRating" syncable="YES" codeGenerationType="class">
         <attribute name="average" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="show" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteShow" inverseName="rating" inverseEntity="FavoriteShow"/>
     </entity>
     <entity name="FavoriteShowSchedule" representedClassName="FavoriteShowSchedule" syncable="YES" codeGenerationType="class">
         <attribute name="days" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="time" attributeType="String"/>
+        <relationship name="show" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteShow" inverseName="schedule" inverseEntity="FavoriteShow"/>
     </entity>
 </model>

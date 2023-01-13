@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 enum TVShowsPeopleViewControllerFactory {
     static func `default`() -> TVShowsPeopleViewController {
         make()
