@@ -56,19 +56,19 @@ final class AppCoordinator: MainCoordinator {
 
         switch flow {
             case .shows(let showsFlow):
-                guard let index = childrenFlowCoordinators.firstIndex(where: { $0 === showsFlowCoordinator }) else {
+                guard let index = childrenCoordinators.firstIndex(where: { $0 === showsFlowCoordinator }) else {
                     break
                 }
                 showsFlowCoordinator.handleFlow(showsFlow)
                 rootTabBarController?.selectedIndex = index
             case .people(let peopleFlow):
-                guard let index = childrenFlowCoordinators.firstIndex(where: { $0 === peopleFlowCoordinator }) else {
+                guard let index = childrenCoordinators.firstIndex(where: { $0 === peopleFlowCoordinator }) else {
                     break
                 }
                 peopleFlowCoordinator.handleFlow(peopleFlow)
                 rootTabBarController?.selectedIndex = index
             case .favorites(let favoritesFlow):
-                guard let index = childrenFlowCoordinators.firstIndex(where: { $0 === favoritesFlowCoordinator }) else {
+                guard let index = childrenCoordinators.firstIndex(where: { $0 === favoritesFlowCoordinator }) else {
                     break
                 }
                 favoritesFlowCoordinator.handleFlow(favoritesFlow)
@@ -86,10 +86,6 @@ final class AppCoordinator: MainCoordinator {
 
     private var rootTabBarController: UITabBarController? {
         rootViewController as? UITabBarController
-    }
-
-    private var childrenFlowCoordinators: [any FlowCoordinator] {
-        (childrenCoordinators as [any FlowCoordinator])
     }
 }
 
