@@ -8,8 +8,9 @@ enum TVShowsListViewControllerFactory {
 
     static func make(
         showsListView: UIView & TVShowsListViewProtocol,
-        searchController: UISearchController & TVShowsListSearchControllerProtocol
+        searchController: UISearchController & TVShowsListSearchControllerProtocol,
+        coordinator: any FlowCoordinator = AppCoordinator.shared.showsFlowCoordinator
     ) -> TVShowsListViewController {
-        TVShowsListViewController(showsListView: showsListView, searchController: searchController)
+        TVShowsListViewController(showsListView: showsListView, searchController: searchController, coordinator: coordinator)
     }
 }

@@ -1,11 +1,12 @@
 import UIKit
 
 /// Controller for displaying details about a particular show
-final class TVShowDetailsViewController: UIViewController {
+final class TVShowDetailsViewController: UIViewController, Coordinated {
     // MARK: Lifecycle
 
-    init(detailsView: UIView & TVShowDetailsViewProtocol) {
+    init(detailsView: UIView & TVShowDetailsViewProtocol, coordinator: any FlowCoordinator) {
         self.detailsView = detailsView
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
         detailsView.delegate = self
     }
@@ -16,6 +17,8 @@ final class TVShowDetailsViewController: UIViewController {
     }
 
     // MARK: Internal
+
+    private(set) var coordinator: (any FlowCoordinator)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +61,7 @@ final class TVShowDetailsViewController: UIViewController {
 
 extension TVShowDetailsViewController: TVShowDetailsViewDelegate {
     func presentEpisodeDetails(_ episode: TVShowEpisode) {
-        let vc = TVShowEpisodeDetailsViewControllerFactory.make(episode: episode)
-        navigationController?.pushViewController(vc, animated: true)
+        coordinator?.handleFlow(ShowsFlow.episodeDetails(episode))
     }
 
     func updateRightBarButtonImage(with image: UIImage) {

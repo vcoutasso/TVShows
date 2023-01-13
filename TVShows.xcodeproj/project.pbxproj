@@ -70,6 +70,17 @@
 		4C6C25B3296FA3E30004FB3F /* StretchyImageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C25B2296FA3E30004FB3F /* StretchyImageHeaderView.swift */; };
 		4C6C25B7296FAA8F0004FB3F /* TVShowDetailsViewCollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C25B6296FAA8F0004FB3F /* TVShowDetailsViewCollectionViewAdapter.swift */; };
 		4C6C25B9296FAE0B0004FB3F /* TVShowDetailsInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C25B8296FAE0B0004FB3F /* TVShowDetailsInfoCollectionViewCell.swift */; };
+		4CAE89A1297105A300083877 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89A0297105A300083877 /* Coordinator.swift */; };
+		4CAE89A3297107A100083877 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89A2297107A100083877 /* AppFlow.swift */; };
+		4CAE89A729710A0300083877 /* TVShowsPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89A629710A0300083877 /* TVShowsPeopleViewController.swift */; };
+		4CAE89AB29710A5800083877 /* FavoriteTVShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89AA29710A5800083877 /* FavoriteTVShowsViewController.swift */; };
+		4CAE89AD297110F200083877 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89AC297110F200083877 /* MainCoordinator.swift */; };
+		4CAE89B02971114600083877 /* FlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89AF2971114600083877 /* FlowCoordinator.swift */; };
+		4CAE89B22971136200083877 /* Coordinated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89B12971136200083877 /* Coordinated.swift */; };
+		4CAE89B4297113C400083877 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89B3297113C400083877 /* AppCoordinator.swift */; };
+		4CAE89B72971161000083877 /* ShowsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89B62971161000083877 /* ShowsFlowCoordinator.swift */; };
+		4CAE89B92971162700083877 /* PeopleFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89B82971162700083877 /* PeopleFlowCoordinator.swift */; };
+		4CAE89BB2971164600083877 /* FavoritesFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAE89BA2971164600083877 /* FavoritesFlowCoordinator.swift */; };
 		4CB6CFAB296D9EE900E2A229 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */; };
 		4CB6CFAD296D9EE900E2A229 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */; };
 		4CB6CFAF296D9EE900E2A229 /* TVShowsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6CFAE296D9EE900E2A229 /* TVShowsListViewController.swift */; };
@@ -166,6 +177,17 @@
 		4C6C25B2296FA3E30004FB3F /* StretchyImageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyImageHeaderView.swift; sourceTree = "<group>"; };
 		4C6C25B6296FAA8F0004FB3F /* TVShowDetailsViewCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsViewCollectionViewAdapter.swift; sourceTree = "<group>"; };
 		4C6C25B8296FAE0B0004FB3F /* TVShowDetailsInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		4CAE89A0297105A300083877 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		4CAE89A2297107A100083877 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
+		4CAE89A629710A0300083877 /* TVShowsPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowsPeopleViewController.swift; sourceTree = "<group>"; };
+		4CAE89AA29710A5800083877 /* FavoriteTVShowsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTVShowsViewController.swift; sourceTree = "<group>"; };
+		4CAE89AC297110F200083877 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		4CAE89AF2971114600083877 /* FlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
+		4CAE89B12971136200083877 /* Coordinated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinated.swift; sourceTree = "<group>"; };
+		4CAE89B3297113C400083877 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		4CAE89B62971161000083877 /* ShowsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsFlowCoordinator.swift; sourceTree = "<group>"; };
+		4CAE89B82971162700083877 /* PeopleFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleFlowCoordinator.swift; sourceTree = "<group>"; };
+		4CAE89BA2971164600083877 /* FavoritesFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesFlowCoordinator.swift; sourceTree = "<group>"; };
 		4CB6CFA7296D9EE900E2A229 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB6CFAA296D9EE900E2A229 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CB6CFAC296D9EE900E2A229 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -297,6 +319,8 @@
 			isa = PBXGroup;
 			children = (
 				4C6253A8296E1DC1006AC733 /* Shows */,
+				4CAE89A4297109EB00083877 /* People */,
+				4CAE89A829710A2900083877 /* Favorites */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -444,6 +468,62 @@
 			path = Factories;
 			sourceTree = "<group>";
 		};
+		4CAE899F2971057300083877 /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				4CAE89B5297115F500083877 /* FlowCoordinators */,
+				4CAE89A2297107A100083877 /* AppFlow.swift */,
+				4CAE89A0297105A300083877 /* Coordinator.swift */,
+				4CAE89AF2971114600083877 /* FlowCoordinator.swift */,
+				4CAE89AC297110F200083877 /* MainCoordinator.swift */,
+				4CAE89B12971136200083877 /* Coordinated.swift */,
+				4CAE89B3297113C400083877 /* AppCoordinator.swift */,
+			);
+			path = Routing;
+			sourceTree = "<group>";
+		};
+		4CAE89A4297109EB00083877 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				4CAE89A5297109F100083877 /* Controllers */,
+			);
+			path = People;
+			sourceTree = "<group>";
+		};
+		4CAE89A5297109F100083877 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4CAE89A629710A0300083877 /* TVShowsPeopleViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4CAE89A829710A2900083877 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				4CAE89A929710A3500083877 /* Controllers */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		4CAE89A929710A3500083877 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4CAE89AA29710A5800083877 /* FavoriteTVShowsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4CAE89B5297115F500083877 /* FlowCoordinators */ = {
+			isa = PBXGroup;
+			children = (
+				4CAE89B62971161000083877 /* ShowsFlowCoordinator.swift */,
+				4CAE89B82971162700083877 /* PeopleFlowCoordinator.swift */,
+				4CAE89BA2971164600083877 /* FavoritesFlowCoordinator.swift */,
+			);
+			path = FlowCoordinators;
+			sourceTree = "<group>";
+		};
 		4CB6CF9E296D9EE900E2A229 = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +545,7 @@
 		4CB6CFA9296D9EE900E2A229 /* TVShows */ = {
 			isa = PBXGroup;
 			children = (
+				4CAE899F2971057300083877 /* Routing */,
 				4C08F1832970DCF900FDA2C9 /* Persistence */,
 				4CB6CFEB296DAC6300E2A229 /* APIClient */,
 				4C6253D1296E4F8D006AC733 /* Common */,
@@ -659,11 +740,15 @@
 				4C6C25A3296F64190004FB3F /* TVShowsListViewControllerFactory.swift in Sources */,
 				4CB6CFAB296D9EE900E2A229 /* AppDelegate.swift in Sources */,
 				4CB6CFE6296DAB4900E2A229 /* TVShowEpisode.swift in Sources */,
+				4CAE89B4297113C400083877 /* AppCoordinator.swift in Sources */,
 				4C6C25AF296F7F9A0004FB3F /* Date+.swift in Sources */,
 				4C08F1742970889A00FDA2C9 /* TVShowDetailsInfoSeasonHeaderView.swift in Sources */,
+				4CAE89B72971161000083877 /* ShowsFlowCoordinator.swift in Sources */,
 				4CB6CFF1296DAE0200E2A229 /* TVMazeRequest.swift in Sources */,
 				4C08F1802970BEA900FDA2C9 /* TVShowEpisodeDetailsViewModel.swift in Sources */,
+				4CAE89A729710A0300083877 /* TVShowsPeopleViewController.swift in Sources */,
 				4C6C25B3296FA3E30004FB3F /* StretchyImageHeaderView.swift in Sources */,
+				4CAE89AD297110F200083877 /* MainCoordinator.swift in Sources */,
 				4C6253BA296E2EEE006AC733 /* TVShowsListCollectionViewCellViewModel.swift in Sources */,
 				4C6253B2296E265C006AC733 /* UIView+.swift in Sources */,
 				4C6C25B7296FAA8F0004FB3F /* TVShowDetailsViewCollectionViewAdapter.swift in Sources */,
@@ -691,22 +776,29 @@
 				4C6C25B1296F84DD0004FB3F /* CircularProgressIndicatorView.swift in Sources */,
 				4C625394296DF775006AC733 /* URLSession+.swift in Sources */,
 				4C6253B0296E2040006AC733 /* TVShowsListViewModel.swift in Sources */,
+				4CAE89BB2971164600083877 /* FavoritesFlowCoordinator.swift in Sources */,
 				4C6C25AB296F69BA0004FB3F /* TVShowsListSearchController.swift in Sources */,
+				4CAE89B92971162700083877 /* PeopleFlowCoordinator.swift in Sources */,
 				4C6C258F296EEF3B0004FB3F /* TVMazeQueryItems.swift in Sources */,
 				4C625388296DEF39006AC733 /* NetworkSession.swift in Sources */,
 				4C6253AC296E1E94006AC733 /* TVShowsListView.swift in Sources */,
 				4C62539F296E0E5F006AC733 /* JSONDecoder+.swift in Sources */,
 				4C625391296DF719006AC733 /* NetworkSessionURLSession.swift in Sources */,
 				4C08F1852970DD4300FDA2C9 /* DataPersisting.swift in Sources */,
+				4CAE89B02971114600083877 /* FlowCoordinator.swift in Sources */,
 				4C6C2591296EF8550004FB3F /* String+.swift in Sources */,
 				4C62539D296E0DFC006AC733 /* JSONDecoding.swift in Sources */,
+				4CAE89AB29710A5800083877 /* FavoriteTVShowsViewController.swift in Sources */,
 				4C6C258D296EEEA00004FB3F /* TVMazePathComponents.swift in Sources */,
+				4CAE89A1297105A300083877 /* Coordinator.swift in Sources */,
 				4C08F1822970C6EB00FDA2C9 /* TVShowEpisodeDetailsViewFactory.swift in Sources */,
+				4CAE89B22971136200083877 /* Coordinated.swift in Sources */,
 				4C6C25A5296F64AC0004FB3F /* TVShowsListViewFactory.swift in Sources */,
 				4C6C259B296F46BA0004FB3F /* TVShowDetailsView.swift in Sources */,
 				4C08F17E2970BE6600FDA2C9 /* TVShowEpisodeDetailsView.swift in Sources */,
 				4C6C259D296F46D10004FB3F /* TVShowDetailsViewModel.swift in Sources */,
 				4C625386296DEEB7006AC733 /* NetworkRequesting.swift in Sources */,
+				4CAE89A3297107A100083877 /* AppFlow.swift in Sources */,
 				4C6C25B9296FAE0B0004FB3F /* TVShowDetailsInfoCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

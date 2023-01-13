@@ -4,6 +4,7 @@ import UIKit
 enum TVShowDetailsViewControllerFactory {
     static func make(
         show: TVShow,
+        coordinator: any Coordinator,
         apiService: TVMazeServiceProtocol = TVMazeService.default,
         imageLoader: ImageLoading = CachedImageLoader.shared,
         persistentStorage: DataPersisting = CoreDataStore.shared
@@ -19,6 +20,6 @@ enum TVShowDetailsViewControllerFactory {
         ]
         let collectionAdapter = TVShowDetailsViewCollectionViewAdapter(show: show, sections: collectionViewSections)
         let detailsView = TVShowDetailsViewFactory.make(viewModel: detailsViewModel, collectionAdapter: collectionAdapter)
-        return TVShowDetailsViewController(detailsView: detailsView)
+        return TVShowDetailsViewController(detailsView: detailsView, coordinator: coordinator)
     }
 }

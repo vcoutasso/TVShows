@@ -4,12 +4,17 @@ import Combine
 // MARK: - TVShowsViewController
 
 /// Main TV Shows controller
-final class TVShowsListViewController: UIViewController {
+final class TVShowsListViewController: UIViewController, Coordinated {
     // MARK: Lifecycle
 
-    init(showsListView: UIView & TVShowsListViewProtocol, searchController: UISearchController & TVShowsListSearchControllerProtocol) {
+    init(
+        showsListView: UIView & TVShowsListViewProtocol,
+        searchController: UISearchController & TVShowsListSearchControllerProtocol,
+        coordinator: any FlowCoordinator
+    ) {
         self.showsListView = showsListView
         self.searchController = searchController
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
 
         self.showsListView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,6 +27,8 @@ final class TVShowsListViewController: UIViewController {
     }
 
     // MARK: Internal
+
+    private(set) var coordinator: (any FlowCoordinator)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +82,6 @@ final class TVShowsListViewController: UIViewController {
 
 extension TVShowsListViewController: TVShowsListViewDelegate {
     func presentShowDetails(_ show: TVShow) {
-        let vc = TVShowDetailsViewControllerFactory.make(show: show)
-        navigationController?.pushViewController(vc, animated: true)
+        coordinator?.handleFlow(ShowsFlow.showDetails(show))
     }
 }
