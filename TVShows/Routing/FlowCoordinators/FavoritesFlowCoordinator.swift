@@ -17,6 +17,7 @@ final class FavoritesFlowCoordinator: Coordinator {
     func start() -> UIViewController {
         let mainController = FavoriteTVShowsViewControllerFactory.default()
         let navigationController = UINavigationController(rootViewController: mainController)
+        navigationController.navigationBar.prefersLargeTitles = true
         rootViewController = navigationController
         return rootViewController
     }
