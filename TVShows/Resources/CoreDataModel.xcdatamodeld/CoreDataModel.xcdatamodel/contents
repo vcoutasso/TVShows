@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FavoriteShow" representedClassName="FavoriteShow" syncable="YES" codeGenerationType="class">
+        <attribute name="genres" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="premiered" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="status" attributeType="String"/>
+        <attribute name="summary" optional="YES" attributeType="String"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteShowImages"/>
+        <relationship name="rating" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteShowRating"/>
+        <relationship name="schedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteShowSchedule"/>
+    </entity>
+    <entity name="FavoriteShowImages" representedClassName="FavoriteShowImages" syncable="YES" codeGenerationType="class">
+        <attribute name="medium" attributeType="String"/>
+        <attribute name="original" attributeType="String"/>
+    </entity>
+    <entity name="FavoriteShowRating" representedClassName="FavoriteShowRating" syncable="YES" codeGenerationType="class">
+        <attribute name="average" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="FavoriteShowSchedule" representedClassName="FavoriteShowSchedule" syncable="YES" codeGenerationType="class">
+        <attribute name="days" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="time" attributeType="String"/>
+    </entity>
+</model>
