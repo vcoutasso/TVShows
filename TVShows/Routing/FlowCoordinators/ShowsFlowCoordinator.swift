@@ -23,7 +23,7 @@ final class ShowsFlowCoordinator: Coordinator {
         return rootViewController
     }
 
-    func handleFlow<T: FlowRoute>(_ flow: T) {
+    @MainActor func handleFlow<T: FlowRoute>(_ flow: T) {
         guard let associatedFlow = flow as? Flow else {
             parentCoordinator?.handleFlow(flow)
             return
@@ -32,9 +32,11 @@ final class ShowsFlowCoordinator: Coordinator {
             case .list:
                 rootNavigationController?.popToRootViewController(animated: true)
             case .showDetails(let show):
-                parentCoordinator?.handleFlow(AppFlow.favorites(.list))
-            case .episodeDetails:
-                parentCoordinator?.handleFlow(AppFlow.people(.list))
+                let destinationViewController = TVShowDetailsViewControllerFactory.make(show: show, coordinator: self)
+                rootNavigationController?.pushViewController(destinationViewController, animated: true)
+            case .episodeDetails(let episode):
+                let destinationViewController = TVShowEpisodeDetailsViewControllerFactory.make(episode: episode)
+                rootNavigationController?.pushViewController(destinationViewController, animated: true)
         }
     }
 }

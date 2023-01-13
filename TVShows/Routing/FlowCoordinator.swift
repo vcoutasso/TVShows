@@ -7,5 +7,5 @@ protocol FlowCoordinator<Flow>: AnyObject {
 
     var parentCoordinator: (any MainCoordinator)? { get set }
 
-    func handleFlow<T: FlowRoute>(_ flow: T)
+    @MainActor func handleFlow<T: FlowRoute>(_ flow: T)
 }

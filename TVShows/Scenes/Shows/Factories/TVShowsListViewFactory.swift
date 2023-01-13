@@ -3,7 +3,10 @@ import Foundation
 @MainActor
 enum TVShowsListViewFactory {
     static func `default`() -> TVShowsListView {
-        make(viewModel: TVShowsListViewModel(apiService: TVMazeService.default), collectionAdapter: TVShowListViewCollectionViewAdapter())
+        make(
+            viewModel: TVShowsListViewModel(apiService: TVMazeService.default),
+            collectionAdapter: TVShowListViewCollectionViewAdapter()
+        )
     }
 
     static func make(

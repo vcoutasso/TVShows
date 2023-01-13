@@ -3,5 +3,7 @@ import Foundation
 // MARK: - Coordinated
 
 protocol Coordinated {
-    var coordinator: (any FlowCoordinator)? { get }
+    associatedtype Flow: FlowRoute
+
+    var coordinator: (any FlowCoordinator<Flow>)? { get }
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-final class TVShowEpisodeDetailsViewController: UIViewController {
+final class TVShowEpisodeDetailsViewController: UIViewController, Coordinated {
     // MARK: Lifecycle
 
     init(episodeView: TVShowEpisodeDetailsView) {
@@ -15,6 +15,8 @@ final class TVShowEpisodeDetailsViewController: UIViewController {
     }
 
     // MARK: Internal
+
+    private(set) var coordinator: (any FlowCoordinator<ShowsFlow>)?
 
     override func viewDidLoad() {
         super.viewDidLoad()

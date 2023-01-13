@@ -6,8 +6,8 @@ protocol Coordinator: FlowCoordinator {
     var rootViewController: UIViewController { get }
     var tabBarItem: ((Int) -> UITabBarItem)? { get }
 
-    func start() -> UIViewController
-    @discardableResult func resetToRoot() -> Self
+    @MainActor func start() -> UIViewController
+    @MainActor @discardableResult func resetToRoot() -> Self
 }
 
 extension Coordinator {

@@ -18,7 +18,7 @@ final class TVShowDetailsViewController: UIViewController, Coordinated {
 
     // MARK: Internal
 
-    private(set) var coordinator: (any FlowCoordinator)?
+    private(set) var coordinator: (any FlowCoordinator<ShowsFlow>)?
 
     override func viewDidLoad() {
         super.viewDidLoad()

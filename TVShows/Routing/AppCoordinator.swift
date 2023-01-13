@@ -76,7 +76,7 @@ final class AppCoordinator: MainCoordinator {
 
     // MARK: Private
 
-    private func routeToCoordinator<T: FlowRoute>(_ route: T) {
+    @MainActor private func routeToCoordinator<T: FlowRoute>(_ route: T) {
         guard let coordinator = flowCoordinatorFor(type(of: route)),
               let index = childrenCoordinators.firstIndex(where: { $0 as any FlowCoordinator === coordinator })
         else { return }
