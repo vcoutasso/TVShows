@@ -1,5 +1,12 @@
 import UIKit
 
+// MARK: - PeopleFlow
+
+enum PeopleFlow: FlowRoute {
+    case list
+    case showDetails
+}
+
 // MARK: - PeopleFlowCoordinator
 
 final class PeopleFlowCoordinator: Coordinator {
@@ -8,14 +15,14 @@ final class PeopleFlowCoordinator: Coordinator {
     // MARK: Internal
 
     private(set) var rootViewController: UIViewController = UIViewController()
-    var parentCoordinator: (any MainCoordinator)?
+    weak var parentCoordinator: (any MainCoordinator)?
 
     var tabBarItem: ((Int) -> UITabBarItem)? = { tag in
         .init(title: "People", image: UIImage(systemName: "person"), tag: tag)
     }
 
     func start() -> UIViewController {
-        let mainController = TVShowsPeopleViewController()
+        let mainController = TVShowsPeopleViewControllerFactory.default()
         let navigationController = UINavigationController(rootViewController: mainController)
         rootViewController = navigationController
         return rootViewController

@@ -57,6 +57,6 @@ final class FavoriteTVShowsViewController: UIViewController, Coordinated {
 
 extension FavoriteTVShowsViewController: FavoriteShowsListViewDelegate {
     func displayShowDetails(_ show: TVShow) {
-        coordinator?.handleFlow(AppFlow.shows(.showDetails(show)))
+        coordinator?.handleFlow(TabFlow.shows(.showDetails(show)))
     }
 }

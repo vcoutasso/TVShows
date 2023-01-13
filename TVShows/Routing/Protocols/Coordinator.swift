@@ -6,7 +6,7 @@ protocol Coordinator: FlowCoordinator {
     var rootViewController: UIViewController { get }
     var tabBarItem: ((Int) -> UITabBarItem)? { get }
 
-    @MainActor func start() -> UIViewController
+    @MainActor @discardableResult func start() -> UIViewController
     @MainActor @discardableResult func resetToRoot() -> Self
 }
 

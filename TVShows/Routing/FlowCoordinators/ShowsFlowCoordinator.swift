@@ -1,5 +1,13 @@
 import UIKit
 
+// MARK: - ShowsFlow
+
+enum ShowsFlow: FlowRoute {
+    case list
+    case showDetails(TVShow)
+    case episodeDetails(TVShowEpisode)
+}
+
 // MARK: - ShowsFlowCoordinator
 
 final class ShowsFlowCoordinator: Coordinator {
@@ -8,7 +16,7 @@ final class ShowsFlowCoordinator: Coordinator {
     // MARK: Internal
 
     private(set) var rootViewController: UIViewController = UIViewController()
-    var parentCoordinator: (any MainCoordinator)?
+    weak var parentCoordinator: (any MainCoordinator)?
 
     var tabBarItem: ((Int) -> UITabBarItem)? = { tag in
         .init(title: "Shows", image: UIImage(systemName: "tv"), tag: tag)

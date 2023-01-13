@@ -1,42 +1,42 @@
 import UIKit
 
-// MARK: - FavoritesFlow
+// MARK: - AuthenticationFlow
 
-enum FavoritesFlow: FlowRoute {
-    case list
+enum AuthenticationFlow: FlowRoute {
+    case `default`
+    case fallback
 }
 
-// MARK: - FavoritesFlowCoordinator
+// MARK: - AuthenticationFlowCoordinator
 
-final class FavoritesFlowCoordinator: Coordinator {
-    typealias Flow = FavoritesFlow
+final class AuthenticationFlowCoordinator: Coordinator {
+    typealias Flow = AuthenticationFlow
 
     // MARK: Internal
 
     private(set) var rootViewController: UIViewController = UIViewController()
+    private(set) var tabBarItem: ((Int) -> UITabBarItem)?
     weak var parentCoordinator: (any MainCoordinator)?
 
-    var tabBarItem: ((Int) -> UITabBarItem)? = { tag in
-        .init(title: "Favorites", image: UIImage(systemName: "heart"), tag: tag)
-    }
-
     func start() -> UIViewController {
-        let mainController = FavoriteTVShowsViewControllerFactory.default()
+        let mainController = AuthenticationViewControllerFactory.default()
         let navigationController = UINavigationController(rootViewController: mainController)
-        navigationController.navigationBar.prefersLargeTitles = true
         rootViewController = navigationController
+
         return rootViewController
     }
 
-    func handleFlow<T: FlowRoute>(_ flow: T) {
+    @MainActor func handleFlow<T>(_ flow: T) where T : FlowRoute {
         guard let flow = flow as? Flow else {
             parentCoordinator?.handleFlow(flow)
             return
         }
 
         switch flow {
-            case .list:
+            case .`default`:
                 rootNavigationController?.popToRootViewController(animated: true)
+            case .fallback:
+                break
         }
     }
 }

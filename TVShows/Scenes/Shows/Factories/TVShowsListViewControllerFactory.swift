@@ -9,7 +9,7 @@ enum TVShowsListViewControllerFactory {
     static func make(
         showsListView: UIView & TVShowsListViewProtocol,
         searchController: UISearchController & TVShowsListSearchControllerProtocol,
-        coordinator: (any FlowCoordinator<ShowsFlow>)? = AppCoordinator.shared.flowCoordinatorFor(ShowsFlow.self)
+        coordinator: (any FlowCoordinator<ShowsFlow>)? = AppCoordinator.shared.tabCoordinator?.flowCoordinatorFor(ShowsFlow.self)
     ) -> TVShowsListViewController {
         TVShowsListViewController(showsListView: showsListView, searchController: searchController, coordinator: coordinator)
     }

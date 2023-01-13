@@ -1,17 +1,19 @@
 import UIKit
 
-// MARK: - AppCoordinator
+// MARK: - TabFlow
 
-final class AppCoordinator: MainCoordinator {
-    typealias Flow = AppFlow
+enum TabFlow: FlowRoute {
+    case shows(ShowsFlow)
+    case people(PeopleFlow)
+    case favorites(FavoritesFlow)
+}
 
-    // MARK: Lifecycle
+// MARK: - TabCoordinator
 
-    private init() {}
+final class TabCoordinator: MainCoordinator {
+    typealias Flow = TabFlow
 
     // MARK: Internal
-
-    static let shared: AppCoordinator = .init()
 
     private(set) lazy var childrenCoordinators: [any Coordinator] = [
         ShowsFlowCoordinator(),
@@ -33,10 +35,9 @@ final class AppCoordinator: MainCoordinator {
             let rootVC = coordinator.start()
             if let tabBarItem = coordinator.tabBarItem?(idx) {
                 rootVC.tabBarItem = tabBarItem
+                rootTabBarControllers.append(rootVC)
             }
             coordinator.parentCoordinator = self
-
-            rootTabBarControllers.append(rootVC)
         }
 
         tabBarController.viewControllers = rootTabBarControllers
@@ -60,9 +61,9 @@ final class AppCoordinator: MainCoordinator {
         }
     }
 
-    func resetToRoot() -> Self {
+    @discardableResult func resetToRoot() -> Self {
         childrenCoordinators.first?.resetToRoot()
-        handleFlow(AppFlow.shows(.list))
+        handleFlow(TabFlow.shows(.list))
         return self
     }
 

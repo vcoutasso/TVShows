@@ -1,9 +1,11 @@
 import UIKit
+import Combine
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    private var rootViewControllerListener: AnyCancellable?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -13,7 +15,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
-        window?.rootViewController = AppCoordinator.shared.start()
+        rootViewControllerListener = AppCoordinator.shared.rootViewControllerSubject
+            .sink { [weak self] viewController in
+                self?.window?.rootViewController = viewController
+            }
+
+        AppCoordinator.shared.start()
+
         window?.makeKeyAndVisible()
     }
 
