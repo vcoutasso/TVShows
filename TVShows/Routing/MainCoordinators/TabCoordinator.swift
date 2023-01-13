@@ -17,7 +17,6 @@ final class TabCoordinator: MainCoordinator {
 
     private(set) lazy var childrenCoordinators: [any Coordinator] = [
         ShowsFlowCoordinator(),
-        PeopleFlowCoordinator(),
         FavoritesFlowCoordinator(),
     ]
 
