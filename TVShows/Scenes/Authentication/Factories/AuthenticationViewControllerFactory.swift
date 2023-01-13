@@ -4,11 +4,17 @@ import Foundation
 
 enum AuthenticationViewControllerFactory {
     static func `default`() -> AuthenticationViewController {
-        make()
+        let authentication = BiometricAuthenticationService()
+        let coordinator = AppCoordinator.shared.authenticationCoordinator
+
+        return make(biometricAuthenticator: authentication, coordinator: coordinator)
     }
 
-    static func make() -> AuthenticationViewController {
-        .init()
+    static func make(
+        biometricAuthenticator: BiometricAuthenticationProtocol,
+        coordinator: (any FlowCoordinator<AuthenticationFlow>)?
+    ) -> AuthenticationViewController {
+        .init(biometricAuthenticator: biometricAuthenticator, coordinator: coordinator)
     }
 }
 
