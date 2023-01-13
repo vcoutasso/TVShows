@@ -16,6 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         rootViewControllerListener = AppCoordinator.shared.rootViewControllerSubject
+            .receive(on: RunLoop.main)
             .sink { [weak self] viewController in
                 self?.window?.rootViewController = viewController
             }

@@ -118,6 +118,9 @@
 		4CD26FB32971D7EE002A75F6 /* AuthenticationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD26FB22971D7EE002A75F6 /* AuthenticationFlowCoordinator.swift */; };
 		4CD26FB62971D96A002A75F6 /* AuthenticationViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD26FB52971D96A002A75F6 /* AuthenticationViewControllerFactory.swift */; };
 		4CD26FB82971DAF6002A75F6 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD26FB72971DAF6002A75F6 /* AppCoordinator.swift */; };
+		4CEFD3E42971EFB7007C9694 /* PasscodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3E32971EFB7007C9694 /* PasscodeInputView.swift */; };
+		4CEFD3E82971F938007C9694 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3E72971F938007C9694 /* UIStackView+.swift */; };
+		4CEFD3EA2971F9A3007C9694 /* PasscodePinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFD3E92971F9A3007C9694 /* PasscodePinView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -245,6 +248,9 @@
 		4CD26FB22971D7EE002A75F6 /* AuthenticationFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFlowCoordinator.swift; sourceTree = "<group>"; };
 		4CD26FB52971D96A002A75F6 /* AuthenticationViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewControllerFactory.swift; sourceTree = "<group>"; };
 		4CD26FB72971DAF6002A75F6 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		4CEFD3E32971EFB7007C9694 /* PasscodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeInputView.swift; sourceTree = "<group>"; };
+		4CEFD3E72971F938007C9694 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
+		4CEFD3E92971F9A3007C9694 /* PasscodePinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodePinView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +335,7 @@
 				4C6C2590296EF8550004FB3F /* String+.swift */,
 				4C6C25AE296F7F9A0004FB3F /* Date+.swift */,
 				4CD26F9F2971AA29002A75F6 /* UITableView+.swift */,
+				4CEFD3E72971F938007C9694 /* UIStackView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -717,6 +724,7 @@
 		4CD26FAB2971CDC9002A75F6 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				4CEFD3E22971EFA1007C9694 /* Views */,
 				4CD26FB42971D92D002A75F6 /* Factories */,
 				4CD26FAF2971D674002A75F6 /* Controllers */,
 				4CD26FAC2971CEAC002A75F6 /* Services */,
@@ -767,6 +775,15 @@
 				4CAE89AC297110F200083877 /* MainCoordinator.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		4CEFD3E22971EFA1007C9694 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4CEFD3E32971EFB7007C9694 /* PasscodeInputView.swift */,
+				4CEFD3E92971F9A3007C9694 /* PasscodePinView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -888,6 +905,7 @@
 				4CAE89B72971161000083877 /* ShowsFlowCoordinator.swift in Sources */,
 				4CB6CFF1296DAE0200E2A229 /* TVMazeRequest.swift in Sources */,
 				4CD26FB12971D693002A75F6 /* AuthenticationViewController.swift in Sources */,
+				4CEFD3E82971F938007C9694 /* UIStackView+.swift in Sources */,
 				4C08F1802970BEA900FDA2C9 /* TVShowEpisodeDetailsViewModel.swift in Sources */,
 				4CAE89A729710A0300083877 /* TVShowsPeopleViewController.swift in Sources */,
 				4C6C25B3296FA3E30004FB3F /* StretchyImageHeaderView.swift in Sources */,
@@ -904,6 +922,7 @@
 				4C08F1872970DD9600FDA2C9 /* CoreDataStore.swift in Sources */,
 				4C6253D6296E4FB7006AC733 /* LoadingCollectionViewFooter.swift in Sources */,
 				4CD26FAE2971CEB9002A75F6 /* BiometricAuthenticationService.swift in Sources */,
+				4CEFD3EA2971F9A3007C9694 /* PasscodePinView.swift in Sources */,
 				4C6C25A7296F68330004FB3F /* TVShowDetailsViewControllerFactory.swift in Sources */,
 				4CB6CFEF296DAD5D00E2A229 /* TVMazeEndpoint.swift in Sources */,
 				4C6C25A9296F685B0004FB3F /* TVShowDetailsViewFactory.swift in Sources */,
@@ -951,6 +970,7 @@
 				4C6C25A5296F64AC0004FB3F /* TVShowsListViewFactory.swift in Sources */,
 				4C6C259B296F46BA0004FB3F /* TVShowDetailsView.swift in Sources */,
 				4C08F17E2970BE6600FDA2C9 /* TVShowEpisodeDetailsView.swift in Sources */,
+				4CEFD3E42971EFB7007C9694 /* PasscodeInputView.swift in Sources */,
 				4C6C259D296F46D10004FB3F /* TVShowDetailsViewModel.swift in Sources */,
 				4C625386296DEEB7006AC733 /* NetworkRequesting.swift in Sources */,
 				4CAE89A3297107A100083877 /* FlowRoute.swift in Sources */,
