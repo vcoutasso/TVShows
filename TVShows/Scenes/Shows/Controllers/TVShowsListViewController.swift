@@ -10,7 +10,7 @@ final class TVShowsListViewController: UIViewController, Coordinated {
     init(
         showsListView: UIView & TVShowsListViewProtocol,
         searchController: UISearchController & TVShowsListSearchControllerProtocol,
-        coordinator: any FlowCoordinator
+        coordinator: (any FlowCoordinator<ShowsFlow>)?
     ) {
         self.showsListView = showsListView
         self.searchController = searchController

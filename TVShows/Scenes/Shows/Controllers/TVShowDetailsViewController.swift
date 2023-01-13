@@ -4,7 +4,7 @@ import UIKit
 final class TVShowDetailsViewController: UIViewController, Coordinated {
     // MARK: Lifecycle
 
-    init(detailsView: UIView & TVShowDetailsViewProtocol, coordinator: any FlowCoordinator) {
+    init(detailsView: UIView & TVShowDetailsViewProtocol, coordinator: (any FlowCoordinator<ShowsFlow>)?) {
         self.detailsView = detailsView
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)

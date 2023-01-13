@@ -4,7 +4,7 @@ import UIKit
 enum TVShowDetailsViewControllerFactory {
     static func make(
         show: TVShow,
-        coordinator: any Coordinator,
+        coordinator: (any FlowCoordinator<ShowsFlow>)?,
         apiService: TVMazeServiceProtocol = TVMazeService.default,
         imageLoader: ImageLoading = CachedImageLoader.shared,
         persistentStorage: DataPersisting = CoreDataStore.shared

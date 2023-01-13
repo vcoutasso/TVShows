@@ -13,19 +13,15 @@ final class AppCoordinator: MainCoordinator {
 
     static let shared: AppCoordinator = .init()
 
-    let showsFlowCoordinator = ShowsFlowCoordinator()
-    let peopleFlowCoordinator = PeopleFlowCoordinator()
-    let favoritesFlowCoordinator = FavoritesFlowCoordinator()
-
     private(set) lazy var childrenCoordinators: [any Coordinator] = [
-        showsFlowCoordinator,
-        peopleFlowCoordinator,
-        favoritesFlowCoordinator,
+        ShowsFlowCoordinator(),
+        PeopleFlowCoordinator(),
+        FavoritesFlowCoordinator(),
     ]
 
     var parentCoordinator: (any MainCoordinator)?
     private(set) var rootViewController: UIViewController = UIViewController()
-    private(set) var tabBarItem: ((Int) -> UITabBarItem)? = nil
+    private(set) var tabBarItem: ((Int) -> UITabBarItem)?
 
     func start() -> UIViewController {
         let tabBarController = UITabBarController()
@@ -55,24 +51,12 @@ final class AppCoordinator: MainCoordinator {
         }
 
         switch flow {
-            case .shows(let showsFlow):
-                guard let index = childrenCoordinators.firstIndex(where: { $0 === showsFlowCoordinator }) else {
-                    break
-                }
-                showsFlowCoordinator.handleFlow(showsFlow)
-                rootTabBarController?.selectedIndex = index
-            case .people(let peopleFlow):
-                guard let index = childrenCoordinators.firstIndex(where: { $0 === peopleFlowCoordinator }) else {
-                    break
-                }
-                peopleFlowCoordinator.handleFlow(peopleFlow)
-                rootTabBarController?.selectedIndex = index
-            case .favorites(let favoritesFlow):
-                guard let index = childrenCoordinators.firstIndex(where: { $0 === favoritesFlowCoordinator }) else {
-                    break
-                }
-                favoritesFlowCoordinator.handleFlow(favoritesFlow)
-                rootTabBarController?.selectedIndex = index
+            case .shows(let route):
+                routeToCoordinator(route)
+            case .people(let route):
+                routeToCoordinator(route)
+            case .favorites(let route):
+                routeToCoordinator(route)
         }
     }
 
@@ -82,7 +66,23 @@ final class AppCoordinator: MainCoordinator {
         return self
     }
 
+    func flowCoordinatorFor<T: FlowRoute>(_ flow: T.Type) -> (any FlowCoordinator<T>)?  {
+        return childrenCoordinators
+            .compactMap {
+                $0 as? any FlowCoordinator<T>
+            }
+            .first
+    }
+
     // MARK: Private
+
+    private func routeToCoordinator<T: FlowRoute>(_ route: T) {
+        guard let coordinator = flowCoordinatorFor(type(of: route)),
+              let index = childrenCoordinators.firstIndex(where: { $0 as any FlowCoordinator === coordinator })
+        else { return }
+        coordinator.handleFlow(route)
+        rootTabBarController?.selectedIndex = index
+    }
 
     private var rootTabBarController: UITabBarController? {
         rootViewController as? UITabBarController
