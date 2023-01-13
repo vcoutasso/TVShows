@@ -20,6 +20,7 @@ final class TVShowDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
+        setUpNavigationBar()
     }
 
     // MARK: Private
@@ -42,6 +43,16 @@ final class TVShowDetailsViewController: UIViewController {
         ])
     }
 
+    private func setUpNavigationBar() {
+        let barButtonItem = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(didTapRightBarButtonItem))
+        navigationItem.setRightBarButton(barButtonItem, animated: true)
+    }
+
+    @objc
+    private func didTapRightBarButtonItem() {
+        detailsView.didTapFavoriteButton()
+    }
+
     private let detailsView: UIView & TVShowDetailsViewProtocol
 }
 
@@ -49,6 +60,10 @@ extension TVShowDetailsViewController: TVShowDetailsViewDelegate {
     func presentEpisodeDetails(_ episode: TVShowEpisode) {
         let vc = TVShowEpisodeDetailsViewControllerFactory.make(episode: episode)
         navigationController?.pushViewController(vc, animated: true)
+    }
+
+    func updateRightBarButtonImage(with image: UIImage) {
+        navigationItem.rightBarButtonItem?.image = image
     }
 }
 

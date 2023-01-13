@@ -5,9 +5,15 @@ enum TVShowDetailsViewControllerFactory {
     static func make(
         show: TVShow,
         apiService: TVMazeServiceProtocol = TVMazeService.default,
-        imageLoader: ImageLoading = CachedImageLoader.shared
+        imageLoader: ImageLoading = CachedImageLoader.shared,
+        persistentStorage: DataPersisting = CoreDataStore.shared
     ) -> TVShowDetailsViewController {
-        let detailsViewModel = TVShowDetailsViewModel(show: show, apiService: apiService, imageLoader: imageLoader)
+        let detailsViewModel = TVShowDetailsViewModel(
+            show: show,
+            apiService: apiService,
+            imageLoader: imageLoader,
+            persistentStorage: persistentStorage
+        )
         let collectionViewSections: [TVShowDetailsViewCollectionSections] = [
             .info,
         ]

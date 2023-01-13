@@ -5,6 +5,8 @@ import UIKit
 @MainActor
 protocol TVShowDetailsViewProtocol: AnyObject {
     var delegate: TVShowDetailsViewDelegate? { get set }
+
+    func didTapFavoriteButton()
 }
 
 // MARK: - TVShowDetailsViewDelegate
@@ -12,6 +14,7 @@ protocol TVShowDetailsViewProtocol: AnyObject {
 @MainActor
 protocol TVShowDetailsViewDelegate: AnyObject {
     func presentEpisodeDetails(_ episode: TVShowEpisode)
+    func updateRightBarButtonImage(with image: UIImage)
 }
 
 // MARK: - TVShowDetailsView
@@ -19,7 +22,10 @@ protocol TVShowDetailsViewDelegate: AnyObject {
 final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
     // MARK: Lifecycle
 
-    init(viewModel: TVShowDetailsViewModelProtocol & TVShowDetailsViewCollectionViewAdapterDelegate, collectionAdapter: TVShowDetailsViewCollectionViewAdapterProtocol) {
+    init(
+        viewModel: TVShowDetailsViewModelProtocol & TVShowDetailsViewCollectionViewAdapterDelegate,
+        collectionAdapter: TVShowDetailsViewCollectionViewAdapterProtocol
+    ) {
         self.viewModel = viewModel
         self.collectionAdapter = collectionAdapter
         super.init(frame: .zero)
@@ -38,6 +44,11 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
 
     weak var delegate: TVShowDetailsViewDelegate?
 
+    func didTapFavoriteButton() {
+        viewModel.handleFavoriteButtonTapped()
+        updateRightBarButton()
+    }
+
     // MARK: Private
 
     private func setUpView() {
@@ -51,20 +62,30 @@ final class TVShowDetailsView: UIView, TVShowDetailsViewProtocol {
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
             collectionView.leftAnchor.constraint(equalTo: leftAnchor),
         ])
-
     }
 
     private func requestData() {
         Task {
-            async let _ = await viewModel.fetchEpisodes()
-            async let _ = await viewModel.fetchImage()
+            await viewModel.fetchData()
+
             if let imageData = viewModel.imageData {
                 collectionAdapter.stretchyHeaderImage = UIImage(data: imageData)
             }
+
             if let episodes = viewModel.episodes {
                 collectionAdapter.updateSectionsWithEpisodes(episodes)
             }
+
+            updateRightBarButton()
+
             collectionView.reloadData()
+        }
+    }
+
+    private func updateRightBarButton() {
+        let imageName = viewModel.isShowInFavorites == true ? "heart.fill" : "heart"
+        if let image = UIImage(systemName: imageName) {
+            delegate?.updateRightBarButtonImage(with: image)
         }
     }
 

@@ -4,16 +4,15 @@ import Foundation
 
 @MainActor
 protocol TVShowDetailsViewModelProtocol: AnyObject {
-    init(show: TVShow, apiService: TVMazeServiceProtocol, imageLoader: ImageLoading)
-
     var delegate: TVShowDetailsViewModelDelegate? { get set }
 
     var show: TVShow { get }
     var imageData: Data? { get }
     var episodes: [TVShowEpisode]? { get }
+    var isShowInFavorites: Bool { get }
 
-    func fetchImage() async
-    func fetchEpisodes() async
+    func fetchData() async
+    func handleFavoriteButtonTapped()
 }
 
 @MainActor
@@ -26,10 +25,16 @@ protocol TVShowDetailsViewModelDelegate: AnyObject {
 final class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
     // MARK: Lifecycle
 
-    init(show: TVShow, apiService: TVMazeServiceProtocol, imageLoader: ImageLoading = CachedImageLoader.shared) {
+    init(
+        show: TVShow,
+        apiService: TVMazeServiceProtocol,
+        imageLoader: ImageLoading,
+        persistentStorage: DataPersisting
+    ) {
         self.show = show
         self.apiService = apiService
         self.imageLoader = imageLoader
+        self.persistentStorage = persistentStorage
     }
 
     // MARK: Internal
@@ -39,8 +44,31 @@ final class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
     let show: TVShow
     private(set) var imageData: Data?
     private(set) var episodes: [TVShowEpisode]?
+    private(set) var isShowInFavorites: Bool = false
 
-    func fetchImage() async {
+    func fetchData() async {
+        async let _ = await fetchImage()
+        async let _ = await fetchEpisodes()
+        isShowInFavorites = persistentStorage.isShowInFavorites(id: show.id)
+    }
+
+    func handleFavoriteButtonTapped() {
+        if !isShowInFavorites {
+            if case let .failure(error) = persistentStorage.addToFavorites(show) {
+                print("Failed to add show \(show.id) to favorites with error \(error)")
+            }
+        } else {
+            if case let .failure(error) = persistentStorage.removeFromFavorites(id: show.id) {
+                print("Failed to remove show \(show.id) from favorites with error \(error)")
+            }
+        }
+
+        isShowInFavorites = persistentStorage.isShowInFavorites(id: show.id)
+    }
+
+    // MARK: Private
+
+    private func fetchImage() async {
         // No image to be fetched
         guard let imageUrl = show.image?.original else { return }
         guard let url = URL(string: imageUrl) else {
@@ -55,7 +83,7 @@ final class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
         }
     }
 
-    func fetchEpisodes() async {
+    private func fetchEpisodes() async {
         let request = TVMazeRequest(endpoint: .shows, pathComponents: [.id(show.id), .episodes], queryItems: nil)
         switch await apiService.execute(request, expecting: [TVShowEpisode].self) {
             case .success(let episodes):
@@ -65,10 +93,9 @@ final class TVShowDetailsViewModel: TVShowDetailsViewModelProtocol {
         }
     }
 
-    // MARK: Private
-
     private let imageLoader: ImageLoading
     private let apiService: TVMazeServiceProtocol
+    private let persistentStorage: DataPersisting
 }
 
 extension TVShowDetailsViewModel: TVShowDetailsViewCollectionViewAdapterDelegate {
