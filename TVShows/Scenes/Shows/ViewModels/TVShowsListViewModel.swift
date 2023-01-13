@@ -100,7 +100,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
             case .success(let results):
                 let shows = results.map { $0.show }
                 updateList(with: shows)
-                displayedCellViewModels = shows.map { TVShowsListCollectionViewCellViewModel(show: $0) }
+                displayedCellViewModels = shows.map { TVShowsListCollectionViewCellViewModelFactory.default(show: $0) }
                 delegate?.didFetchFilteredShows()
             case .failure(let error):
                 if let error = error as? TVMazeService.TVMazeServiceError {
@@ -133,7 +133,7 @@ final class TVShowsListViewModel: NSObject, TVShowsListViewModelProtocol {
 
     private func updateList(with shows: [TVShow]) {
         shows
-            .map { TVShowsListCollectionViewCellViewModel(show: $0) }
+            .map { TVShowsListCollectionViewCellViewModelFactory.default(show: $0) }
             .forEach {
                 cellViewModels.add($0)
             }

@@ -114,7 +114,7 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
             let isPortrait = self.frame.height > self.frame.width
             let itemSize: NSCollectionLayoutSize = isPortrait ? .init(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)) : .init(widthDimension: .fractionalWidth(0.2), heightDimension: .fractionalHeight(1.0))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = .init(top: 2, leading: 2, bottom: 2, trailing: 2)
+            item.contentInsets = .init(top: 4, leading: 4, bottom: 4, trailing: 4)
             let groupHeight: NSCollectionLayoutDimension = isPortrait ? .fractionalHeight(1.0 / 3) : .fractionalHeight(1.0 / 2)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: groupHeight), subitems: [item])
             group.contentInsets = .init(top: 0, leading: Constants.horizontalInset, bottom: 0, trailing: Constants.horizontalInset)

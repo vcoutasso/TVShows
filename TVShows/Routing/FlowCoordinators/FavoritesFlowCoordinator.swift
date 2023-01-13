@@ -29,7 +29,7 @@ final class FavoritesFlowCoordinator: Coordinator {
 
         switch flow {
             case .list:
-                rootNavigationController?.pushViewController(FavoriteTVShowsViewController(), animated: true)
+                rootNavigationController?.pushViewController(FavoriteTVShowsViewControllerFactory.default(), animated: true)
         }
     }
 }

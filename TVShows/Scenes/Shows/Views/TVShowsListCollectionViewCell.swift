@@ -52,9 +52,9 @@ final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
             posterImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
 
             nameLabel.topAnchor.constraint(equalTo: posterImageView.bottomAnchor),
-            nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
             nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
     }
 
@@ -77,7 +77,7 @@ final class TVShowsListCollectionViewCell: UICollectionViewCell, ReusableView {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        if let boldFont = UIFont.preferredFont(forTextStyle: .headline).bold() {
+        if let boldFont = UIFont.preferredFont(forTextStyle: .callout).bold() {
             label.font = boldFont
         }
 

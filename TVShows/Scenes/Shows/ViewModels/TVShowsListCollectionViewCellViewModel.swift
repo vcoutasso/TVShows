@@ -17,7 +17,7 @@ protocol TVShowsListCollectionViewCellViewModelProtocol: AnyObject {
 final class TVShowsListCollectionViewCellViewModel: TVShowsListCollectionViewCellViewModelProtocol {
     // MARK: Lifecycle
 
-    init(show: TVShow, imageLoader: ImageLoading = CachedImageLoader.shared) {
+    init(show: TVShow, imageLoader: ImageLoading) {
         self.show = show
         self.imageLoader = imageLoader
     }

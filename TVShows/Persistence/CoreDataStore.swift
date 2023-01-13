@@ -30,33 +30,19 @@ final class CoreDataStore: DataPersisting {
         getFavoriteShow(for: id) != nil
     }
 
+    func getFavoriteShows() -> [TVShow] {
+        do {
+            let request = FavoriteShow.fetchRequest()
+
+            return try context.fetch(request).compactMap { $0.toDomain() }
+        } catch {
+            print(error)
+            return []
+        }
+    }
+
     func addToFavorites(_ show: TVShow) -> Result<Void, Error> {
-        let newFavorite = FavoriteShow(context: context)
-        newFavorite.id = Int64(show.id)
-        newFavorite.name = show.name
-        newFavorite.genres = show.genres
-        newFavorite.status = show.status
-        newFavorite.premiered = show.premiered
-        newFavorite.summary = show.summary
-
-        let schedule = FavoriteShowSchedule(context: context)
-        schedule.time = show.schedule.time
-        schedule.days = show.schedule.days
-        newFavorite.schedule = schedule
-
-        if let showRating = show.rating {
-            let rating = FavoriteShowRating(context: context)
-            rating.average = showRating.average
-            newFavorite.rating = rating
-        }
-
-        if let showImage = show.image {
-            let images = FavoriteShowImages(context: context)
-            images.medium = showImage.medium
-            images.original = showImage.original
-            newFavorite.image = images
-        }
-
+        FavoriteShow.fromDomain(show, in: context)
         return saveContext()
     }
 
