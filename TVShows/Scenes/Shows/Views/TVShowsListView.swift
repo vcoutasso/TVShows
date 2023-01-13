@@ -78,7 +78,7 @@ final class TVShowsListView: UIView, TVShowsListViewProtocol {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             loadingSpinner.centerXAnchor.constraint(equalTo: centerXAnchor),
-            loadingSpinner.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            loadingSpinner.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
             loadingSpinner.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1),
             loadingSpinner.heightAnchor.constraint(equalTo: loadingSpinner.widthAnchor),
 
