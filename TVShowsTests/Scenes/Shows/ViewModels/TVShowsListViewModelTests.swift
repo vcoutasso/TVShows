@@ -59,7 +59,6 @@ final class TVShowsListViewModelTests: XCTestCase {
         XCTAssertEqual(mirror.children.first(where: { $0.label == "nextPage"})?.value as? Int, 2)
     }
 
-
     func testFetchNextPageShouldNotExecuteServiceAfterReceivingCode404() async {
         // Given
         let mirror = Mirror(reflecting: sut)
